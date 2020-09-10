@@ -1,11 +1,12 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
 Project(ConsoleApplication1)
 
+cmake_policy(SET CMP0015 NEW)
+
 # Set Wt include and library paths
 INCLUDE_DIRECTORIES("Wt 4.3.1 msvs2019 x64/include/")
 LINK_DIRECTORIES("Wt 4.3.1 msvs2019 x64/lib/")
 INCLUDE_DIRECTORIES("include/")
-cmake_policy(SET CMP0015 NEW)
 
 # If Visual Studio IDE
 IF(MSVC_IDE)
