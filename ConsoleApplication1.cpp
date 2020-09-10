@@ -46,7 +46,7 @@ HelloApplication::HelloApplication(const Wt::WEnvironment& env)
 
     auto button = root()->addWidget(Wt::cpp14::make_unique<Wt::WPushButton>("Greet me."));
     // create a button
-    button->setMargin(5, Wt::Side::Left);                   // add 5 pixels margin
+    button->setMargin(25, Wt::Side::Left);                   // add 5 pixels margin
 
     root()->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());    // insert a line break
     greeting_ = root()->addWidget(Wt::cpp14::make_unique<Wt::WText>()); // empty text
@@ -70,6 +70,13 @@ HelloApplication::HelloApplication(const Wt::WEnvironment& env)
     button->clicked().connect([=]() {
         std::cerr << "Hello there, " << nameEdit_->text() << std::endl;
         });
+
+    Wt::WLink link = Wt::WLink("https://www.emweb.be/");
+    link.setTarget(Wt::LinkTarget::NewWindow);
+    auto button2 = root()->addWidget(Wt::cpp14::make_unique<Wt::WAnchor>(link));
+
+    button2->addNew<Wt::WImage>(Wt::WLink("https://www.emweb.be/css/emweb_small.png"));
+
 }
 
 void HelloApplication::greet()
