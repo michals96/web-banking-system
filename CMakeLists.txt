@@ -3,9 +3,9 @@ Project(ConsoleApplication1)
 
 # Set Wt include and library paths
 INCLUDE_DIRECTORIES("Wt 4.3.1 msvs2019 x64/include/")
-INCLUDE_DIRECTORIES("Wt 4.3.1 msvs2019 x64/lib/")
+LINK_DIRECTORIES("Wt 4.3.1 msvs2019 x64/lib/")
 INCLUDE_DIRECTORIES("include/")
-#cmake_policy(SET CMP0015 NEW)
+cmake_policy(SET CMP0015 NEW)
 
 # If Visual Studio IDE
 IF(MSVC_IDE)
@@ -37,7 +37,7 @@ ENDIF(MSVC_IDE)
 
 ADD_EXECUTABLE(ConsoleApplication1 ${ConsoleApplication1_SRC})
 
-TARGET_INCLUDE_LIBRARIES(ConsoleApplication1
+TARGET_LINK_LIBRARIES(ConsoleApplication1
   debug wtd.lib optimized wt.lib
   debug wthttpd.lib optimized wthttp.lib
   )
