@@ -5,7 +5,7 @@ Project(ConsoleApplication1)
 INCLUDE_DIRECTORIES("Wt 4.3.1 msvs2019 x64/include/")
 LINK_DIRECTORIES("Wt 4.3.1 msvs2019 x64/lib/")
 INCLUDE_DIRECTORIES("include/")
-cmake_policy(SET CMP0081 NEW)
+cmake_policy(SET CMP0015 NEW)
 
 # If Visual Studio IDE
 IF(MSVC_IDE)
