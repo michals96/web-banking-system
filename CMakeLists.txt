@@ -37,7 +37,7 @@ ENDIF(MSVC_IDE)
 
 ADD_EXECUTABLE(ConsoleApplication1 ${ConsoleApplication1_SRC})
 
-TARGET_LINK_LIBRARIES(ConsoleApplication1
+TARGET_INCLUDE_LIBRARIES(ConsoleApplication1
   debug wtd.lib optimized wt.lib
   debug wthttpd.lib optimized wthttp.lib
   )
