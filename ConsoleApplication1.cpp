@@ -46,7 +46,7 @@ HelloApplication::HelloApplication(const Wt::WEnvironment& env)
 
     auto button = root()->addWidget(Wt::cpp14::make_unique<Wt::WPushButton>("Greet me."));
     // create a button
-    button->setMargin(25, Wt::Side::Left);                   // add 5 pixels margin
+    button->setMargin(25, Wt::Side::Left);                   // add 5 pixels margin.
 
     root()->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());    // insert a line break
     greeting_ = root()->addWidget(Wt::cpp14::make_unique<Wt::WText>()); // empty text
