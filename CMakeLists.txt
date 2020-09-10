@@ -2,8 +2,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
 Project(ConsoleApplication1)
 
 # Set Wt include and library paths
-INCLUDE_DIRECTORIES("C:/Program Files/Wt 4.3.1 msvs2019 x64/include")
-LINK_DIRECTORIES("C:/Program Files/Wt 4.3.1 msvs2019 x64/lib")
+INCLUDE_DIRECTORIES("Wt 4.3.1 msvs2019 x64/include/")
+LINK_DIRECTORIES("Wt 4.3.1 msvs2019 x64/lib/")
 INCLUDE_DIRECTORIES("include/")
 
 # If Visual Studio IDE
