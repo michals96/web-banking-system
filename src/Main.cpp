@@ -11,6 +11,7 @@
 #include <Wt/WLineEdit.h>
 #include <Wt/WPushButton.h>
 #include <Wt/WText.h>
+#include "Hello.h"
 
  /*
   * A simple hello world application class which demonstrates how to react
@@ -100,6 +101,7 @@ int main(int argc, char** argv)
      * support. The function should return a newly instantiated application
      * object.
      */
+    hello();
     return Wt::WRun(argc, argv, [](const Wt::WEnvironment& env) {
         /*
          * You could read information from the environment to decide whether
