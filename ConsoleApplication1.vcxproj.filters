@@ -10,7 +10,7 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="build\Source.cpp">
+    <ClCompile Include="web-banking-system\Source.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
