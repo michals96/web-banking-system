@@ -39,6 +39,6 @@ INCLUDE_DIRECTORIES("include/")
 TARGET_LINK_DIRECTORIES(ConsoleApplication1 PUBLIC "Wt 4.3.1 msvs2019 x64/lib/")
 
 TARGET_LINK_LIBRARIES(ConsoleApplication1
-  debug wtd.lib optimized wt.lib
-  debug wthttpd.lib optimized wthttp.lib
+  debug wtd optimized wt
+  debug wthttpd optimized wthttp
   )
