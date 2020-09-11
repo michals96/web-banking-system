@@ -5,7 +5,7 @@ cmake_policy(SET CMP0015 NEW)
 
 # Set Wt include and library paths
 INCLUDE_DIRECTORIES("Wt 4.3.1 msvs2019 x64/include/")
-TARGET_LINK_DIRECTORIES("Wt 4.3.1 msvs2019 x64/lib/")
+TARGET_LINK_DIRECTORIES("ConsoleApplication1 Wt 4.3.1 msvs2019 x64/lib/")
 INCLUDE_DIRECTORIES("include/")
 
 # If Visual Studio IDE
