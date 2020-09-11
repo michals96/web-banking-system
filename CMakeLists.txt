@@ -36,7 +36,7 @@ ADD_EXECUTABLE(ConsoleApplication1 ${ConsoleApplication1_SRC})
 # Set Wt include and library paths
 INCLUDE_DIRECTORIES("Wt 4.3.1 msvs2019 x64/include/")
 INCLUDE_DIRECTORIES("include/")
-TARGET_LINK_DIRECTORIES(ConsoleApplication1 "Wt 4.3.1 msvs2019 x64/lib/")
+TARGET_LINK_DIRECTORIES(ConsoleApplication1 PUBLIC "Wt 4.3.1 msvs2019 x64/lib/")
 
 TARGET_LINK_LIBRARIES(ConsoleApplication1
   debug wtd.lib optimized wt.lib
