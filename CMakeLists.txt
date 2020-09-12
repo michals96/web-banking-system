@@ -33,7 +33,6 @@ ENDIF(MSVC_IDE)
 
 ADD_EXECUTABLE(ConsoleApplication1 ${ConsoleApplication1_SRC})
 
-add_subdirectory
 ADD_SUBDIRECTORY("wt-4.3.1/" "Wt 4.3.1 msvs2019 x64/lib/")
 # Set Wt include and library paths
 INCLUDE_DIRECTORIES("Wt 4.3.1 msvs2019 x64/include/")
