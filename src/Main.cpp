@@ -21,9 +21,10 @@ private:
 HelloApplication::HelloApplication(const Wt::WEnvironment& env)
     : WApplication(env)
 {
-    setTitle("Hello world");                           
-
-    root()->addWidget(Wt::cpp14::make_unique<Wt::WText>("Your name, please ? ")); 
+    setTitle("Web banking system");                           
+    std::unique_ptr<Wt::WText> title(Wt::cpp14::make_unique<Wt::WText>("<h1>A Witty game: Hangman</h1>"));
+    root()->addWidget(std::move(title));
+    /* root()->addWidget(Wt::cpp14::make_unique<Wt::WText>("Your name, please ? ")); 
 
     nameEdit_ = root()->addWidget(Wt::cpp14::make_unique<Wt::WLineEdit>());
     nameEdit_->setFocus();                              
@@ -45,9 +46,10 @@ HelloApplication::HelloApplication(const Wt::WEnvironment& env)
 
     Wt::WLink link = Wt::WLink("https://www.emweb.be/");
     link.setTarget(Wt::LinkTarget::NewWindow);
+
     auto button2 = root()->addWidget(Wt::cpp14::make_unique<Wt::WAnchor>(link));
 
-    button2->addNew<Wt::WImage>(Wt::WLink("https://www.emweb.be/css/emweb_small.png"));
+    button2->addNew<Wt::WImage>(Wt::WLink("https://www.emweb.be/css/emweb_small.png"));*/
 
 }
 
@@ -58,7 +60,6 @@ void HelloApplication::greet()
 
 int main(int argc, char** argv)
 {
-    hello();
     return Wt::WRun(argc, argv, [](const Wt::WEnvironment& env) {
         return Wt::cpp14::make_unique<HelloApplication>(env);
         });

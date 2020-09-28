@@ -10,11 +10,12 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="web-banking-system\Source.cpp">
+    <ClCompile Include="src\LoggingPage.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Hello.h" />
+    <ClInclude Include="include\LoggingPage.h" />
   </ItemGroup>
 </Project>
