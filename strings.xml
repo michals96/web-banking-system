@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<messages>
+	<message id="Wt.Auth.login-form-info">
+		Hangman keeps track of the best players, and since that could be
+		you, you might want to register. <br/>
+		If you would rather not register for some reason, use the
+		<b>guest/guest</b> account.
+	</message>
+</messages>
