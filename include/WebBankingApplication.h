@@ -1,10 +1,18 @@
 #pragma once
 #include <Wt/WApplication.h>
 #include <Wt/WContainerWidget.h>
+#include "Session.h"
 
-class WebBankingApplication : public Wt::WApplication, public Wt::WContainerWidget
+class Session;
+
+class WebBankingApplication : public Wt::WContainerWidget
 {
 public:
-	WebBankingApplication(const Wt::WEnvironment& env);
+	WebBankingApplication();
+
+private:
+	Session session;
+
+	void onAuthEvent();
 };
 

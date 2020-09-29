@@ -1,19 +1,42 @@
 #include <Wt/WApplication.h>
-#include <Wt/WBreak.h>
-#include <Wt/WContainerWidget.h>
-#include <Wt/WLineEdit.h>
-#include <Wt/WPushButton.h>
-#include <Wt/WText.h>
+#include <Wt/WServer.h>
 
-#include "Hello.h"
 #include "WebBankingApplication.h"
-#include "HelloApplication.h"
+#include "Session.h"
 
+using namespace Wt;
 
+std::unique_ptr<WApplication> createApplication(const WEnvironment& env)
+{
+    auto app = cpp14::make_unique<WApplication>(env);
+
+    app->setTitle("Web Banking App");
+
+    app->messageResourceBundle().use(app->appRoot() + "strings");
+    //app->messageResourceBundle().use(app->appRoot() + "templates");
+
+    app->useStyleSheet("css/FrontPage.css");
+
+    app->root()->addWidget(cpp14::make_unique<WebBankingApplication>());
+
+    return app;
+}
 
 int main(int argc, char** argv)
 {
-    return Wt::WRun(argc, argv, [](const Wt::WEnvironment& env) {
-        return Wt::cpp14::make_unique<WebBankingApplication>(env);
-        });
+    try {
+        WServer server(argc, argv, WTHTTP_CONFIGURATION);
+
+        server.addEntryPoint(EntryPointType::Application, createApplication);
+
+        // Session::configureAuth();
+
+        server.run();
+    }
+    catch (WServer::Exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
+    catch (std::exception& e) {
+        std::cerr << "exception: " << e.what() << std::endl;
+    }
 }

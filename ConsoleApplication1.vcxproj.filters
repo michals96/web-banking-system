@@ -16,13 +16,19 @@
     <ClCompile Include="src\WebBankingApplication.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Session.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Hello.h" />
     <ClInclude Include="include\HelloApplication.h" />
     <ClInclude Include="include\WebBankingApplication.h" />
+    <ClInclude Include="include\Session.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="css\FrontPage.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="strings.xml" />
   </ItemGroup>
 </Project>
