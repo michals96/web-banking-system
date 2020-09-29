@@ -150,11 +150,13 @@
     <ClCompile Include="src\HelloApplication.cpp" />
     <ClCompile Include="src\WebBankingApplication.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\User.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\HelloApplication.h" />
     <ClInclude Include="include\WebBankingApplication.h" />
     <ClInclude Include="include\Session.h" />
+    <ClInclude Include="include\User.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="css\FrontPage.css" />
