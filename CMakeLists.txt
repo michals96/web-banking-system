@@ -36,7 +36,10 @@ ADD_EXECUTABLE(ConsoleApplication1 ${ConsoleApplication1_SRC})
 ADD_SUBDIRECTORY("wt-4.3.1/" "Wt 4.3.1 msvs2019 x64/lib/")
 # Set Wt include and library paths
 INCLUDE_DIRECTORIES("Wt 4.3.1 msvs2019 x64/include/")
-INCLUDE_DIRECTORIES("../include/")
+
+INCLUDE_DIRECTORIES("include")
+FILE(GLOB SOURCES "src/*.cpp")
+ADD_EXECUTABLE(ConsoleApplication1 ${SOURCES})
 TARGET_LINK_DIRECTORIES(ConsoleApplication1 PUBLIC "Wt 4.3.1 msvs2019 x64/lib/")
 
 TARGET_LINK_LIBRARIES(ConsoleApplication1
