@@ -1,4 +1,4 @@
-#include "Session.h"
+#include "../include/Session.h"
 
 #include "Wt/Auth/AuthService.h"
 #include "Wt/Auth/HashFunction.h"

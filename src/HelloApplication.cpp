@@ -1,4 +1,4 @@
-#include "HelloApplication.h"
+#include "../include/HelloApplication.h"
 #include <Wt/WApplication.h>
 #include <Wt/WBreak.h>
 #include <Wt/WContainerWidget.h>

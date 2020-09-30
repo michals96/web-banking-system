@@ -1,5 +1,5 @@
-#include "WebBankingApplication.h"
-#include "Session.h"
+#include "../include/WebBankingApplication.h"
+#include "../include/Session.h"
 
 #include <Wt/WApplication.h>
 #include <Wt/WServer.h>
@@ -14,7 +14,7 @@ std::unique_ptr<WApplication> createApplication(const WEnvironment& env)
 
     app->messageResourceBundle().use(app->appRoot() + "strings");
 
-    app->useStyleSheet("css/FrontPage.css");
+    app->useStyleSheet("../css/FrontPage.css");
 
     app->root()->addWidget(cpp14::make_unique<WebBankingApplication>());
 

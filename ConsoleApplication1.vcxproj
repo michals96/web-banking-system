@@ -117,7 +117,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;HPDF_DLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Program Files\Wt 4.3.1 msvs2019 x64\include;C:\Users\QVM386\Desktop\web-banking-app\Wt 4.3.1 msvs2019 x64\include\Wt;C:\Users\QVM386\Desktop\web-banking-app\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\Wt 4.3.1 msvs2019 x64\include;C:\Users\QVM386\Desktop\web-banking-app\Wt 4.3.1 msvs2019 x64\include\Wt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
