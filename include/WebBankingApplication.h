@@ -1,4 +1,6 @@
-#pragma once
+#ifndef WEBBANKINGAPPLICATION_H_
+#define WEBBANKINGAPPLICATION_H_
+
 #include <Wt/WApplication.h>
 #include <Wt/WContainerWidget.h>
 #include "Session.h"
@@ -16,3 +18,4 @@ private:
 	void onAuthEvent();
 };
 
+#endif //WEBBANKINGAPPLICATION_H_
