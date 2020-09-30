@@ -20,7 +20,9 @@ namespace dbo = Wt::Dbo;
 
 namespace {
 	Auth::AuthService myAuthService;
+	Auth::PasswordService myPasswordService(myAuthService);
 }
+
 Session::Session()
 {
 }
@@ -42,4 +44,9 @@ Auth::AbstractUserDatabase& Session::users()
 const Auth::AuthService& Session::auth()
 {
 	return myAuthService;
+}
+
+const Auth::AbstractPasswordService& Session::passwordAuth()
+{
+	return myPasswordService;
 }

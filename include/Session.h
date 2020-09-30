@@ -22,6 +22,7 @@ public:
 	Auth::AbstractUserDatabase& users();
 
 	static const Auth::AuthService& auth();
+	static const Auth::AbstractPasswordService& passwordAuth();
 
 private:
 	Wt::Auth::Login login_;
