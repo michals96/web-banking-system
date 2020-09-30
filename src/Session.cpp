@@ -19,8 +19,20 @@
 namespace dbo = Wt::Dbo;
 
 namespace {
+
+	class MyOAuth : public std::vector<const Auth::OAuthService*>
+	{
+	public:
+		~MyOAuth()
+		{
+			for (unsigned i = 0; i < size(); ++i)
+				delete (*this)[i];
+		}
+	};
+
 	Auth::AuthService myAuthService;
 	Auth::PasswordService myPasswordService(myAuthService);
+	MyOAuth myOAuthServices;
 }
 
 Session::Session()
@@ -49,4 +61,9 @@ const Auth::AuthService& Session::auth()
 const Auth::AbstractPasswordService& Session::passwordAuth()
 {
 	return myPasswordService;
+}
+
+const std::vector<const Auth::OAuthService*>& Session::oAuth()
+{
+	return myOAuthServices;
 }

@@ -4,7 +4,7 @@
 #include <Wt/Dbo/Session.h>
 #include <Wt/Dbo/ptr.h>
 #include <Wt/Dbo/backend/Sqlite3.h>
-
+#include<vector>
 #include "User.h"
 
 using namespace Wt;
@@ -23,6 +23,7 @@ public:
 
 	static const Auth::AuthService& auth();
 	static const Auth::AbstractPasswordService& passwordAuth();
+	static const std::vector<const Auth::OAuthService*>& oAuth();
 
 private:
 	Wt::Auth::Login login_;

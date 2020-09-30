@@ -18,6 +18,7 @@ WebBankingApplication::WebBankingApplication()
 		= Wt::cpp14::make_unique<Wt::Auth::AuthModel>(Session::auth(), session.users());
 
 	authModel->addPasswordAuth(&Session::passwordAuth());
+	authModel->addOAuth(Session::oAuth());
 
 	std::unique_ptr<Wt::WText> title(Wt::cpp14::make_unique<Wt::WText>("<h1>Web Banking System</h1>"));
 
