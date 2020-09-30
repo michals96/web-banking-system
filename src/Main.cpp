@@ -13,7 +13,6 @@ std::unique_ptr<WApplication> createApplication(const WEnvironment& env)
     app->setTitle("Web Banking App");
 
     app->messageResourceBundle().use(app->appRoot() + "strings");
-    //app->messageResourceBundle().use(app->appRoot() + "templates");
 
     app->useStyleSheet("css/FrontPage.css");
 
@@ -28,8 +27,6 @@ int main(int argc, char** argv)
         WServer server(argc, argv, WTHTTP_CONFIGURATION);
 
         server.addEntryPoint(EntryPointType::Application, createApplication);
-
-        // Session::configureAuth();
 
         server.run();
     }

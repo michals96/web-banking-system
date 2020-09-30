@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <messages>
 	<message id="Wt.Auth.login-form-info">
-		Hangman keeps track of the best players, and since that could be
-		you, you might want to register. <br/>
+		This is simple web application that simulates banking service. <br/>
+		Written and created by <b>MICHAL STEFANIUK</b> as his engineering theesis. <br/>
 		If you would rather not register for some reason, use the
 		<b>guest/guest</b> account.
 	</message>

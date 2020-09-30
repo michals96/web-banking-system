@@ -20,12 +20,19 @@ WebBankingApplication::WebBankingApplication()
 	authModel->addPasswordAuth(&Session::passwordAuth());
 	authModel->addOAuth(Session::oAuth());
 
-	std::unique_ptr<Wt::WText> title(Wt::cpp14::make_unique<Wt::WText>("<h1>Web Banking System</h1>"));
+	std::unique_ptr<Auth::AuthWidget> authWidget
+		= cpp14::make_unique<Auth::AuthWidget>(session.login());
+	auto authWidgetPtr = authWidget.get();
+	authWidget->setModel(std::move(authModel));
+	authWidget->setRegistrationEnabled(true);
+
+
+	std::unique_ptr<Wt::WText> title(Wt::cpp14::make_unique<Wt::WText>("<h1 class='frontTitle'>Web Banking Application</h1>"));
+
 
 	addWidget(std::move(title));
 
-	//addWidget(std::move(authWidget));
-
+	addWidget(std::move(authWidget));
 }
 
 void WebBankingApplication::onAuthEvent()

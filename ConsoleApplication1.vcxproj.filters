@@ -30,9 +30,9 @@
     <ClInclude Include="include\User.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="css\FrontPage.css" />
+    <Xml Include="strings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="strings.xml" />
+    <None Include="css\FrontPage.css" />
   </ItemGroup>
 </Project>

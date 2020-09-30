@@ -1,3 +1,10 @@
-h1 {
+h1.frontTitle {
     text-align: center;
+}
+
+.Wt-auth-logged-in {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: 90%;
 }
