@@ -47,6 +47,13 @@ WebBankingApplication::WebBankingApplication()
 
 void WebBankingApplication::onAuthEvent()
 {
+	if (session.login().loggedIn())
+	{
+		handleInternalPath(WApplication::instance()->internalPath());
+	}
+	else {
+		mainStack->clear();
+	}
 
 }
 
@@ -58,9 +65,13 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 			showUserPanel();
 		}
 		// Handling admin panel
-		else if (internalPath == "adminPanel")
+		else if (internalPath == "/adminPanel")
 		{
 			// showAdminPanel();
+		}
+		else
+		{
+			WApplication::instance()->setInternalPath("/userPanel", true);
 		}
 	}
 }
