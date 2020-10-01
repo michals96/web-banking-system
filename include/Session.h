@@ -14,19 +14,24 @@ typedef Auth::Dbo::UserDatabase<AuthInfo> UserDatabase;
 class Session
 {
 public:
+	static void configureAuth();
+
 	Session();
 	~Session();
 
-	Wt::Auth::Login& login();
-
 	Auth::AbstractUserDatabase& users();
+	Wt::Auth::Login& login();
+	
+	std::vector<User> topUsers(int limit);
+
+	std::string userName() const;
 
 	static const Auth::AuthService& auth();
 	static const Auth::AbstractPasswordService& passwordAuth();
 	static const std::vector<const Auth::OAuthService*>& oAuth();
 
 private:
+	mutable Dbo::Session session_;
 	Wt::Auth::Login login_;
 	std::unique_ptr<UserDatabase> users_;
 };
-

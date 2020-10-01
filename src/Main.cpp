@@ -28,6 +28,8 @@ int main(int argc, char** argv)
 
         server.addEntryPoint(EntryPointType::Application, createApplication);
 
+        Session::configureAuth();
+
         server.run();
     }
     catch (WServer::Exception& e) {

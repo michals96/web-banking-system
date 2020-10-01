@@ -117,13 +117,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;HPDF_DLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Program Files\Wt 4.3.1 msvs2019 x64\include;C:\Users\QVM386\Desktop\web-banking-app\Wt 4.3.1 msvs2019 x64\include\Wt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\Wt 4.3.1 msvs2019 x64\include\Wt;C:\Program Files\Wt 4.3.1 msvs2019 x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Program Files\Wt 4.3.1 msvs2019 x64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>wtd.lib;wthttpd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>wtd.lib;wthttpd.lib;wtdbod.lib;wtdbofirebirdd.lib;wtdbomssqlserverd.lib;wtdbomysqld.lib;wtdbopostgresd.lib;wtdbosqlite3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -151,12 +151,14 @@
     <ClCompile Include="src\WebBankingApplication.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\User.cpp" />
+    <ClCompile Include="src\WebBankingWidget.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\HelloApplication.h" />
     <ClInclude Include="include\WebBankingApplication.h" />
     <ClInclude Include="include\Session.h" />
     <ClInclude Include="include\User.h" />
+    <ClInclude Include="include\WebBankingWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="css\FrontPage.css" />
