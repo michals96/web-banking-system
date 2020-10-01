@@ -5,14 +5,18 @@
 #include <Wt/WContainerWidget.h>
 #include "Session.h"
 
+using namespace Wt;
+
 class Session;
 
 class WebBankingApplication : public Wt::WContainerWidget
 {
 public:
 	WebBankingApplication();
+	void handleInternalPath(const std::string& internalPath);
 
 private:
+	WStackedWidget* mainStack;
 	Session session;
 
 	void onAuthEvent();

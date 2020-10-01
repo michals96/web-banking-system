@@ -26,16 +26,26 @@ WebBankingApplication::WebBankingApplication()
 	authWidget->setModel(std::move(authModel));
 	authWidget->setRegistrationEnabled(true);
 
-
 	std::unique_ptr<Wt::WText> title(Wt::cpp14::make_unique<Wt::WText>("<h1 class='frontTitle'>Web Banking Application</h1>"));
-
 
 	addWidget(std::move(title));
 
 	addWidget(std::move(authWidget));
+
+	// Here we can add new stacks like userStack, adminStack etc
+	mainStack = new WStackedWidget();
+	mainStack->setStyleClass("bankingStack");
+	addWidget(std::unique_ptr<WStackedWidget>(mainStack));
+
+	WApplication::instance()->internalPathChanged()
+		.connect(this, &WebBankingApplication::handleInternalPath);
 }
 
 void WebBankingApplication::onAuthEvent()
 {
 
+}
+
+void WebBankingApplication::handleInternalPath(const std::string& internalPath)
+{
 }
