@@ -35,4 +35,3 @@ private:
 	Wt::Auth::Login login_;
 	std::unique_ptr<UserDatabase> users_;
 };
-
