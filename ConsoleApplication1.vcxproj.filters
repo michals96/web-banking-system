@@ -10,11 +10,29 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="web-banking-system\Source.cpp">
+    <ClCompile Include="src\HelloApplication.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WebBankingApplication.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Session.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\User.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Hello.h" />
+    <ClInclude Include="include\HelloApplication.h" />
+    <ClInclude Include="include\WebBankingApplication.h" />
+    <ClInclude Include="include\Session.h" />
+    <ClInclude Include="include\User.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="strings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="css\FrontPage.css" />
   </ItemGroup>
 </Project>
