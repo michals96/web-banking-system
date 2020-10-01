@@ -11,6 +11,8 @@
 
 #include <Wt/WApplication.h>
 #include <Wt/WLogger.h>
+#include <vector>
+#include <string>
 
 #ifndef WT_WIN32
 #include <unistd.h>
@@ -20,7 +22,7 @@ namespace dbo = Wt::Dbo;
 
 namespace {
 
-	class MyOAuth : public std::vector<const Auth::OAuthService*>
+	class MyOAuth : public std::vector<const Wt::Auth::OAuthService*>
 	{
 	public:
 		~MyOAuth()
@@ -30,7 +32,7 @@ namespace {
 		}
 	};
 
-	Auth::AuthService myAuthService;
+	Wt::Auth::AuthService myAuthService;
 	Auth::PasswordService myPasswordService(myAuthService);
 	MyOAuth myOAuthServices;
 }
@@ -66,4 +68,12 @@ const Auth::AbstractPasswordService& Session::passwordAuth()
 const std::vector<const Auth::OAuthService*>& Session::oAuth()
 {
 	return myOAuthServices;
+}
+
+std::string Session::userName() const
+{
+	if (login_.loggedIn())
+		return login_.user().identity(Auth::Identity::LoginName).toUTF8();
+	else
+		return std::string();
 }

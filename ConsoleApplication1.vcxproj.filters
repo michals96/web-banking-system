@@ -22,12 +22,16 @@
     <ClCompile Include="src\User.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\WebBankingWidget.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\HelloApplication.h" />
     <ClInclude Include="include\WebBankingApplication.h" />
     <ClInclude Include="include\Session.h" />
     <ClInclude Include="include\User.h" />
+    <ClInclude Include="include\WebBankingWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="strings.xml" />

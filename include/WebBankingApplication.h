@@ -1,25 +1,26 @@
-#ifndef WEBBANKINGAPPLICATION_H_
-#define WEBBANKINGAPPLICATION_H_
-
+#pragma once
 #include <Wt/WApplication.h>
 #include <Wt/WContainerWidget.h>
-#include "Session.h"
+#include "../include/Session.h"
 
 using namespace Wt;
 
 class Session;
+class WebBankingWidget;
 
 class WebBankingApplication : public Wt::WContainerWidget
 {
 public:
 	WebBankingApplication();
 	void handleInternalPath(const std::string& internalPath);
+	
 
 private:
-	WStackedWidget* mainStack;
+	WebBankingWidget     *panel;
+	WStackedWidget       *mainStack;
+	
 	Session session;
 
 	void onAuthEvent();
+	void showUserPanel();
 };
-
-#endif //WEBBANKINGAPPLICATION_H_

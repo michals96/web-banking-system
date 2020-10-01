@@ -1,4 +1,3 @@
-#include "../include/WebBankingApplication.h"
 #include <Wt/WApplication.h>
 #include <Wt/WAnchor.h>
 #include <Wt/WText.h>
@@ -8,6 +7,9 @@
 #include <Wt/Auth/AuthWidget.h>
 #include <Wt/Auth/RegistrationModel.h>
 #include <string>
+
+#include "../include/WebBankingApplication.h"
+#include "../include/WebBankingWidget.h"
 
 WebBankingApplication::WebBankingApplication()
 	: Wt::WContainerWidget()
@@ -39,6 +41,8 @@ WebBankingApplication::WebBankingApplication()
 
 	WApplication::instance()->internalPathChanged()
 		.connect(this, &WebBankingApplication::handleInternalPath);
+
+	authWidgetPtr->processEnvironment();
 }
 
 void WebBankingApplication::onAuthEvent()
@@ -48,4 +52,25 @@ void WebBankingApplication::onAuthEvent()
 
 void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 {
+	if (session.login().loggedIn()) {
+		if (internalPath == "/userPanel")
+		{
+			showUserPanel();
+		}
+		// Handling admin panel
+		else if (internalPath == "adminPanel")
+		{
+			// showAdminPanel();
+		}
+	}
+}
+
+void WebBankingApplication::showUserPanel()
+{
+	if (!panel)
+	{
+		panel = mainStack->addWidget(cpp14::make_unique<WebBankingWidget>(session.userName()));
+	}
+
+	mainStack->setCurrentWidget(panel);
 }

@@ -18,8 +18,8 @@ public:
 	~Session();
 
 	Wt::Auth::Login& login();
-
 	Auth::AbstractUserDatabase& users();
+	std::string userName() const;
 
 	static const Auth::AuthService& auth();
 	static const Auth::AbstractPasswordService& passwordAuth();
