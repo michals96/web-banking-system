@@ -45,4 +45,6 @@ TARGET_LINK_DIRECTORIES(ConsoleApplication1 PUBLIC "Wt 4.3.1 msvs2019 x64/lib/")
 TARGET_LINK_LIBRARIES(ConsoleApplication1
   debug wtd optimized wt
   debug wthttpd optimized wthttp
+  debug wtdbod optimized wtdbo
+  debug wtdbosqlite3d optimized wtdbosqlite3
   )
