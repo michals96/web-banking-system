@@ -10,6 +10,7 @@
 \usepackage{color}
 \usepackage{geometry}
 \usepackage{regexpatch,fancyvrb,xparse}
+
 \makeatletter
 \let\do@footnotetext\@footnotetext
 \regexpatchcmd{\do@footnotetext}
@@ -146,9 +147,97 @@ The chosen IDE for this project is \textbf{Microsoft Visual Studio Community 201
 }
 
 \subsubsection*{Boost C++ library}
+{
+\tab Boost is a collection of C++ libraries that enhances capabilities of development C++ code, which is also licensed by \textbf{Boost Software License}. For the project Boost is necessary to build Web Toolkit library as it's implementation uses Boost functionalities.
+
+\bigskip
+The most important features provided by Boost are
+\begin{itemize}
+	\item Algorithms
+	\item Concurrent programming
+	\item Complex containers
+	\item Correctness validating and enhanced unit testing
+	\item Additional data structures (like bimap, fusion, tuple etc)
+	\item High level programming and functional objects
+	\item Parsers and graphs
+	\item Meta-programming with templates
+\end{itemize} 
+}
 \subsubsection*{CMake}
+{
+\tab CMake is a cross platform tool that provides automatic management of compiling the code of an application. It's role is to create a configuration for project files of popular programming environments, which then are used in a process of compilation. The main advantage of using CMake is it's independence of the compiler and the platform. However CMake itself is not a standalone program, instead by creating files with rules for compilation dedicated to another program like IDE it forms a unified building environment. CMake stands for \textit{Cross-platform Make}.
+
+\bigskip
+The most important features provided by CMake are
+\begin{itemize}
+	\item Platform independence
+	\item Cross compilation
+	\item Out-of-source building
+	\item Building projects with complex catalog structure 
+	\item Unit testing support
+	\item Detecting dependencies and outer libraries
+\end{itemize}
+This project required including CMake tool because of various dependencies and complex building due to including Web Toolkit and Boost.  
+
+\bigskip
+To be able to exploit favors that CMake offers one must create \textbf{CMakeLists.txt} file placed in the main catalog of the project. The core of this file is a simple scripting language that describes rules and defines variables telling the compiler how to links files and what should be the outcome of the compilation process.
+}
 \subsubsection*{Others}
 \textit{Git BASH} tool and \textit{Web Toolkit} library are described thoroughly in next chaptres.
+\newpage
+
+\paragraph{Example CMake file used in project}
+\begin{verbatim}
+CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
+Project(ConsoleApplication1)
+
+# If Visual Studio IDE
+IF(MSVC_IDE)
+	# Copy user file
+  FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.vcxproj.user DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+ENDIF(MSVC_IDE)
+
+# If Eclipse IDE
+IF(${CMAKE_EXTRA_GENERATOR} MATCHES ".*Eclipse.*")
+	IF(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+		# Copy debug user file
+    FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}-debug.exe.launch DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+	ENDIF()
+	IF(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+		# Copy release user file
+    FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}-release.exe.launch DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+	ENDIF()
+ENDIF()
+
+# Copy resources to build tree
+# FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+SET(ConsoleApplication1_SRC src/Main.cpp)
+
+# If Visual Studio IDE
+IF(MSVC_IDE)
+	SET(ConsoleApplication1_SRC ${ConsoleApplication1_SRC} src/Main.cpp)
+ENDIF(MSVC_IDE)
+
+ADD_EXECUTABLE(ConsoleApplication1 ${ConsoleApplication1_SRC})
+
+ADD_SUBDIRECTORY("wt-4.3.1/" "Wt 4.3.1 msvs2019 x64/lib/")
+# Set Wt include and library paths
+INCLUDE_DIRECTORIES("Wt 4.3.1 msvs2019 x64/include/")
+
+INCLUDE_DIRECTORIES("include")
+FILE(GLOB SOURCES "src/*.cpp")
+ADD_EXECUTABLE(ConsoleApplication1 ${SOURCES})
+TARGET_LINK_DIRECTORIES(ConsoleApplication1 PUBLIC "Wt 4.3.1 msvs2019 x64/lib/")
+
+TARGET_LINK_LIBRARIES(ConsoleApplication1
+  debug wtd optimized wt
+  debug wthttpd optimized wthttp
+  debug wtdbod optimized wtdbo
+  debug wtdbosqlite3d optimized wtdbosqlite3
+  )
+\end{verbatim}
+
 \section{WebToolkit C++ library}
 \subsection{Library introduction}
 \subsubsection{Introduction to Wt}
