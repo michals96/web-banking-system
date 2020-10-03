@@ -8,7 +8,7 @@
 \usepackage{graphicx}
 \usepackage{color}
 \usepackage{geometry}
-
+\newcommand\tab[1][1cm]{\hspace*{#1}}
 \geometry{hmargin={2cm, 2cm}, height=10.0in}
 
 \begin{document}
@@ -62,10 +62,27 @@ Jednoczesnie Uczelnia informuje, ze zgodnie z art. 15a ww. ustawy o prawie autor
 \newpage
 \section*{Introduction}
 \addcontentsline{toc}{section}{\protect\numberline{}Introduction}%
-\section{Projects assumptions}
-\subsection{Goal of the project}
-\subsection{Programming environment}
+\tab {Software engineering is a very wide area of engineering which particularly concerns developing and maintaining programming products. A development process itself is a major challenge to all people involved, starting with developers creating the code, continuing with product owners who are managing teams and coordinating the work flow and ending-up with managers who are setting the direction of the whole process.
 
+\bigskip
+The main motivation to create this thesis was simply to present a development process that includes basic and nowadays necessary tools which are significantly helpful in such process.
+
+\bigskip
+To carry out the development and present all tools it was decided that an example application will be a C++ web application created with a GUI library in modern C++ called \textbf{Web Toolkit}. 
+
+\bigskip 
+Nowadays in a software engineering world there is a trend to migrate desktop applications to the internet, which has also impacted a lot GUI desktop libraries in decreasing their utilities. Foreground reason behind choosing C++ to create a web application, which is quite unusual, was to show the tremendous possibilities that this language still provides and to exhibit the capabilities of open source libraries shared among developers.
+
+\bigskip
+The following contents was divided into five chapters describing the development process and the application itself with bottom line two chapters summarizing thesis and listing literature.
+
+\
+}
+
+\section{Projects assumptions}
+
+\subsection{Application's blue-print}
+\subsection{Programming environment}
 \section{WebToolkit C++ library}
 \subsection{Library introduction}
 \subsubsection{Introduction to Wt}
