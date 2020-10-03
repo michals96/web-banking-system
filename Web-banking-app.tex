@@ -2,6 +2,7 @@
 
 \usepackage{etoc}
 \usepackage{blindtext}
+\usepackage{scrextend}
 \usepackage[utf8]{inputenc}
 \usepackage[USenglish,british,american,australian,english]{babel}
 \usepackage{helvet}
@@ -78,10 +79,26 @@ The following contents was divided into five chapters describing the development
 
 \
 }
+\newpage
 
 \section{Projects assumptions}
 
 \subsection{Application's blue-print}
+{The application is a single-page service run on a local server with an \textbf{http://localhost:8080/} address. After starting, logging panel appears, giving the user an opportunity to type their credentials and log-in. 
+
+\bigskip
+The idea of the service is to provide to the user basic functionalities of a banking service like for instance transferring money or checking their balance. Those required implementing secure back-end layer with a database containing information about the users and transactions and a front-end layer which is transparent to the user. 
+
+\bigskip
+Regarding the credentials user will see different features after logging into the service. There might be many accounts created and held up in the database of the service but there are only two rights of access.}\\
+\begin{labeling}{alligator}
+\item [\textbf{USER}] Transferring money and seeing current account's balance.
+\item [\textbf{ADMIN}] Sees details about every account in the service as well as has access to the logs from the application.
+\end{labeling}
+
+\bigskip
+After user decides to quit the service he is given a possibility to log out of the service and whilst doing that the application returns to the logging page where session is refreshed and database is updated. If the user was an admin of the service, he has access to the console logs that are gathering and sniffing network traffic like HTTP methods for RESTful APIs.  
+
 \subsection{Programming environment}
 \section{WebToolkit C++ library}
 \subsection{Library introduction}
