@@ -1,7 +1,9 @@
 \documentclass[a4paper,12pt]{article}
 
+\usepackage{etoc}
+\usepackage{blindtext}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{polski}
+\usepackage[USenglish,british,american,australian,english]{babel}
 \usepackage{helvet}
 \usepackage{graphicx}
 \usepackage{color}
@@ -10,13 +12,6 @@
 \geometry{hmargin={2cm, 2cm}, height=10.0in}
 
 \begin{document}
-
-% =====  STRONA TYTULOWA PRACY MAGISTERSKIEJKIEJ ====
-% przygotowanie: 2008/01/18, K. Malarz
-% tlumaczenie: 2008/12/12, A. Dworak
-% przedostatnia modyfikacja: 2008/12/18, A. Lenda
-% ostatnia modyfikacja: 2009/07/01, K. Malarz
-
 \thispagestyle{empty}
 %% ------------------------ NAGLOWEK STRONY ---------------------------------
 \includegraphics[height=37.5mm]{agh_nzw_a_en_1w_wbr_pms}\\
@@ -34,14 +29,14 @@
 \vspace{3ex}
 {\small \sf major: {\bf \textsf{applied computer science}}}\\
 \vspace{1.5ex}
-{\small \sf specialisation: {\bf \textsf{software engineering}}}\\
+%{\small \sf specialisation: {\bf \textsf{software engineering}}}\\
 \vspace{10ex}
 %% ------------------------ TYTUL PRACY --------------------------------------
 {\bf \huge \textsf{Web application developement using WebToolkit
 C++ on the example of a banking service}}\\
 \vspace{14ex}
 %% ------------------------ OPIEKUN PRACY ------------------------------------
-{\Large \sf Supervisor: {\bf \textsf{Dr Eng Grzegorz Gach}}}\\
+{\Large \sf Supervisor: {\bf \textsf{Dr Grzegorz Gach}}}\\
 \vspace{22ex}
 {\large \bf \textsf{Cracow, June 2021}}
 \end{center}
@@ -49,57 +44,67 @@ C++ on the example of a banking service}}\\
 
 \newpage
 
-%% =====  TYL STRONY TYTULOWEJ PRACY MAGISTERSKIEJKIEJ ====
-Aware of criminal liability for making untrue statements I decleare that
+%% ===== ENG TYL STRONY TYTULOWEJ PRACY MAGISTERSKIEJKIEJ ====
+{Aware of criminal liability for making untrue statements I decleare that
 the following thesis was written personally by myself and that I did not use
-any sources but the ones mentioned in the dissertation itself.
-%% =====  TYL STRONY TYTULOWEJ PRACY MAGISTERSKIEJKIEJ ====
+any sources but the ones mentioned in the dissertation itself.}\\
+\vspace{10ex}
+
+%% ===== PL TYL STRONY TYTULOWEJ PRACY MAGISTERSKIEJKIEJ ====
+{Oświadczam, świadomy(-a) odpowiedzialności karnej za poświadczenie
+nieprawdy, że niniejszy projekt inżynierski wykonałem(-am) osobiście i że nie korzystałem(-am) ze źródeł innych niż wymienione w pracy.}\\
 
 \newpage
-
-\rightline{Cracow, ?? June 20??}
-\begin{center}
-{\bf The subject of the master thesis and the internship by Jan
-Nowak,
-student of 5th year major in technical physics, specialisation in computational physics}\\
-\end{center}
-
-The subject of the master thesis:
-{\bf Put down the subject of your thesis here The subject of your thesis The subject of your thesis}\\
-
-\begin{tabular}{rl}
-Supervisor:                     & Prof. Dr. 123\\
-Reviewer:                       & Dr. Owaki 123\\
-A place of the internship:      & WFiIS AGH, KrakĂłw\\
-\end{tabular}
-
-\begin{center}
-{\bf Programme of the master thesis and the internship}
-\end{center}
-
-\begin{enumerate}
-\item First  discussion with the supervisor on realization of the  thesis.
-\item Collecting and studying the references relevant to the
-thesis topic(s).
-\item The internship:
-\begin{itemize}
-\item getting to know the idea\ldots,
-\item participation in experiments/ working out the adequate of software\ldots,
-\item discussion with the supervisor focused on the results obtained\ldots,
-\item preparation of the  internship report.
-\end{itemize}
-\item Continuation of calculations concerning the thesis subject.
-\item Ordering and first analysis of the calculation results.
-\item Final analysis of the results obtained, conclusions -- discussion with and final approval by the thesis supervisor.
-\item Typesetting the thesis.
-\end{enumerate}
-
-
-\noindent
-Dean's office delivery deadline: ?? June 20??\\[1cm]
-
+\tableofcontents
 \newpage
+\section*{Introduction}
+\addcontentsline{toc}{section}{\protect\numberline{}Introduction}%
+\section{Projects assumptions}
+\subsection{Goal of the project}
+\subsection{Programming environment}
 
+\section{WebToolkit C++ library}
+\subsection{Library introduction}
+\subsubsection{Introduction to Wt}
+\subsubsection{Introduction to Wt::Dbo}
+\subsubsection{Introduction to Wt::Auth}
+\subsection{Widgets gallery}
+\subsection{Library overview}
+
+\section{DevOps layer}
+\subsection{Distributed version-control system}}
+\subsubsection{GitHub}
+\subsubsection{BitBucket}
+\subsection{Proprietary issue tracking}
+\subsubsection{JIRA Software}
+\subsubsection{Confluence}
+\subsection{Containers}
+\subsubsection{Docker}
+\subsubsection{Kubernetes}
+\subsubsection{Containers vs OS-level virtualization}
+\subsection{Automation server}
+\subsubsection{GitHub CMake workflows}
+\subsubsection{CircleCI}
+\subsubsection{Jenkins}
+
+\section{Implementation}
+\subsection{Server side session}
+\subsection{Logging panel}
+\subsection{Database}
+\subsection{User features}
+\subsubsection{Transferring money}
+\subsubsection{Checking user balance}
+\subsection{Admin features}
+\subsubsection{Listing all users}
+\subsubsection{Access to server logs}
+\subsection{Modern C++ features}
+
+\section{Testing}
+\subsection{Unit testing}
+\subsection{Regression testing}
+\section{Summary}
+\section{Literature}
+\newpage
 
 \linespread{1.3}
 \selectfont
