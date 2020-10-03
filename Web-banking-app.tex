@@ -9,6 +9,17 @@
 \usepackage{graphicx}
 \usepackage{color}
 \usepackage{geometry}
+\usepackage{regexpatch,fancyvrb,xparse}
+\makeatletter
+\let\do@footnotetext\@footnotetext
+\regexpatchcmd{\do@footnotetext}
+  {\c{insert}\c{footins}\cB.(.*)\cE.}
+  {\1\c{egroup}}
+  {}{}
+\def\@footnotetext{\insert\footins\bgroup\@makeother\#\do@footnotetext}
+\newcommand{\ttvar}{\begingroup\@makeother\#\@ttvar}
+\newcommand{\@ttvar}[1]{\ttfamily\detokenize{#1}\endgroup}
+\makeatother
 \newcommand\tab[1][1cm]{\hspace*{#1}}
 \geometry{hmargin={2cm, 2cm}, height=10.0in}
 
@@ -80,11 +91,10 @@ The following contents was divided into five chapters describing the development
 \
 }
 \newpage
-
 \section{Projects assumptions}
 
 \subsection{Application's blue-print}
-{The application is a single-page service run on a local server with an \textbf{http://localhost:8080/} address. After starting, logging panel appears, giving the user an opportunity to type their credentials and log-in. 
+{\tab The application is a single-page service run on a local server with an \textbf{http://localhost:8080/} address. After starting, logging panel appears, giving the user an opportunity to type their credentials and log-in. 
 
 \bigskip
 The idea of the service is to provide to the user basic functionalities of a banking service like for instance transferring money or checking their balance. Those required implementing secure back-end layer with a database containing information about the users and transactions and a front-end layer which is transparent to the user. 
@@ -100,6 +110,45 @@ Regarding the credentials user will see different features after logging into th
 After user decides to quit the service he is given a possibility to log out of the service and whilst doing that the application returns to the logging page where session is refreshed and database is updated. If the user was an admin of the service, he has access to the console logs that are gathering and sniffing network traffic like HTTP methods for RESTful APIs.  
 
 \subsection{Programming environment}
+{\tab Developing any kind of programs usually requires specific environmental variables therefore a programmers task is to choose a specific set of tools which will be the most handy during the process.  
+
+\bigskip
+Regarding the specifics of the project the chosen set of tools:
+\begin{labeling}{alligator}
+\item [\textbf{IDE}] Microsoft Visual Studio Community 2019
+\item [\textbf{LIBRARY}] Web Toolkit 4.3.1
+\item [\textbf{LIBRARY}] Boost C++ lib
+\item [\textbf{TOOL}] CMake
+\item [\textbf{TOOL}] Git BASH
+\end{labeling}}
+
+\newpage
+\subsubsection*{IDE - Integrated Development Environment}
+{
+\tab IDE is a program or a set of programs merged into one that usually gathers tools, libraries, debuggers, run time scripts and any other stuff necessary for the developer to write the code. The purpose of IDE is to allow easily and swiftly create code, but at the same time test it, compile it and run it in one place. 
+
+\bigskip
+The advantage of this solution is it gives the developer an opportunity to set up and scale his development environment adjusting it to the project needs. Usually IDE, as well as modern text editors, also support plugins which are nice addition the program, like for instance syntax highlighters, semantics hints, code analyzers or refactoring scripts.
+
+\bigskip
+The chosen IDE for this project is \textbf{Microsoft Visual Studio Community 2019}. Web Toolkit library is supported on various platforms including Linux distributions (even less popular ones like ArchLinux, Slackware or Opensuse), Windows or other operating systems like Android, Raspberry Pi or even OS X. The consequence of choosing MSV IDE was using Windows platform and prebuilt Windows binaries of the WT library.
+
+\bigskip
+\textbf{Microsoft Visual Studio} is and IDE produced by Microsoft Company and it allows creating cross-platform software with graphical user interface. It basically supports every programming language but the basic package contains support for 
+\begin{itemize}
+	\item Microsoft Visual C\ttvar{#}
+	\item Microsoft Visual C++
+	\item Microsoft Visual Basic
+	\item Microsoft Visual J\ttvar{#}
+	\item Microsoft Visual Web Developer ASP.NET
+	\item Microsoft Visual F\ttvar{#}
+\end{itemize}
+}
+
+\subsubsection*{Boost C++ library}
+\subsubsection*{CMake}
+\subsubsection*{Others}
+\textit{Git BASH} tool and \textit{Web Toolkit} library are described thoroughly in next chaptres.
 \section{WebToolkit C++ library}
 \subsection{Library introduction}
 \subsubsection{Introduction to Wt}
