@@ -5,11 +5,10 @@
 #include <Wt/Dbo/WtSqlTraits.h>
 #include <Wt/Auth/Dbo/AuthInfo.h>
 
-using namespace Wt;
 namespace dbo = Wt::Dbo;
 
 class User;
-typedef Auth::Dbo::AuthInfo<User> AuthInfo;
+typedef Wt::Auth::Dbo::AuthInfo<User> AuthInfo;
 typedef dbo::collection< dbo::ptr<User> > Users;
 
 class User
