@@ -59,6 +59,22 @@ Session::Session()
 		guestUser.addIdentity(Auth::Identity::LoginName, "guest");
 		myPasswordService.updatePassword(guestUser, "guest");
 
+		Auth::User adminUser = users_->registerNew();
+		adminUser.addIdentity(Auth::Identity::LoginName, "admin");
+		myPasswordService.updatePassword(adminUser, "admin");
+
+		Auth::User user = users_->registerNew();
+		user.addIdentity(Auth::Identity::LoginName, "user1");
+		myPasswordService.updatePassword(user, "user1");
+
+		Auth::User user2 = users_->registerNew();
+		user2.addIdentity(Auth::Identity::LoginName, "user2");
+		myPasswordService.updatePassword(user2, "user2");
+
+		Auth::User user3 = users_->registerNew();
+		user3.addIdentity(Auth::Identity::LoginName, "user3");
+		myPasswordService.updatePassword(user3, "user3");
+
 		log("info") << "Database created";
 	}
 	catch (...) {
