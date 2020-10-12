@@ -18,10 +18,12 @@ public:
 private:
 	WebBankingWidget     *panel;
 	WStackedWidget       *mainStack;
-	WContainerWidget     *links;
+	WContainerWidget     *userLinks;
+	WContainerWidget	 *adminLinks;
 
 	WAnchor* balanceAnchor;
 	WAnchor* transactionAnchor;
+	WAnchor* listUsersAnchor;
 
 	Session session;
 

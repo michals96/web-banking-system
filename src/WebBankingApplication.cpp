@@ -41,16 +41,26 @@ WebBankingApplication::WebBankingApplication()
 	mainStack->setStyleClass("bankingStack");
 	addWidget(std::unique_ptr<WStackedWidget>(mainStack));
 
-	links = new WContainerWidget();
-	links->setStyleClass("links");
-	links->hide();
-	addWidget(std::unique_ptr<WContainerWidget>(links));
+	// Add user links
+	userLinks = new WContainerWidget();
+	userLinks->setStyleClass("links");
+	userLinks->hide();
+	addWidget(std::unique_ptr<WContainerWidget>(userLinks));
 
-	balanceAnchor = links->addWidget(cpp14::make_unique<WAnchor>("/balance", "See the balance"));
+	balanceAnchor = userLinks->addWidget(cpp14::make_unique<WAnchor>("/balance", "See the balance"));
 	balanceAnchor->setLink(WLink(LinkType::InternalPath, "/balance"));
 
-	transactionAnchor = links->addWidget(cpp14::make_unique<WAnchor>("/transaction", "Make a transaction"));
+	transactionAnchor = userLinks->addWidget(cpp14::make_unique<WAnchor>("/transaction", "Make a transaction"));
 	transactionAnchor->setLink(WLink(LinkType::InternalPath, "/transaction"));
+
+	// Add admin links
+	adminLinks = new WContainerWidget();
+	adminLinks->setStyleClass("links");
+	adminLinks->hide();
+	addWidget(std::unique_ptr<WContainerWidget>(adminLinks));
+
+	listUsersAnchor = adminLinks->addWidget(cpp14::make_unique<WAnchor>("/accounts", "List all accounts"));
+	listUsersAnchor->setLink(WLink(LinkType::InternalPath, "/accounts"));
 
 	WApplication::instance()->internalPathChanged()
 		.connect(this, &WebBankingApplication::handleInternalPath);
@@ -60,29 +70,39 @@ WebBankingApplication::WebBankingApplication()
 
 void WebBankingApplication::onAuthEvent()
 {
-	if (session.login().loggedIn())
+	if (session.login().loggedIn() && session.userName() != "admin")
 	{
-		links->show();
+		userLinks->show();
 		handleInternalPath(WApplication::instance()->internalPath());
 	}
-	else {
-		mainStack->clear();
-		links->hide();
+	else if (session.login().loggedIn() && session.userName() == "admin")
+	{
+		adminLinks->show();
+		handleInternalPath(WApplication::instance()->internalPath());
 	}
-
+	else 
+	{
+		mainStack->clear();
+		userLinks->hide();
+		adminLinks->hide();
+	}
 }
 
 void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 {
-	if (session.login().loggedIn()) {
+	if (session.login().loggedIn()) 
+	{
 		if (internalPath == "/balance")
 		{
 			showUserPanel();
 		}
-		// Handling admin panel
 		else if (internalPath == "/transaction")
 		{
-			// showAdminPanel();
+			// show transaction panel
+		}
+		else if (internalPath == "/accounts")
+		{
+			// show accounts details
 		}
 		else
 		{
