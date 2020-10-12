@@ -18,7 +18,11 @@ public:
 private:
 	WebBankingWidget     *panel;
 	WStackedWidget       *mainStack;
-	
+	WContainerWidget     *links;
+
+	WAnchor* balanceAnchor;
+	WAnchor* transactionAnchor;
+
 	Session session;
 
 	void onAuthEvent();

@@ -41,6 +41,17 @@ WebBankingApplication::WebBankingApplication()
 	mainStack->setStyleClass("bankingStack");
 	addWidget(std::unique_ptr<WStackedWidget>(mainStack));
 
+	links = new WContainerWidget();
+	links->setStyleClass("links");
+	links->hide();
+	addWidget(std::unique_ptr<WContainerWidget>(links));
+
+	balanceAnchor = links->addWidget(cpp14::make_unique<WAnchor>("/balance", "See the balance"));
+	balanceAnchor->setLink(WLink(LinkType::InternalPath, "/balance"));
+
+	transactionAnchor = links->addWidget(cpp14::make_unique<WAnchor>("/transaction", "Make a transaction"));
+	transactionAnchor->setLink(WLink(LinkType::InternalPath, "/transaction"));
+
 	WApplication::instance()->internalPathChanged()
 		.connect(this, &WebBankingApplication::handleInternalPath);
 
@@ -51,10 +62,12 @@ void WebBankingApplication::onAuthEvent()
 {
 	if (session.login().loggedIn())
 	{
+		links->show();
 		handleInternalPath(WApplication::instance()->internalPath());
 	}
 	else {
 		mainStack->clear();
+		links->hide();
 	}
 
 }
@@ -62,18 +75,18 @@ void WebBankingApplication::onAuthEvent()
 void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 {
 	if (session.login().loggedIn()) {
-		if (internalPath == "/userPanel")
+		if (internalPath == "/balance")
 		{
 			showUserPanel();
 		}
 		// Handling admin panel
-		else if (internalPath == "/adminPanel")
+		else if (internalPath == "/transaction")
 		{
 			// showAdminPanel();
 		}
 		else
 		{
-			WApplication::instance()->setInternalPath("/userPanel", true);
+			WApplication::instance()->setInternalPath("/balance", true);
 		}
 	}
 }

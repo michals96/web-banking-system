@@ -14,3 +14,13 @@ h1.frontTitle {
 .bankingStack {
     margin: 20px 40px;
 }
+
+.links {
+    margin: 10px;
+    text-align: center;
+}
+
+    .links a {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
