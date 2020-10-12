@@ -4,7 +4,7 @@
 #include <Wt/Dbo/Session.h>
 #include <Wt/Dbo/ptr.h>
 #include <Wt/Dbo/backend/Sqlite3.h>
-#include<vector>
+#include <vector>
 #include "User.h"
 
 using namespace Wt;
