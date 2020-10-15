@@ -108,12 +108,20 @@ void Session::configureAuth()
 
 std::vector<User> Session::topUsers(int limit)
 {
+	Auth::User user2 = users_->registerNew();
+	user2.addIdentity(Auth::Identity::LoginName, "user2");
+	myPasswordService.updatePassword(user2, "user2");
+
 	dbo::Transaction transaction(session_);
 
-	Users top = session_.find<User>().orderBy("score desc").limit(limit);
+	//Users top = session_.find<User>().orderBy("balance desc").limit(limit);
+
+	Users top = session_.find<User>();
 
 	std::vector<User> result;
-	for (Users::const_iterator i = top.begin(); i != top.end(); ++i) {
+
+	for (Users::const_iterator i = top.begin(); i != top.end(); ++i) 
+	{
 		dbo::ptr<User> user = *i;
 		result.push_back(*user);
 
@@ -123,9 +131,46 @@ std::vector<User> Session::topUsers(int limit)
 		result.back().name = name;
 	}
 
+
+
+
+	std::cout << " -------- " << result.size() << " ----------" << std::endl;
 	transaction.commit();
 
 	return result;
+}
+
+int Session::findId()
+{
+	dbo::Transaction transaction(session_);
+
+	dbo::ptr<User> u = user();
+	int ranking = -1;
+
+	if (u)
+		ranking = session_.query<int>("select distinct count(balance) from user")
+		.where("balance > ?").bind(u->balance);
+
+	transaction.commit();
+
+	return ranking + 1;
+}
+
+dbo::ptr<User> Session::user() const
+{
+	if (login_.loggedIn()) {
+		dbo::ptr<AuthInfo> authInfo = users_->find(login_.user());
+		dbo::ptr<User> user = authInfo->user();
+
+		if (!user) {
+			user = session_.add(Wt::cpp14::make_unique<User>());
+			authInfo.modify()->setUser(user);
+		}
+
+		return user;
+	}
+	else
+		return dbo::ptr<User>();
 }
 
 Session::~Session()

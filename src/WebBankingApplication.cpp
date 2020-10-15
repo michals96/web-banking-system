@@ -109,7 +109,7 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 	{
 		if (internalPath == "/accounts")
 		{
-			// show accounts details
+			showAllAccounts();
 		}
 		else
 		{
@@ -117,6 +117,18 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 		}
 	}
 
+}
+
+void WebBankingApplication::showAllAccounts()
+{
+	if (!accounts)
+		accounts = mainStack->addWidget(cpp14::make_unique<ListAccountsWidget>(&session));
+
+	mainStack->setCurrentWidget(accounts);
+	accounts->update();
+
+	balanceAnchor->removeStyleClass("selected-link");
+	listUsersAnchor->addStyleClass("selected-link");
 }
 
 void WebBankingApplication::showUserPanel()

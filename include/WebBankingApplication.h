@@ -2,6 +2,7 @@
 #include <Wt/WApplication.h>
 #include <Wt/WContainerWidget.h>
 #include "../include/Session.h"
+#include "../include/ListAccountsWidget.h"
 
 using namespace Wt;
 
@@ -20,6 +21,7 @@ private:
 	WStackedWidget       *mainStack;
 	WContainerWidget     *userLinks;
 	WContainerWidget	 *adminLinks;
+	ListAccountsWidget   *accounts;
 
 	WAnchor* balanceAnchor;
 	WAnchor* transactionAnchor;
@@ -29,4 +31,5 @@ private:
 
 	void onAuthEvent();
 	void showUserPanel();
+	void showAllAccounts();
 };
