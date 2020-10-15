@@ -37,11 +37,32 @@ namespace {
 	MyOAuth myOAuthServices;
 }
 
+void Session::configureAuth()
+{
+	myAuthService.setAuthTokensEnabled(true, "webbankingcookie");
+	myAuthService.setEmailVerificationEnabled(true);
+
+	std::unique_ptr<Auth::PasswordVerifier> verifier
+		= cpp14::make_unique<Auth::PasswordVerifier>();
+	verifier->addHashFunction(cpp14::make_unique<Auth::BCryptHashFunction>(7));
+
+#ifdef HAVE_CRYPT
+	// We want to still support users registered in the pre - Wt::Auth
+	verifier->addHashFunction(cpp14::make_unique<UnixCryptHashFunction>());
+#endif
+
+	myPasswordService.setVerifier(std::move(verifier));
+	myPasswordService.setStrengthValidator(cpp14::make_unique<Auth::PasswordStrengthValidator>());
+	myPasswordService.setAttemptThrottlingEnabled(true);
+
+	if (Auth::GoogleService::configured())
+		myOAuthServices.push_back(new Auth::GoogleService(myAuthService));
+}
+
 Session::Session()
 {
 	auto sqlite3 = cpp14::make_unique<Dbo::backend::Sqlite3>(WApplication::instance()->appRoot() + "WebBankingUserDatabase.db");
 	sqlite3->setProperty("show-queries", "true");
-
 	session_.setConnection(std::move(sqlite3));
 
 	session_.mapClass<User>("user");
@@ -75,6 +96,12 @@ Session::Session()
 		user3.addIdentity(Auth::Identity::LoginName, "user3");
 		myPasswordService.updatePassword(user3, "user3");
 
+		std::unique_ptr<User> user123{ new User() };
+		user123->name = "Joe";
+		user123->balance = 13;
+
+		dbo::ptr<User> userPtr = session_.add(std::move(user123));
+
 		log("info") << "Database created";
 	}
 	catch (...) {
@@ -84,51 +111,46 @@ Session::Session()
 	transaction.commit();
 }
 
-void Session::configureAuth()
+Session::~Session()
 {
-	myAuthService.setAuthTokensEnabled(true, "hangmancookie");
-	myAuthService.setEmailVerificationEnabled(true);
+}
 
-	std::unique_ptr<Auth::PasswordVerifier> verifier
-		= cpp14::make_unique<Auth::PasswordVerifier>();
-	verifier->addHashFunction(cpp14::make_unique<Auth::BCryptHashFunction>(7));
+dbo::ptr<User> Session::user() const
+{
+	if (login_.loggedIn()) {
+		dbo::ptr<AuthInfo> authInfo = users_->find(login_.user());
+		dbo::ptr<User> user = authInfo->user();
 
-#ifdef HAVE_CRYPT
-	// We want to still support users registered in the pre - Wt::Auth
-	verifier->addHashFunction(cpp14::make_unique<UnixCryptHashFunction>());
-#endif
+		if (!user) {
+			user = session_.add(Wt::cpp14::make_unique<User>());
+			authInfo.modify()->setUser(user);
+		}
 
-	myPasswordService.setVerifier(std::move(verifier));
-	myPasswordService.setStrengthValidator(cpp14::make_unique<Auth::PasswordStrengthValidator>());
-	myPasswordService.setAttemptThrottlingEnabled(true);
-
-	if (Auth::GoogleService::configured())
-		myOAuthServices.push_back(new Auth::GoogleService(myAuthService));
+		return user;
+	}
+	else
+		return dbo::ptr<User>();
 }
 
 std::vector<User> Session::topUsers(int limit)
 {
-	Auth::User user2 = users_->registerNew();
-	user2.addIdentity(Auth::Identity::LoginName, "user2");
-	myPasswordService.updatePassword(user2, "user2");
-
 	dbo::Transaction transaction(session_);
 
-	//Users top = session_.find<User>().orderBy("balance desc").limit(limit);
+	Users top = session_.find<User>().orderBy("balance desc").limit(limit);
 
-	Users top = session_.find<User>();
+	//Users top = session_.find<User>();
 
 	std::vector<User> result;
-
+	
 	for (Users::const_iterator i = top.begin(); i != top.end(); ++i) 
 	{
 		dbo::ptr<User> user = *i;
 		result.push_back(*user);
 
-		dbo::ptr<AuthInfo> auth = *user->authInfos.begin();
-		std::string name = auth->identity(Auth::Identity::LoginName).toUTF8();
+		//dbo::ptr<AuthInfo> auth = *user->authInfos.begin();
+		//std::string name = auth->identity(Auth::Identity::LoginName).toUTF8();
 
-		result.back().name = name;
+		result.back().name = "123";
 	}
 
 
@@ -154,27 +176,6 @@ int Session::findId()
 	transaction.commit();
 
 	return ranking + 1;
-}
-
-dbo::ptr<User> Session::user() const
-{
-	if (login_.loggedIn()) {
-		dbo::ptr<AuthInfo> authInfo = users_->find(login_.user());
-		dbo::ptr<User> user = authInfo->user();
-
-		if (!user) {
-			user = session_.add(Wt::cpp14::make_unique<User>());
-			authInfo.modify()->setUser(user);
-		}
-
-		return user;
-	}
-	else
-		return dbo::ptr<User>();
-}
-
-Session::~Session()
-{
 }
 
 Wt::Auth::Login& Session::login()

@@ -22,7 +22,7 @@ public:
     template<class Action>
     void persist(Action& a)
     {
-
+        dbo::field(a, name, "name");
         dbo::field(a, balance, "balance");
         dbo::hasMany(a, authInfos, dbo::ManyToOne, "user");
     }
