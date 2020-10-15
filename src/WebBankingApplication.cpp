@@ -90,7 +90,7 @@ void WebBankingApplication::onAuthEvent()
 
 void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 {
-	if (session.login().loggedIn()) 
+	if (session.login().loggedIn() && session.userName() != "admin") 
 	{
 		if (internalPath == "/balance")
 		{
@@ -100,15 +100,23 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 		{
 			// show transaction panel
 		}
-		else if (internalPath == "/accounts")
-		{
-			// show accounts details
-		}
 		else
 		{
 			WApplication::instance()->setInternalPath("/balance", true);
 		}
 	}
+	else if (session.login().loggedIn() && session.userName() == "admin")
+	{
+		if (internalPath == "/accounts")
+		{
+			// show accounts details
+		}
+		else
+		{
+			WApplication::instance()->setInternalPath("/accounts", true);
+		}
+	}
+
 }
 
 void WebBankingApplication::showUserPanel()
