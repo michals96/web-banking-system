@@ -99,27 +99,27 @@ Session::Session()
 
 		// Creating and inserting real Users as a reflection of Auth Users
 		std::unique_ptr<User> userGuest{ new User() };
-		userGuest->name = "Guest";
+		userGuest->name = "guest";
 		userGuest->balance = 10000;
 		dbo::ptr<User> userPtr = session_.add(std::move(userGuest));
 
 		std::unique_ptr<User> admin{ new User() };
-		admin->name = "Admin";
+		admin->name = "admin";
 		admin->balance = 15000;
 		dbo::ptr<User> userPtr_admin = session_.add(std::move(admin));
 
 		std::unique_ptr<User> userFirst{ new User() };
-		userFirst->name = "User1";
+		userFirst->name = "user1";
 		userFirst->balance = 500;
 		dbo::ptr<User> userPtr_First = session_.add(std::move(userFirst));
 
 		std::unique_ptr<User> userSecond{ new User() };
-		userSecond->name = "User2";
+		userSecond->name = "user2";
 		userSecond->balance = 35000;
 		dbo::ptr<User> userPtr_Second = session_.add(std::move(userSecond));
 
 		std::unique_ptr<User> userThird{ new User() };
-		userThird->name = "User3";
+		userThird->name = "user3";
 		userThird->balance = 90000;
 		dbo::ptr<User> userPtr_Third = session_.add(std::move(userThird));
 
