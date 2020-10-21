@@ -1,22 +1,30 @@
 \documentclass[a4paper,12pt]{article}
 
+\usepackage{etoc}
+\usepackage{blindtext}
+\usepackage{scrextend}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{polski}
+\usepackage[USenglish,british,american,australian,english]{babel}
 \usepackage{helvet}
 \usepackage{graphicx}
 \usepackage{color}
 \usepackage{geometry}
+\usepackage{regexpatch,fancyvrb,xparse}
 
+\makeatletter
+\let\do@footnotetext\@footnotetext
+\regexpatchcmd{\do@footnotetext}
+  {\c{insert}\c{footins}\cB.(.*)\cE.}
+  {\1\c{egroup}}
+  {}{}
+\def\@footnotetext{\insert\footins\bgroup\@makeother\#\do@footnotetext}
+\newcommand{\ttvar}{\begingroup\@makeother\#\@ttvar}
+\newcommand{\@ttvar}[1]{\ttfamily\detokenize{#1}\endgroup}
+\makeatother
+\newcommand\tab[1][1cm]{\hspace*{#1}}
 \geometry{hmargin={2cm, 2cm}, height=10.0in}
 
 \begin{document}
-
-% =====  STRONA TYTULOWA PRACY MAGISTERSKIEJKIEJ ====
-% przygotowanie: 2008/01/18, K. Malarz
-% tlumaczenie: 2008/12/12, A. Dworak
-% przedostatnia modyfikacja: 2008/12/18, A. Lenda
-% ostatnia modyfikacja: 2009/07/01, K. Malarz
-
 \thispagestyle{empty}
 %% ------------------------ NAGLOWEK STRONY ---------------------------------
 \includegraphics[height=37.5mm]{agh_nzw_a_en_1w_wbr_pms}\\
@@ -34,14 +42,14 @@
 \vspace{3ex}
 {\small \sf major: {\bf \textsf{applied computer science}}}\\
 \vspace{1.5ex}
-{\small \sf specialisation: {\bf \textsf{software engineering}}}\\
+%{\small \sf specialisation: {\bf \textsf{software engineering}}}\\
 \vspace{10ex}
 %% ------------------------ TYTUL PRACY --------------------------------------
 {\bf \huge \textsf{Web application developement using WebToolkit
 C++ on the example of a banking service}}\\
 \vspace{14ex}
 %% ------------------------ OPIEKUN PRACY ------------------------------------
-{\Large \sf Supervisor: {\bf \textsf{Dr Eng Grzegorz Gach}}}\\
+{\Large \sf Supervisor: {\bf \textsf{Dr Grzegorz Gach}}}\\
 \vspace{22ex}
 {\large \bf \textsf{Cracow, June 2021}}
 \end{center}
@@ -49,57 +57,229 @@ C++ on the example of a banking service}}\\
 
 \newpage
 
-%% =====  TYL STRONY TYTULOWEJ PRACY MAGISTERSKIEJKIEJ ====
-Aware of criminal liability for making untrue statements I decleare that
-the following thesis was written personally by myself and that I did not use
-any sources but the ones mentioned in the dissertation itself.
-%% =====  TYL STRONY TYTULOWEJ PRACY MAGISTERSKIEJKIEJ ====
+\begin{center}
+	{\bf\large\textsf{Oświadczenie studenta}}\\
+\end{center}
+
+%% ===== PL TYL STRONY TYTULOWEJ PRACY MAGISTERSKIEJKIEJ ====
+{Uprzedzony(-a) o odpowiedzialnosci karnej na podstawie art. 115 ust. 1 i 2 ustawy z dnia 4 lutego 1994 r. o prawie autorskim i prawach pokrewnych (t.j. Dz. U. z 2018 r. poz. 1191 z pozn. zm.): ,,Kto przywlaszcza sobie autorstwo albo wprowadza w blad co do autorstwa calosci lub czesci cudzego utworu albo artystycznego wykonania, podlega grzywnie, karze ograniczenia wolnosci albo pozbawienia wolnosci do lat 3. Tej samej karze podlega, kto rozpowszechnia bez podania nazwiska lub pseudonimu tworcy cudzy utwor w wersji oryginalnej albo w postaci opracowania, artystyczne wykonanie albo publicznie znieksztalca taki utwor, artystyczne wykonanie, fonogram, wideogram lub nadanie.", a takze uprzedzony(-a) o odpowiedzialnosci dyscyplinarnej na podstawie art. 307 ust. 1 ustawy z dnia 20 lipca 2018r. Prawo o szkolnictwie wyzszym i nauce (Dz. U. z 2018 r. poz. 1668 z pozn. zm.) ,,Student podlega odpowiedzialnosci dyscyplinarnej za naruszenie przepisow obowiazujacych w uczelni oraz za czyn uchybiajacy godnosci studenta.", oswiadczam, ze niniejsza prace dyplomowa wykonalem(-am) osobiscie i samodzielnie i nie korzystalem(-am) ze zrodel innych niz wymienione w pracy.
+
+\bigskip
+
+Jednoczesnie Uczelnia informuje, ze zgodnie z art. 15a ww. ustawy o prawie autorskim i prawach pokrewnych Uczelni przysluguje pierwszenstwo w opublikowaniu pracy dyplomowej studenta. Jezeli Uczelnia nie opublikowala pracy dyplomowej w terminie 6 miesiecy od dnia jej obrony, autor moze ja opublikowac, chyba ze praca jest czescia utworu zbiorowego. Ponadto Uczelnia jako podmiot, o ktorym mowa w art. 7 ust. 1 pkt 1 ustawy z dnia 20 lipca 2018 r. Prawo o szkolnictwie wyzszym i nauce (Dz. U. z 2018 r. poz. 1668 z po 'zn. zm.), moze korzystac bez wynagrodzenia i bez koniecznosci uzyskania zgody autora z utworu stworzonego przez studenta w wyniku wykonywania obowiazkow zwiazanych z odbywaniem studiow, udostepniac utwor ministrowi wlasciwemu do spraw szkolnictwa wyzszego i nauki oraz korzystac z utworow znajdujacych sie w prowadzonych przez niego bazach danych, w celu sprawdzania z wykorzystaniem systemu antyplagiatowego. Minister wlasciwy do spraw szkolnictwa wyzszego i nauki moze korzystac z prac dyplomowych znajdujacych sie w prowadzonych przez niego bazach danych w zakresie niezbednym do zapewnienia prawidlowego utrzymania i rozwoju tych baz oraz wspolpracujacych z nimi systemow informatycznych.}\\
+
+\bigskip
 
 \newpage
+\tableofcontents
+\newpage
+\section*{Introduction}
+\addcontentsline{toc}{section}{\protect\numberline{}Introduction}%
+\tab {Software engineering is a very wide area of engineering which particularly concerns developing and maintaining programming products. A development process itself is a major challenge to all people involved, starting with developers creating the code, continuing with product owners who are managing teams and coordinating the work flow and ending-up with managers who are setting the direction of the whole process.
 
-\rightline{Cracow, ?? June 20??}
-\begin{center}
-{\bf The subject of the master thesis and the internship by Jan
-Nowak,
-student of 5th year major in technical physics, specialisation in computational physics}\\
-\end{center}
+\bigskip
+The main motivation to create this thesis was simply to present a development process that includes basic and nowadays necessary tools which are significantly helpful in such process.
 
-The subject of the master thesis:
-{\bf Put down the subject of your thesis here The subject of your thesis The subject of your thesis}\\
+\bigskip
+To carry out the development and present all tools it was decided that an example application will be a C++ web application created with a GUI library in modern C++ called \textbf{Web Toolkit}. 
 
-\begin{tabular}{rl}
-Supervisor:                     & Prof. Dr. 123\\
-Reviewer:                       & Dr. Owaki 123\\
-A place of the internship:      & WFiIS AGH, KrakĂłw\\
-\end{tabular}
+\bigskip 
+Nowadays in a software engineering world there is a trend to migrate desktop applications to the internet, which has also impacted a lot GUI desktop libraries in decreasing their utilities. Foreground reason behind choosing C++ to create a web application, which is quite unusual, was to show the tremendous possibilities that this language still provides and to exhibit the capabilities of open source libraries shared among developers.
 
-\begin{center}
-{\bf Programme of the master thesis and the internship}
-\end{center}
+\bigskip
+The following contents was divided into five chapters describing the development process and the application itself with bottom line two chapters summarizing thesis and listing literature.
 
-\begin{enumerate}
-\item First  discussion with the supervisor on realization of the  thesis.
-\item Collecting and studying the references relevant to the
-thesis topic(s).
-\item The internship:
+\
+}
+\newpage
+\section{Projects assumptions}
+
+\subsection{Application's blue-print}
+{\tab The application is a single-page service run on a local server with an \textbf{http://localhost:8080/} address. After starting, logging panel appears, giving the user an opportunity to type their credentials and log-in. 
+
+\bigskip
+The idea of the service is to provide to the user basic functionalities of a banking service like for instance transferring money or checking their balance. Those required implementing secure back-end layer with a database containing information about the users and transactions and a front-end layer which is transparent to the user. 
+
+\bigskip
+Regarding the credentials user will see different features after logging into the service. There might be many accounts created and held up in the database of the service but there are only two rights of access.}\\
+\begin{labeling}{alligator}
+\item [\textbf{USER}] Transferring money and seeing current account's balance.
+\item [\textbf{ADMIN}] Sees details about every account in the service as well as has access to the logs from the application.
+\end{labeling}
+
+\bigskip
+After user decides to quit the service he is given a possibility to log out of the service and whilst doing that the application returns to the logging page where session is refreshed and database is updated. If the user was an admin of the service, he has access to the console logs that are gathering and sniffing network traffic like HTTP methods for RESTful APIs.  
+
+\subsection{Programming environment}
+{\tab Developing any kind of programs usually requires specific environmental variables therefore a programmers task is to choose a specific set of tools which will be the most handy during the process.  
+
+\bigskip
+Regarding the specifics of the project the chosen set of tools:
+\begin{labeling}{alligator}
+\item [\textbf{IDE}] Microsoft Visual Studio Community 2019
+\item [\textbf{LIBRARY}] Web Toolkit 4.3.1
+\item [\textbf{LIBRARY}] Boost C++ lib
+\item [\textbf{TOOL}] CMake
+\item [\textbf{TOOL}] Git BASH
+\end{labeling}}
+
+\newpage
+\subsubsection*{IDE - Integrated Development Environment}
+{
+\tab IDE is a program or a set of programs merged into one that usually gathers tools, libraries, debuggers, run time scripts and any other stuff necessary for the developer to write the code. The purpose of IDE is to allow easily and swiftly create code, but at the same time test it, compile it and run it in one place. 
+
+\bigskip
+The advantage of this solution is it gives the developer an opportunity to set up and scale his development environment adjusting it to the project needs. Usually IDE, as well as modern text editors, also support plugins which are nice addition the program, like for instance syntax highlighters, semantics hints, code analyzers or refactoring scripts.
+
+\bigskip
+The chosen IDE for this project is \textbf{Microsoft Visual Studio Community 2019}. Web Toolkit library is supported on various platforms including Linux distributions (even less popular ones like ArchLinux, Slackware or Opensuse), Windows or other operating systems like Android, Raspberry Pi or even OS X. The consequence of choosing MSV IDE was using Windows platform and prebuilt Windows binaries of the WT library.
+
+\bigskip
+\textbf{Microsoft Visual Studio} is and IDE produced by Microsoft Company and it allows creating cross-platform software with graphical user interface. It basically supports every programming language but the basic package contains support for 
 \begin{itemize}
-\item getting to know the idea\ldots,
-\item participation in experiments/ working out the adequate of software\ldots,
-\item discussion with the supervisor focused on the results obtained\ldots,
-\item preparation of the  internship report.
+	\item Microsoft Visual C\ttvar{#}
+	\item Microsoft Visual C++
+	\item Microsoft Visual Basic
+	\item Microsoft Visual J\ttvar{#}
+	\item Microsoft Visual Web Developer ASP.NET
+	\item Microsoft Visual F\ttvar{#}
 \end{itemize}
-\item Continuation of calculations concerning the thesis subject.
-\item Ordering and first analysis of the calculation results.
-\item Final analysis of the results obtained, conclusions -- discussion with and final approval by the thesis supervisor.
-\item Typesetting the thesis.
-\end{enumerate}
+}
 
+\subsubsection*{Boost C++ library}
+{
+\tab Boost is a collection of C++ libraries that enhances capabilities of development C++ code, which is also licensed by \textbf{Boost Software License}. For the project Boost is necessary to build Web Toolkit library as it's implementation uses Boost functionalities.
 
-\noindent
-Dean's office delivery deadline: ?? June 20??\\[1cm]
+\bigskip
+The most important features provided by Boost are
+\begin{itemize}
+	\item Algorithms
+	\item Concurrent programming
+	\item Complex containers
+	\item Correctness validating and enhanced unit testing
+	\item Additional data structures (like bimap, fusion, tuple etc)
+	\item High level programming and functional objects
+	\item Parsers and graphs
+	\item Meta-programming with templates
+\end{itemize} 
+}
+\subsubsection*{CMake}
+{
+\tab CMake is a cross platform tool that provides automatic management of compiling the code of an application. It's role is to create a configuration for project files of popular programming environments, which then are used in a process of compilation. The main advantage of using CMake is it's independence of the compiler and the platform. However CMake itself is not a standalone program, instead by creating files with rules for compilation dedicated to another program like IDE it forms a unified building environment. CMake stands for \textit{Cross-platform Make}.
 
+\bigskip
+The most important features provided by CMake are
+\begin{itemize}
+	\item Platform independence
+	\item Cross compilation
+	\item Out-of-source building
+	\item Building projects with complex catalog structure 
+	\item Unit testing support
+	\item Detecting dependencies and outer libraries
+\end{itemize}
+This project required including CMake tool because of various dependencies and complex building due to including Web Toolkit and Boost.  
+
+\bigskip
+To be able to exploit favors that CMake offers one must create \textbf{CMakeLists.txt} file placed in the main catalog of the project. The core of this file is a simple scripting language that describes rules and defines variables telling the compiler how to links files and what should be the outcome of the compilation process.
+}
+\subsubsection*{Others}
+\textit{Git BASH} tool and \textit{Web Toolkit} library are described thoroughly in next chaptres.
 \newpage
 
+\paragraph{Example CMake file used in project}
+\begin{verbatim}
+CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
+Project(ConsoleApplication1)
+
+# If Visual Studio IDE
+IF(MSVC_IDE)
+	# Copy user file
+  FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.vcxproj.user DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+ENDIF(MSVC_IDE)
+
+# If Eclipse IDE
+IF(${CMAKE_EXTRA_GENERATOR} MATCHES ".*Eclipse.*")
+	IF(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+		# Copy debug user file
+    FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}-debug.exe.launch DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+	ENDIF()
+	IF(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+		# Copy release user file
+    FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}-release.exe.launch DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+	ENDIF()
+ENDIF()
+
+# Copy resources to build tree
+# FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+SET(ConsoleApplication1_SRC src/Main.cpp)
+
+# If Visual Studio IDE
+IF(MSVC_IDE)
+	SET(ConsoleApplication1_SRC ${ConsoleApplication1_SRC} src/Main.cpp)
+ENDIF(MSVC_IDE)
+
+ADD_EXECUTABLE(ConsoleApplication1 ${ConsoleApplication1_SRC})
+
+ADD_SUBDIRECTORY("wt-4.3.1/" "Wt 4.3.1 msvs2019 x64/lib/")
+# Set Wt include and library paths
+INCLUDE_DIRECTORIES("Wt 4.3.1 msvs2019 x64/include/")
+
+INCLUDE_DIRECTORIES("include")
+FILE(GLOB SOURCES "src/*.cpp")
+ADD_EXECUTABLE(ConsoleApplication1 ${SOURCES})
+TARGET_LINK_DIRECTORIES(ConsoleApplication1 PUBLIC "Wt 4.3.1 msvs2019 x64/lib/")
+
+TARGET_LINK_LIBRARIES(ConsoleApplication1
+  debug wtd optimized wt
+  debug wthttpd optimized wthttp
+  debug wtdbod optimized wtdbo
+  debug wtdbosqlite3d optimized wtdbosqlite3
+  )
+\end{verbatim}
+
+\section{WebToolkit C++ library}
+\subsection{Library introduction}
+\subsubsection{Introduction to Wt}
+\subsubsection{Introduction to Wt::Dbo}
+\subsubsection{Introduction to Wt::Auth}
+\subsection{Widgets gallery}
+\subsection{Library overview}
+
+\section{DevOps layer}
+\subsection{Distributed version-control system}}
+\subsubsection{GitHub}
+\subsubsection{BitBucket}
+\subsection{Proprietary issue tracking}
+\subsubsection{JIRA Software}
+\subsubsection{Confluence}
+\subsection{Containers}
+\subsubsection{Docker}
+\subsubsection{Kubernetes}
+\subsubsection{Containers vs OS-level virtualization}
+\subsection{Automation server}
+\subsubsection{GitHub CMake workflows}
+\subsubsection{CircleCI}
+\subsubsection{Jenkins}
+
+\section{Implementation}
+\subsection{Server side session}
+\subsection{Logging panel}
+\subsection{Database}
+\subsection{User features}
+\subsubsection{Transferring money}
+\subsubsection{Checking user balance}
+\subsection{Admin features}
+\subsubsection{Listing all users}
+\subsubsection{Access to server logs}
+\subsection{Modern C++ features}
+
+\section{Testing}
+\subsection{Unit testing}
+\subsection{Regression testing}
+\section{Summary}
+\section{Literature}
+\newpage
 
 \linespread{1.3}
 \selectfont
