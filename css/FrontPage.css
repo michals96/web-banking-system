@@ -20,7 +20,34 @@ h1.frontTitle {
     text-align: center;
 }
 
-    .links a {
-        padding-left: 5px;
-        padding-right: 5px;
-    }
+.links a {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.listAccounts table {
+    width: 60ex;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-style: solid;
+    border-color: #555;
+    border-width: 2px;
+    color: #333;
+}
+
+.listAccounts td, th {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #999;
+    padding: 3px;
+}
+
+.listAccounts th {
+    font-variant: small-caps;
+}
+
+.listAccounts tr#self {
+    font-style: italic;
+    font-weight: bold;
+    font-variant: normal;
+}

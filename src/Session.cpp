@@ -37,11 +37,32 @@ namespace {
 	MyOAuth myOAuthServices;
 }
 
+void Session::configureAuth()
+{
+	myAuthService.setAuthTokensEnabled(true, "webbankingcookie");
+	myAuthService.setEmailVerificationEnabled(true);
+
+	std::unique_ptr<Auth::PasswordVerifier> verifier
+		= cpp14::make_unique<Auth::PasswordVerifier>();
+	verifier->addHashFunction(cpp14::make_unique<Auth::BCryptHashFunction>(7));
+
+#ifdef HAVE_CRYPT
+	// We want to still support users registered in the pre - Wt::Auth
+	verifier->addHashFunction(cpp14::make_unique<UnixCryptHashFunction>());
+#endif
+
+	myPasswordService.setVerifier(std::move(verifier));
+	myPasswordService.setStrengthValidator(cpp14::make_unique<Auth::PasswordStrengthValidator>());
+	myPasswordService.setAttemptThrottlingEnabled(true);
+
+	if (Auth::GoogleService::configured())
+		myOAuthServices.push_back(new Auth::GoogleService(myAuthService));
+}
+
 Session::Session()
 {
 	auto sqlite3 = cpp14::make_unique<Dbo::backend::Sqlite3>(WApplication::instance()->appRoot() + "WebBankingUserDatabase.db");
 	sqlite3->setProperty("show-queries", "true");
-
 	session_.setConnection(std::move(sqlite3));
 
 	session_.mapClass<User>("user");
@@ -55,6 +76,7 @@ Session::Session()
 	try {
 		session_.createTables();
 
+		// Creating and inserting Auth Users
 		Auth::User guestUser = users_->registerNew();
 		guestUser.addIdentity(Auth::Identity::LoginName, "guest");
 		myPasswordService.updatePassword(guestUser, "guest");
@@ -75,6 +97,32 @@ Session::Session()
 		user3.addIdentity(Auth::Identity::LoginName, "user3");
 		myPasswordService.updatePassword(user3, "user3");
 
+		// Creating and inserting real Users as a reflection of Auth Users
+		std::unique_ptr<User> userGuest{ new User() };
+		userGuest->name = "guest";
+		userGuest->balance = 10000;
+		dbo::ptr<User> userPtr = session_.add(std::move(userGuest));
+
+		std::unique_ptr<User> admin{ new User() };
+		admin->name = "admin";
+		admin->balance = 15000;
+		dbo::ptr<User> userPtr_admin = session_.add(std::move(admin));
+
+		std::unique_ptr<User> userFirst{ new User() };
+		userFirst->name = "user1";
+		userFirst->balance = 500;
+		dbo::ptr<User> userPtr_First = session_.add(std::move(userFirst));
+
+		std::unique_ptr<User> userSecond{ new User() };
+		userSecond->name = "user2";
+		userSecond->balance = 35000;
+		dbo::ptr<User> userPtr_Second = session_.add(std::move(userSecond));
+
+		std::unique_ptr<User> userThird{ new User() };
+		userThird->name = "user3";
+		userThird->balance = 90000;
+		dbo::ptr<User> userPtr_Third = session_.add(std::move(userThird));
+
 		log("info") << "Database created";
 	}
 	catch (...) {
@@ -84,43 +132,46 @@ Session::Session()
 	transaction.commit();
 }
 
-void Session::configureAuth()
+Session::~Session()
 {
-	myAuthService.setAuthTokensEnabled(true, "hangmancookie");
-	myAuthService.setEmailVerificationEnabled(true);
+}
 
-	std::unique_ptr<Auth::PasswordVerifier> verifier
-		= cpp14::make_unique<Auth::PasswordVerifier>();
-	verifier->addHashFunction(cpp14::make_unique<Auth::BCryptHashFunction>(7));
+dbo::ptr<User> Session::user() const
+{
+	if (login_.loggedIn()) {
+		dbo::ptr<AuthInfo> authInfo = users_->find(login_.user());
+		dbo::ptr<User> user = authInfo->user();
 
-#ifdef HAVE_CRYPT
-	// We want to still support users registered in the pre - Wt::Auth
-	verifier->addHashFunction(cpp14::make_unique<UnixCryptHashFunction>());
-#endif
+		if (!user) {
+			user = session_.add(Wt::cpp14::make_unique<User>());
+			authInfo.modify()->setUser(user);
+		}
 
-	myPasswordService.setVerifier(std::move(verifier));
-	myPasswordService.setStrengthValidator(cpp14::make_unique<Auth::PasswordStrengthValidator>());
-	myPasswordService.setAttemptThrottlingEnabled(true);
-
-	if (Auth::GoogleService::configured())
-		myOAuthServices.push_back(new Auth::GoogleService(myAuthService));
+		return user;
+	}
+	else
+		return dbo::ptr<User>();
 }
 
 std::vector<User> Session::topUsers(int limit)
 {
 	dbo::Transaction transaction(session_);
 
-	Users top = session_.find<User>().orderBy("score desc").limit(limit);
+	Users top = session_.find<User>().orderBy("balance desc").limit(limit);
+
+	//Users top = session_.find<User>();
 
 	std::vector<User> result;
-	for (Users::const_iterator i = top.begin(); i != top.end(); ++i) {
+	
+	for (Users::const_iterator i = top.begin(); i != top.end(); ++i) 
+	{
 		dbo::ptr<User> user = *i;
 		result.push_back(*user);
 
-		dbo::ptr<AuthInfo> auth = *user->authInfos.begin();
-		std::string name = auth->identity(Auth::Identity::LoginName).toUTF8();
+		//dbo::ptr<AuthInfo> auth = *user->authInfos.begin();
+		//std::string name = auth->identity(Auth::Identity::LoginName).toUTF8();
 
-		result.back().name = name;
+		result.back().name = user->name;
 	}
 
 	transaction.commit();
@@ -128,8 +179,20 @@ std::vector<User> Session::topUsers(int limit)
 	return result;
 }
 
-Session::~Session()
+int Session::findId()
 {
+	dbo::Transaction transaction(session_);
+
+	dbo::ptr<User> u = user();
+	int ranking = -1;
+
+	if (u)
+		ranking = session_.query<int>("select distinct count(balance) from user")
+		.where("balance > ?").bind(u->balance);
+
+	transaction.commit();
+
+	return ranking + 1;
 }
 
 Wt::Auth::Login& Session::login()

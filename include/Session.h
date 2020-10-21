@@ -21,10 +21,9 @@ public:
 
 	Auth::AbstractUserDatabase& users();
 	Wt::Auth::Login& login();
-	
 	std::vector<User> topUsers(int limit);
-
 	std::string userName() const;
+	int findId();
 
 	static const Auth::AuthService& auth();
 	static const Auth::AbstractPasswordService& passwordAuth();
@@ -34,4 +33,5 @@ private:
 	mutable Dbo::Session session_;
 	Wt::Auth::Login login_;
 	std::unique_ptr<UserDatabase> users_;
+	Dbo::ptr<User> user() const;
 };
