@@ -113,7 +113,7 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 		}
 		else
 		{
-			WApplication::instance()->setInternalPath("/accounts", true);
+			WApplication::instance()->setInternalPath("/", true);
 		}
 	}
 
