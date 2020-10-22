@@ -9,7 +9,7 @@
 #include <string>
 
 #include "../include/WebBankingApplication.h"
-#include "../include/WebBankingWidget.h"
+#include "../include/UserBalanceWidget.h"
 
 using namespace Wt;
 
@@ -94,7 +94,7 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 	{
 		if (internalPath == "/balance")
 		{
-			showUserPanel();
+			showUserBalance();
 		}
 		else if (internalPath == "/transaction")
 		{
@@ -102,7 +102,7 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 		}
 		else
 		{
-			WApplication::instance()->setInternalPath("/balance", true);
+			WApplication::instance()->setInternalPath("/", true);
 		}
 	}
 	else if (session.login().loggedIn() && session.userName() == "admin")
@@ -126,17 +126,13 @@ void WebBankingApplication::showAllAccounts()
 
 	mainStack->setCurrentWidget(accounts);
 	accounts->update();
-
-	balanceAnchor->removeStyleClass("selected-link");
-	listUsersAnchor->addStyleClass("selected-link");
 }
 
-void WebBankingApplication::showUserPanel()
+void WebBankingApplication::showUserBalance()
 {
-	if (!panel)
-	{
-		panel = mainStack->addWidget(cpp14::make_unique<WebBankingWidget>(session.userName()));
-	}
+	if (!userBalance)
+		userBalance = mainStack->addWidget(cpp14::make_unique<UserBalanceWidget>(&session));
 
-	mainStack->setCurrentWidget(panel);
+	mainStack->setCurrentWidget(userBalance);
+	userBalance->update();
 }

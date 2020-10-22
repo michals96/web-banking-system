@@ -20,6 +20,11 @@ h1.frontTitle {
     text-align: center;
 }
 
+.showUserBalance {
+    margin: 10px;
+    text-align: center;
+}
+
 .links a {
     padding-left: 5px;
     padding-right: 5px;
@@ -50,4 +55,8 @@ h1.frontTitle {
     font-style: italic;
     font-weight: bold;
     font-variant: normal;
+}
+
+.selected-link {
+    font-weight: bold;
 }
