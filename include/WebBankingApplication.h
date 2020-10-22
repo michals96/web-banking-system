@@ -3,6 +3,8 @@
 #include <Wt/WContainerWidget.h>
 #include "../include/Session.h" // -I w makefile
 #include "../include/ListAccountsWidget.h"
+#include "../include/UserBalanceWidget.h"
+#include "../include/TransactionsWidget.h"
 
 using namespace Wt;
 
@@ -22,6 +24,7 @@ private:
 	WContainerWidget     *userLinks;
 	WContainerWidget	 *adminLinks;
 	ListAccountsWidget   *accounts;
+	TransactionsWidget   *transactions;
 
 	WAnchor* balanceAnchor;
 	WAnchor* transactionAnchor;
@@ -32,4 +35,5 @@ private:
 	void onAuthEvent();
 	void showUserBalance();
 	void showAllAccounts();
+	void showTransactionPanel();
 };
