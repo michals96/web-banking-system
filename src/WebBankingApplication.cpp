@@ -94,7 +94,7 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 	{
 		if (internalPath == "/balance")
 		{
-			showUserPanel();
+			showUserBalance();
 		}
 		else if (internalPath == "/transaction")
 		{
@@ -102,7 +102,7 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 		}
 		else
 		{
-			WApplication::instance()->setInternalPath("/balance", true);
+			WApplication::instance()->setInternalPath("/", true);
 		}
 	}
 	else if (session.login().loggedIn() && session.userName() == "admin")
@@ -131,7 +131,7 @@ void WebBankingApplication::showAllAccounts()
 	listUsersAnchor->addStyleClass("selected-link");
 }
 
-void WebBankingApplication::showUserPanel()
+void WebBankingApplication::showUserBalance()
 {
 	if (!panel)
 	{
@@ -139,4 +139,6 @@ void WebBankingApplication::showUserPanel()
 	}
 
 	mainStack->setCurrentWidget(panel);
+
+	//std::unique_ptr<Wt::WText> title(cpp14::make_unique<Wt::WText>("<h1 class='frontTitle'>Web Banking Application</h1>"));
 }

@@ -30,6 +30,6 @@ private:
 	Session session;
 
 	void onAuthEvent();
-	void showUserPanel();
+	void showUserBalance();
 	void showAllAccounts();
 };

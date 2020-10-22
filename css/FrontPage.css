@@ -51,3 +51,7 @@ h1.frontTitle {
     font-weight: bold;
     font-variant: normal;
 }
+
+.selected-link {
+    font-weight: bold;
+}
