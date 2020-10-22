@@ -10,6 +10,7 @@
 
 #include "../include/WebBankingApplication.h"
 #include "../include/UserBalanceWidget.h"
+#include "../include/TransactionsWidget.h"
 
 using namespace Wt;
 
@@ -95,11 +96,13 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 	{
 		if (internalPath == "/balance")
 		{
+
 			showUserBalance();
 		}
 		else if (internalPath == "/transaction")
 		{
-			// show transaction panel
+
+			showTransactionPanel();
 		}
 		else
 		{
@@ -140,4 +143,13 @@ void WebBankingApplication::showUserBalance()
 
 	mainStack->setCurrentWidget(userBalance);
 	userBalance->update();
+}
+
+void WebBankingApplication::showTransactionPanel()
+{
+	if (!transactions)
+		transactions = mainStack->addWidget(cpp14::make_unique<TransactionsWidget>(&session));
+
+	mainStack->setCurrentWidget(transactions);
+	transactions->update();
 }

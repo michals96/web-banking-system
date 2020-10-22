@@ -33,5 +33,5 @@ void UserBalanceWidget::update()
 	
 	std::string userBalanceStr = std::to_string(userBalance);
 
-	this->addWidget(cpp14::make_unique<WText>("<h2>Hello " + userName + ",  your balance is " + userBalanceStr + "</h2>"));
+	this->addWidget(cpp14::make_unique<WText>("<h2>Hello " + userName + ",  your balance is " + userBalanceStr + "$</h2>"));
 }
