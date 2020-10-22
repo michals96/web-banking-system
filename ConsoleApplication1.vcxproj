@@ -149,18 +149,20 @@
     <ClCompile Include="src\ListAccountsWidget.cpp" />
     <ClCompile Include="src\Session.cpp" />
     <ClCompile Include="src\HelloApplication.cpp" />
+    <ClCompile Include="src\TransactionsWidget.cpp" />
     <ClCompile Include="src\WebBankingApplication.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\User.cpp" />
-    <ClCompile Include="src\WebBankingWidget.cpp" />
+    <ClCompile Include="src\UserBalanceWidget.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\HelloApplication.h" />
     <ClInclude Include="include\ListAccountsWidget.h" />
+    <ClInclude Include="include\TransactionsWidget.h" />
     <ClInclude Include="include\WebBankingApplication.h" />
     <ClInclude Include="include\Session.h" />
     <ClInclude Include="include\User.h" />
-    <ClInclude Include="include\WebBankingWidget.h" />
+    <ClInclude Include="include\UserBalanceWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="css\FrontPage.css" />

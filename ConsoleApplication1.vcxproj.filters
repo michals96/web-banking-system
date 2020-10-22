@@ -22,10 +22,13 @@
     <ClCompile Include="src\User.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\WebBankingWidget.cpp">
+    <ClCompile Include="src\ListAccountsWidget.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\ListAccountsWidget.cpp">
+    <ClCompile Include="src\UserBalanceWidget.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TransactionsWidget.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -34,8 +37,9 @@
     <ClInclude Include="include\WebBankingApplication.h" />
     <ClInclude Include="include\Session.h" />
     <ClInclude Include="include\User.h" />
-    <ClInclude Include="include\WebBankingWidget.h" />
     <ClInclude Include="include\ListAccountsWidget.h" />
+    <ClInclude Include="include\UserBalanceWidget.h" />
+    <ClInclude Include="include\TransactionsWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="strings.xml" />
