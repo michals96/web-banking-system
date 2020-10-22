@@ -82,6 +82,7 @@ void WebBankingApplication::onAuthEvent()
 	}
 	else 
 	{
+		handleInternalPath(WApplication::instance()->internalPath());
 		mainStack->clear();
 		userLinks->hide();
 		adminLinks->hide();
@@ -115,6 +116,10 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 		{
 			WApplication::instance()->setInternalPath("/", true);
 		}
+	}
+	else if (session.login().loggedIn() == false)
+	{
+		WApplication::instance()->setInternalPath("", true);
 	}
 
 }
