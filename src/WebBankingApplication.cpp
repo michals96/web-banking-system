@@ -135,5 +135,4 @@ void WebBankingApplication::showUserBalance()
 
 	mainStack->setCurrentWidget(userBalance);
 	userBalance->update();
-	//std::unique_ptr<Wt::WText> title(cpp14::make_unique<Wt::WText>("<h1 class='frontTitle'>Web Banking Application</h1>"));
 }
