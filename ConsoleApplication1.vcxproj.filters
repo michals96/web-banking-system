@@ -25,6 +25,9 @@
     <ClCompile Include="src\WebBankingWidget.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\ListAccountsWidget.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\HelloApplication.h" />
@@ -32,6 +35,7 @@
     <ClInclude Include="include\Session.h" />
     <ClInclude Include="include\User.h" />
     <ClInclude Include="include\WebBankingWidget.h" />
+    <ClInclude Include="include\ListAccountsWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="strings.xml" />
