@@ -1,5 +1,8 @@
 #include <Wt/WText.h>
 #include <Wt/Dbo/Dbo.h>
+#include <Wt/WContainerWidget.h>
+#include <Wt/WBreak.h>
+#include <Wt/WSlider.h>
 
 #include "../include/TransactionsWidget.h"
 #include "../include/Session.h"
@@ -17,21 +20,29 @@ TransactionsWidget::TransactionsWidget(Session* session) :
 
 void TransactionsWidget::update()
 {
-	/* clear();
+	clear();
 
-	std::string userName = session_->userName();
-	int userBalance = 0;
+	auto container = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 
-	std::vector<User> top = session_->topUsers(5);
+	container->addNew<Wt::WText>("How much money do you want to transfer?");
+	container->addNew<Wt::WBreak>();
 
-	for (auto& user : top) {
+	Wt::WSlider* slider = container->addNew<Wt::WSlider>();
+	slider->resize(500, 50);
+	slider->setTickPosition(Wt::WSlider::TickPosition::TicksAbove);
+	slider->setTickInterval(10);
+	slider->setMinimum(1);
+	slider->setMaximum(2000);
+	slider->setValue(1000);
 
-		if (user.name == userName) {
-			userBalance = user.balance;
-		}
-	}
+	container->addNew<Wt::WBreak>();
+	Wt::WText* out =
+		container->addNew<Wt::WText>();
 
-	std::string userBalanceStr = std::to_string(userBalance);
+	slider->valueChanged().connect([=] {
+		out->setText("AMOUNT: " + slider->valueText() + "$");
+		});
 
-	this->addWidget(cpp14::make_unique<WText>("<h2>Hello " + userName + ",  your balance is " + userBalanceStr + "$</h2>"));*/
+	this->addWidget(std::move(container));
+
 }
