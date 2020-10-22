@@ -9,6 +9,7 @@ class UserBalanceWidget : public WContainerWidget
 {
 public:
 	UserBalanceWidget(Session* session);
+	void update();
 
 private:
 	Session* session_;

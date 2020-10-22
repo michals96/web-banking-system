@@ -126,18 +126,14 @@ void WebBankingApplication::showAllAccounts()
 
 	mainStack->setCurrentWidget(accounts);
 	accounts->update();
-
-	balanceAnchor->removeStyleClass("selected-link");
-	listUsersAnchor->addStyleClass("selected-link");
 }
 
 void WebBankingApplication::showUserBalance()
 {
 	if (!userBalance)
 		userBalance = mainStack->addWidget(cpp14::make_unique<UserBalanceWidget>(&session));
-	
 
 	mainStack->setCurrentWidget(userBalance);
-
+	userBalance->update();
 	//std::unique_ptr<Wt::WText> title(cpp14::make_unique<Wt::WText>("<h1 class='frontTitle'>Web Banking Application</h1>"));
 }
