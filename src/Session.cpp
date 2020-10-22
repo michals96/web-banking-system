@@ -61,7 +61,7 @@ void Session::configureAuth()
 
 Session::Session()
 {
-	auto sqlite3 = cpp14::make_unique<Dbo::backend::Sqlite3>(WApplication::instance()->appRoot() + "WebBankingUserDatabase.db");
+	auto sqlite3 = cpp14::make_unique<Dbo::backend::Sqlite3>(WApplication::instance()->appRoot() + "WebBankingUserDatabaseNew.db");
 	sqlite3->setProperty("show-queries", "true");
 	session_.setConnection(std::move(sqlite3));
 
@@ -159,8 +159,6 @@ std::vector<User> Session::topUsers(int limit)
 
 	Users top = session_.find<User>().orderBy("balance desc").limit(limit);
 
-	//Users top = session_.find<User>();
-
 	std::vector<User> result;
 	
 	for (Users::const_iterator i = top.begin(); i != top.end(); ++i) 
@@ -168,15 +166,25 @@ std::vector<User> Session::topUsers(int limit)
 		dbo::ptr<User> user = *i;
 		result.push_back(*user);
 
-		//dbo::ptr<AuthInfo> auth = *user->authInfos.begin();
-		//std::string name = auth->identity(Auth::Identity::LoginName).toUTF8();
-
 		result.back().name = user->name;
 	}
 
 	transaction.commit();
 
 	return result;
+}
+
+void Session::addToBalance(std::string tgtName, std::string srcName, int amount)
+{
+	dbo::Transaction transaction(session_);
+
+	dbo::ptr<User> targetUser = session_.find<User>().where("name = ?").bind(tgtName);
+	targetUser.modify()->balance += amount;
+
+	dbo::ptr<User> srcUser = session_.find<User>().where("name = ?").bind(srcName);
+	srcUser.modify()->balance -= amount;
+
+	transaction.commit();
 }
 
 int Session::findId()

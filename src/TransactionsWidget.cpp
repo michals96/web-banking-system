@@ -29,6 +29,15 @@ void TransactionsWidget::update()
 {
 	clear();
 
+	// --------------------------------------------
+
+	std::vector<User> top = session_->topUsers(5);
+	std::vector<User> transactionUsers;
+
+	std::copy_if(top.begin(), top.end(), std::back_inserter(transactionUsers), [&](User u) { return u.name != "admin" && u.name != session_->userName(); });
+
+	// --------------------------------------------
+
 	auto amountContainer = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 
 	amountContainer->addNew<Wt::WText>("How much money do you want to transfer?");
@@ -47,7 +56,7 @@ void TransactionsWidget::update()
 		amountContainer->addNew<Wt::WText>();
 
 	slider->valueChanged().connect([=] {
-		out->setText("AMOUNT: " + slider->valueText() + "$");
+		out->setText(" " + slider->valueText() + "$");
 		});
 	
 	this->addWidget(std::move(amountContainer));
@@ -57,9 +66,11 @@ void TransactionsWidget::update()
 	auto selectUserContainer = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 
 	auto cb = selectUserContainer->addNew<Wt::WComboBox>();
-	cb->addItem("user");
-	cb->addItem("user");
-	cb->addItem("user");
+
+	for (auto& user : transactionUsers) {
+		cb->addItem(user.name);
+	}
+
 	cb->setCurrentIndex(1); // Show 'Medium' initially.
 	cb->setMargin(10, Wt::Side::Right);
 
@@ -122,16 +133,16 @@ void TransactionsWidget::update()
 		stopButton->disable();
 		resetButton->disable();
 		});
-	
-	int transferComplete = 0;
 
 	intervalTimer->timeout().connect([=] {
 		bar->setValue(bar->value() + 1);
 		if (bar->value() == 10) {
+			session_->addToBalance(transactionUsers[cb->currentIndex()].name, session_->userName(), slider->value());
 			stopButton->clicked().emit(Wt::WMouseEvent());
 			startButton->disable();
 			this->addWidget(cpp14::make_unique<WBreak>());
 			this->addWidget(std::move(cpp14::make_unique<WText>("Transfer complete!")));
+
 		}
 		});
 

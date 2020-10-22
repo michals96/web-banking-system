@@ -1,7 +1,7 @@
 #pragma once
 #include <Wt/WApplication.h>
 #include <Wt/WContainerWidget.h>
-#include "../include/Session.h" // -I w makefile
+#include "../include/Session.h"
 #include "../include/ListAccountsWidget.h"
 #include "../include/UserBalanceWidget.h"
 #include "../include/TransactionsWidget.h"
