@@ -7,7 +7,7 @@
 using namespace Wt;
 
 class Session;
-class WebBankingWidget;
+class UserBalanceWidget;
 class ListAccountsWidget;
 
 class WebBankingApplication : public Wt::WContainerWidget
@@ -17,7 +17,7 @@ public:
 	void handleInternalPath(const std::string& internalPath);
 	
 private:
-	WebBankingWidget     *panel;
+	UserBalanceWidget    *userBalance;
 	WStackedWidget       *mainStack;
 	WContainerWidget     *userLinks;
 	WContainerWidget	 *adminLinks;

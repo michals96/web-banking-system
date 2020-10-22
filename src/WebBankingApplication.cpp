@@ -9,7 +9,7 @@
 #include <string>
 
 #include "../include/WebBankingApplication.h"
-#include "../include/WebBankingWidget.h"
+#include "../include/UserBalanceWidget.h"
 
 using namespace Wt;
 
@@ -133,12 +133,11 @@ void WebBankingApplication::showAllAccounts()
 
 void WebBankingApplication::showUserBalance()
 {
-	if (!panel)
-	{
-		panel = mainStack->addWidget(cpp14::make_unique<WebBankingWidget>(session.userName()));
-	}
+	if (!userBalance)
+		userBalance = mainStack->addWidget(cpp14::make_unique<UserBalanceWidget>(&session));
+	
 
-	mainStack->setCurrentWidget(panel);
+	mainStack->setCurrentWidget(userBalance);
 
 	//std::unique_ptr<Wt::WText> title(cpp14::make_unique<Wt::WText>("<h1 class='frontTitle'>Web Banking Application</h1>"));
 }
