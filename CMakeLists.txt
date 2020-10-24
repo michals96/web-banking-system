@@ -50,4 +50,4 @@ TARGET_LINK_LIBRARIES(ConsoleApplication1
   )
 
 enable_testing()
-add_subdirectory("Test/" "Test/out"/)
+add_subdirectory("Test/" "Test/out/")
