@@ -10,6 +10,7 @@
 #include <Wt/WProgressBar.h>
 #include <Wt/WPushButton.h>
 #include <Wt/WTimer.h>
+#include <Wt/WMessageBox.h>
 
 #include "../include/TransactionsWidget.h"
 #include "../include/Session.h"
@@ -29,14 +30,19 @@ void TransactionsWidget::update()
 {
 	clear();
 
-	// --------------------------------------------
-
 	std::vector<User> top = session_->topUsers(5);
+
+	User currentUser;
+
+	for (auto& user : top) {
+		if (user.name == session_->userName()) {
+			currentUser = user;
+		}
+	}
+	
 	std::vector<User> transactionUsers;
 
 	std::copy_if(top.begin(), top.end(), std::back_inserter(transactionUsers), [&](User u) { return u.name != "admin" && u.name != session_->userName(); });
-
-	// --------------------------------------------
 
 	auto amountContainer = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 
@@ -44,13 +50,14 @@ void TransactionsWidget::update()
 	amountContainer->addNew<Wt::WBreak>();
 
 	Wt::WSlider* slider = amountContainer->addNew<Wt::WSlider>();
+
 	slider->resize(500, 50);
 	slider->setTickPosition(Wt::WSlider::TickPosition::TicksAbove);
-	slider->setTickInterval(10);
-	slider->setMinimum(1);
-	slider->setMaximum(2000);
-	slider->setValue(1000);
-
+	slider->setTickInterval(1);
+	slider->setMinimum(10);
+	slider->setMaximum(currentUser.balance);
+	slider->setValue(currentUser.balance/2);
+	
 	amountContainer->addNew<Wt::WBreak>();
 	Wt::WText* out =
 		amountContainer->addNew<Wt::WText>();
@@ -71,7 +78,7 @@ void TransactionsWidget::update()
 		cb->addItem(user.name);
 	}
 
-	cb->setCurrentIndex(1); // Show 'Medium' initially.
+	cb->setCurrentIndex(1);
 	cb->setMargin(10, Wt::Side::Right);
 
 	auto outText = selectUserContainer->addNew<Wt::WText>();
@@ -107,14 +114,41 @@ void TransactionsWidget::update()
 	intervalTimer->setInterval(std::chrono::milliseconds(1000));
 
 	startButton->clicked().connect([=] {
-		if (bar->value() < 10) {
-			intervalTimer->start();
-			startButton->setText("Resume");
+
+		if (currentUser.balance == 0)
+		{
+			Wt::StandardButton answer 
+				= Wt::WMessageBox::show("Not enough cash", "<p> You don't have enough money!</p>", Wt::StandardButton::Ok);
 		}
 
-		startButton->disable();
-		stopButton->enable();
-		resetButton->disable();
+		if (slider->value() == currentUser.balance/2 && currentUser.balance != 0)
+		{
+			Wt::StandardButton answer
+				= Wt::WMessageBox::show("Transfer amount not set", "<p> Please select money transfer amount!</p>", Wt::StandardButton::Ok);
+		}
+		else {
+
+			std::string amountString = std::to_string(slider->value());
+
+			Wt::StandardButton answer
+				= Wt::WMessageBox::show("Transfer money",
+					"<p>Do you want to trasfer " + amountString + "$ to " + transactionUsers[cb->currentIndex()].name + "?</p>",
+					Wt::StandardButton::Ok | Wt::StandardButton::Cancel);
+
+			if (answer == Wt::StandardButton::Ok) {
+				if (bar->value() < 10) {
+					intervalTimer->start();
+					startButton->setText("Resume");
+				}
+
+				startButton->disable();
+				stopButton->enable();
+				resetButton->disable();
+			}
+			else {
+
+			}
+		}
 		});
 
 	stopButton->clicked().connect([=] {

@@ -61,7 +61,7 @@ void Session::configureAuth()
 
 Session::Session()
 {
-	auto sqlite3 = cpp14::make_unique<Dbo::backend::Sqlite3>(WApplication::instance()->appRoot() + "WebBankingUserDatabaseNew.db");
+	auto sqlite3 = cpp14::make_unique<Dbo::backend::Sqlite3>(WApplication::instance()->appRoot() + "WebBankingUserDatabase.db");
 	sqlite3->setProperty("show-queries", "true");
 	session_.setConnection(std::move(sqlite3));
 
