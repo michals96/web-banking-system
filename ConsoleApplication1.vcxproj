@@ -115,7 +115,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;HPDF_DLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;HPDF_DLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Program Files\Wt 4.3.1 msvs2019 x64\include\Wt;C:\Program Files\Wt 4.3.1 msvs2019 x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -132,7 +132,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Program Files\Wt 4.3.1 msvs2019 x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\ListAccountsWidget.cpp" />
+    <ClCompile Include="src\LogsWidget.cpp" />
     <ClCompile Include="src\Session.cpp" />
     <ClCompile Include="src\HelloApplication.cpp" />
     <ClCompile Include="src\TransactionsWidget.cpp" />
@@ -158,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="include\HelloApplication.h" />
     <ClInclude Include="include\ListAccountsWidget.h" />
+    <ClInclude Include="include\LogsWidget.h" />
     <ClInclude Include="include\TransactionsWidget.h" />
     <ClInclude Include="include\WebBankingApplication.h" />
     <ClInclude Include="include\Session.h" />

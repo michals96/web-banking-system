@@ -6,7 +6,6 @@
 #include <Wt/WAny.h>
 #include <Wt/WComboBox.h>
 #include <Wt/WStringListModel.h>
-#include <Wt/WBreak.h>
 #include <Wt/WProgressBar.h>
 #include <Wt/WPushButton.h>
 #include <Wt/WTimer.h>
@@ -15,6 +14,9 @@
 #include "../include/TransactionsWidget.h"
 #include "../include/Session.h"
 #include "../include/User.h"
+
+#include <fstream>
+
 
 using namespace Wt;
 
@@ -26,9 +28,35 @@ TransactionsWidget::TransactionsWidget(Session* session) :
 	setStyleClass("showTransactions");
 }
 
+std::string TransactionsWidget::currentDateTime() {
+	time_t     now = time(0);
+	struct tm  tstruct;
+	char       buf[80];
+	tstruct = *localtime(&now);
+	strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+
+	return buf;
+}
+
+void TransactionsWidget::log(std::string tgtName, std::string srcName, int amount, bool succeddedTransaction)
+{
+	std::ofstream outfile;
+	outfile.open("logs.txt", std::ios_base::app);
+
+	if (succeddedTransaction)
+	{
+		outfile << "<h3>[" + currentDateTime() + "] " + srcName + " transferred " + std::to_string(amount) + "$ to " + tgtName + "</h3>\n";
+	}
+	else
+	{
+		outfile << "<h3 style='color:Tomato;'>[" + currentDateTime() + "] " + srcName + " failed to wire " + std::to_string(amount) + "$ to" + tgtName + "</h3>\n";
+	}
+}
 void TransactionsWidget::update()
 {
 	clear();
+
+	this->addWidget(cpp14::make_unique<WText>("<h2> Transfer money menu </h2>"));
 
 	std::vector<User> top = session_->topUsers(5);
 
@@ -172,6 +200,7 @@ void TransactionsWidget::update()
 		bar->setValue(bar->value() + 1);
 		if (bar->value() == 10) {
 			session_->addToBalance(transactionUsers[cb->currentIndex()].name, session_->userName(), slider->value());
+			log(transactionUsers[cb->currentIndex()].name, session_->userName(), slider->value(), true);
 			stopButton->clicked().emit(Wt::WMouseEvent());
 			startButton->disable();
 			this->addWidget(cpp14::make_unique<WBreak>());

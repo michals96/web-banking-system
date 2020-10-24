@@ -11,6 +11,8 @@ class TransactionsWidget : public WContainerWidget
 public:
 	TransactionsWidget(Session* session);
 	void update();
+	void log(std::string tgtName, std::string srcName, int amount, bool succeddedTransaction);
+	std::string currentDateTime();
 
 private:
 	Session* session_;
