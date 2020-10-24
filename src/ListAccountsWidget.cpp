@@ -46,12 +46,8 @@ void ListAccountsWidget::update()
         table->elementAt(row, 0)->addWidget(cpp14::make_unique<WText>(asString(rank)));
         table->elementAt(row, 1)->addWidget(cpp14::make_unique<WText>(user.name));
         table->elementAt(row, 2)->addWidget(cpp14::make_unique<WText>(asString(user.balance)));
-        std::cout << "ENTER USER " << top.size() << std::endl;
 
         if (session_->login().loggedIn() && session_->userName() == user.name)
             table->rowAt(row)->setId("self");
     }
-
-    //WText* fineprint = this->addWidget(cpp14::make_unique<WText>(tr("highscore.info")));
-    //fineprint->addStyleClass("fineprint");
 }

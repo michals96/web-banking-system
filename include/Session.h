@@ -24,6 +24,7 @@ public:
 	std::vector<User> topUsers(int limit);
 	std::string userName() const;
 	int findId();
+	void addToBalance(std::string tgtName, std::string srcName, int amount);
 
 	static const Auth::AuthService& auth();
 	static const Auth::AbstractPasswordService& passwordAuth();
