@@ -63,6 +63,9 @@ WebBankingApplication::WebBankingApplication()
 	listUsersAnchor = adminLinks->addWidget(cpp14::make_unique<WAnchor>("/accounts", "List all accounts"));
 	listUsersAnchor->setLink(WLink(LinkType::InternalPath, "/accounts"));
 
+	serviceLogsAnchor = adminLinks->addWidget(cpp14::make_unique<WAnchor>("/logs", "Service logs"));
+	serviceLogsAnchor->setLink(WLink(LinkType::InternalPath, "/logs"));
+
 	WApplication::instance()->internalPathChanged()
 		.connect(this, &WebBankingApplication::handleInternalPath);
 
@@ -115,6 +118,10 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 		{
 			showAllAccounts();
 		}
+		else if (internalPath == "/logs")
+		{
+			showServiceLogs();
+		}
 		else
 		{
 			WApplication::instance()->setInternalPath("/", true);
@@ -125,6 +132,15 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 		WApplication::instance()->setInternalPath("", true);
 	}
 
+}
+
+void WebBankingApplication::showServiceLogs()
+{
+	if (!logs)
+		logs = mainStack->addWidget(cpp14::make_unique<LogsWidget>(&session));
+
+	mainStack->setCurrentWidget(logs);
+	logs->update();
 }
 
 void WebBankingApplication::showAllAccounts()
