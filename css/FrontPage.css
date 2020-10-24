@@ -30,6 +30,11 @@ h1.frontTitle {
     text-align: center;
 }
 
+.showLogs {
+    margin: 10px;
+    text-align: center;
+}
+
 .links a {
     padding-left: 5px;
     padding-right: 5px;

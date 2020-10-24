@@ -31,6 +31,9 @@
     <ClCompile Include="src\TransactionsWidget.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\LogsWidget.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\HelloApplication.h" />
@@ -40,6 +43,7 @@
     <ClInclude Include="include\ListAccountsWidget.h" />
     <ClInclude Include="include\UserBalanceWidget.h" />
     <ClInclude Include="include\TransactionsWidget.h" />
+    <ClInclude Include="include\LogsWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="strings.xml" />

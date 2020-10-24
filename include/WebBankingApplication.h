@@ -5,6 +5,7 @@
 #include "../include/ListAccountsWidget.h"
 #include "../include/UserBalanceWidget.h"
 #include "../include/TransactionsWidget.h"
+#include "../include/LogsWidget.h"
 
 using namespace Wt;
 
@@ -25,10 +26,12 @@ private:
 	WContainerWidget	 *adminLinks;
 	ListAccountsWidget   *accounts;
 	TransactionsWidget   *transactions;
+	LogsWidget			 *logs;
 
 	WAnchor* balanceAnchor;
 	WAnchor* transactionAnchor;
 	WAnchor* listUsersAnchor;
+	WAnchor* serviceLogsAnchor;
 
 	Session session;
 
@@ -36,4 +39,5 @@ private:
 	void showUserBalance();
 	void showAllAccounts();
 	void showTransactionPanel();
+	void showServiceLogs();
 };

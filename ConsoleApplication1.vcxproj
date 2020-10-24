@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\ListAccountsWidget.cpp" />
+    <ClCompile Include="src\LogsWidget.cpp" />
     <ClCompile Include="src\Session.cpp" />
     <ClCompile Include="src\HelloApplication.cpp" />
     <ClCompile Include="src\TransactionsWidget.cpp" />
@@ -158,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="include\HelloApplication.h" />
     <ClInclude Include="include\ListAccountsWidget.h" />
+    <ClInclude Include="include\LogsWidget.h" />
     <ClInclude Include="include\TransactionsWidget.h" />
     <ClInclude Include="include\WebBankingApplication.h" />
     <ClInclude Include="include\Session.h" />
