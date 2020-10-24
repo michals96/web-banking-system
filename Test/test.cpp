@@ -27,3 +27,8 @@ NAMESPACE_TEST(SimpleTests, TestClass, ifStringIsProperlySet)
 	EXPECT_EQ(testObject.getStr(), "Not a Hello World!");
 	EXPECT_TRUE(true);
 }
+
+// bierz dwoch userow i posprawdzaj cos na nich ->  niezerowe imie, nieujemny stan konta, konkretny stan konta(addtobalance)
+// topusers zwraca niepusty wektor
+// transactions zwraca date
+// przetestuj funkcje z session

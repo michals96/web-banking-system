@@ -48,3 +48,6 @@ TARGET_LINK_LIBRARIES(ConsoleApplication1
   debug wtdbod optimized wtdbo
   debug wtdbosqlite3d optimized wtdbosqlite3
   )
+
+enable_testing()
+add_subdirectory("Test/" "Test/out"/)
