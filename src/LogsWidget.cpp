@@ -2,6 +2,7 @@
 #include <Wt/Dbo/Dbo.h>
 #include <Wt/WTable.h>
 #include <Wt/WAny.h>
+#include <Wt/WBreak.h>
 
 #include "../include/LogsWidget.h"
 #include "../include/Session.h"
@@ -27,8 +28,6 @@ void LogsWidget::update()
 	if (file.is_open()) {
 		std::string line;
 		while (std::getline(file, line)) {
-			// using printf() in all tests for consistency
-			//printf("%s", line.c_str());
 			this->addWidget(cpp14::make_unique<WText>(line.c_str()));
 			this->addWidget(cpp14::make_unique<WBreak>());
 		}

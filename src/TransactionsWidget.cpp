@@ -6,7 +6,6 @@
 #include <Wt/WAny.h>
 #include <Wt/WComboBox.h>
 #include <Wt/WStringListModel.h>
-#include <Wt/WBreak.h>
 #include <Wt/WProgressBar.h>
 #include <Wt/WPushButton.h>
 #include <Wt/WTimer.h>
@@ -46,11 +45,11 @@ void TransactionsWidget::log(std::string tgtName, std::string srcName, int amoun
 
 	if (succeddedTransaction)
 	{
-		outfile << "[" + currentDateTime() + "] " + srcName + " transferred " + std::to_string(amount) + "$ to " + tgtName + "\n";
+		outfile << "<h3>[" + currentDateTime() + "] " + srcName + " transferred " + std::to_string(amount) + "$ to " + tgtName + "</h3>\n";
 	}
 	else
 	{
-		outfile << "[" + currentDateTime() + "] " + srcName + " failed to wire " + std::to_string(amount) + "$ to" + tgtName + "\n";
+		outfile << "<h3 style='color:Tomato;'>[" + currentDateTime() + "] " + srcName + " failed to wire " + std::to_string(amount) + "$ to" + tgtName + "</h3>\n";
 	}
 }
 void TransactionsWidget::update()
