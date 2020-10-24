@@ -10,9 +10,6 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\HelloApplication.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\WebBankingApplication.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -39,7 +36,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\HelloApplication.h" />
     <ClInclude Include="include\WebBankingApplication.h" />
     <ClInclude Include="include\Session.h" />
     <ClInclude Include="include\User.h" />
