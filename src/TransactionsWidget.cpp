@@ -56,6 +56,8 @@ void TransactionsWidget::update()
 {
 	clear();
 
+	this->addWidget(cpp14::make_unique<WText>("<h2> Transfer money menu </h2>"));
+
 	std::vector<User> top = session_->topUsers(5);
 
 	User currentUser;

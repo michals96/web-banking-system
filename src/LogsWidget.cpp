@@ -1,8 +1,8 @@
 #include <Wt/WText.h>
 #include <Wt/Dbo/Dbo.h>
-#include <Wt/WTable.h>
 #include <Wt/WAny.h>
 #include <Wt/WBreak.h>
+#include <Wt/WGroupBox.h>
 
 #include "../include/LogsWidget.h"
 #include "../include/Session.h"
@@ -24,13 +24,20 @@ void LogsWidget::update()
 {
 	clear();
 
+	auto groupBox = Wt::cpp14::make_unique<Wt::WGroupBox>("Service logs");
+	groupBox->addStyleClass("centered-example");
+
 	std::ifstream file("logs.txt");
 	if (file.is_open()) {
 		std::string line;
 		while (std::getline(file, line)) {
-			this->addWidget(cpp14::make_unique<WText>(line.c_str()));
-			this->addWidget(cpp14::make_unique<WBreak>());
+			//this->addWidget(cpp14::make_unique<WText>(line.c_str()));
+			//this->addWidget(cpp14::make_unique<WBreak>());
+			groupBox->addNew<Wt::WText>(line.c_str());
 		}
+
+		this->addWidget(std::move(groupBox));
+
 		file.close();
 	}
 }
