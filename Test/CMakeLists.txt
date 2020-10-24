@@ -1,4 +1,4 @@
-SET(CTEST_SRC ${CTEST_SRC} Test/ctest.cpp)
+SET(CTEST_SRC ${CTEST_SRC} ctest.cpp)
 add_executable(test ${CTEST_SRC})
 
 add_test(usage_test test)
