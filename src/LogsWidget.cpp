@@ -1,9 +1,13 @@
 #include <Wt/WText.h>
 #include <Wt/Dbo/Dbo.h>
+#include <Wt/WTable.h>
+#include <Wt/WAny.h>
 
 #include "../include/LogsWidget.h"
 #include "../include/Session.h"
 #include "../include/User.h"
+
+#include <fstream>
 
 using namespace Wt;
 
@@ -19,5 +23,15 @@ void LogsWidget::update()
 {
 	clear();
 
-	this->addWidget(cpp14::make_unique<WText>("<h2>Here are service logs</h2>"));
+	std::ifstream file("logs.txt");
+	if (file.is_open()) {
+		std::string line;
+		while (std::getline(file, line)) {
+			// using printf() in all tests for consistency
+			//printf("%s", line.c_str());
+			this->addWidget(cpp14::make_unique<WText>(line.c_str()));
+			this->addWidget(cpp14::make_unique<WBreak>());
+		}
+		file.close();
+	}
 }
