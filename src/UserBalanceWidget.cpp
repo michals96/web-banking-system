@@ -1,5 +1,6 @@
 #include <Wt/WText.h>
 #include <Wt/Dbo/Dbo.h>
+#include <Wt/WGroupBox.h>
 
 #include "../include/UserBalanceWidget.h"
 #include "../include/Session.h"
@@ -31,7 +32,10 @@ void UserBalanceWidget::update()
         }
     }
 	
-	std::string userBalanceStr = std::to_string(userBalance);
+	auto groupBox = Wt::cpp14::make_unique<Wt::WGroupBox>(userName + " balance");
+	groupBox->addStyleClass("centered-example");
 
-	this->addWidget(cpp14::make_unique<WText>("<h2>Hello " + userName + ",  your balance is " + userBalanceStr + "$</h2>"));
+	std::string userBalanceStr = std::to_string(userBalance);
+	groupBox->addNew<Wt::WText>("<h2>" + userBalanceStr + "$</h2>");
+	this->addWidget(std::move(groupBox));
 }

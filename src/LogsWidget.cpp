@@ -31,8 +31,6 @@ void LogsWidget::update()
 	if (file.is_open()) {
 		std::string line;
 		while (std::getline(file, line)) {
-			//this->addWidget(cpp14::make_unique<WText>(line.c_str()));
-			//this->addWidget(cpp14::make_unique<WBreak>());
 			groupBox->addNew<Wt::WText>(line.c_str());
 		}
 
