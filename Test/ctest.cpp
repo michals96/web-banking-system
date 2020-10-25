@@ -8,9 +8,6 @@
 
 int main(int argc, char** argv) {
 
-    TransactionsWidget widget;
-    std::string str = widget.currentDateTime();
-
     if (argc < 2) {
         printf("usage: test <argument>\n");
         printf("    If <argument> is 0, print SUCCESS. Otherwise print FAIL.\n");
