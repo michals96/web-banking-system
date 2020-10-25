@@ -12,6 +12,3 @@ set_tests_properties(fail_test PROPERTIES WILL_FAIL TRUE)
 
 add_test(fail_test_output test 1)
 set_tests_properties(fail_test_output PROPERTIES PASS_REGULAR_EXPRESSION "FAIL")
-
-add_test(current_date test 2)
-set_tests_properties(current_date PROPERTIES PASS_REGULAR_EXPRESSION "SUCCESS")
