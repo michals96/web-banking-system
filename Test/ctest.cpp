@@ -1,6 +1,6 @@
 #include "pch.h"
 
-//#ifndef _WIN32
+#ifndef _WIN32
 #include <stdio.h>
 #include <stdlib.h>
 #include"../include/TransactionsWidget.h"
@@ -35,4 +35,4 @@ int main(int argc, char** argv) {
         exit(1);
     }
 }
-//#endif
+#endif
