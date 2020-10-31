@@ -207,8 +207,7 @@ Let's have an example project which structure looks like below\newline
      |-- Student.cpp
      \-- mainapp.cpp
 \end{lstlisting}
-
-
+\bigskip
 The content of \textbf{*.cpp} and \textbf{*.h} files is irrelevant here, at this point it could be any code. In the main directory we have a simple \textbf{CMakeLists.txt} which is used to build the project. The code of our CMakeLists script:\newline
 
 \begin{lstlisting}[frame=single]
@@ -226,7 +225,7 @@ file(GLOB SOURCES "src/*.cpp")
 
 add_executable(testStudent ${SOURCES})
 \end{lstlisting}
-
+\bigskip
 The most important things that above CMake will perform (in order from the top) are
 \begin{itemize}
 	\item Include directories to let the CMake know where headers files with definitions are
@@ -244,7 +243,7 @@ The most important things that above CMake will perform (in order from the top) 
   $ ./testStudent
 \end{lstlisting}
   
-  Commands above will create \hl{build} directory. From there cmake will create \textbf{Makefile} containing references to all sources and headers, which ultimately will create an executable that is ready to be run. This as a very basic example of how \textbf{CMake} works. In next chapters there will be more details about \textbf{CMake} and what is the main concept behind basing on the one used in project. 
+\bigskip Commands above will create \hl{build} directory. From there cmake will create \textbf{Makefile} containing references to all sources and headers, which ultimately will create an executable that is ready to be run. This as a very basic example of how \textbf{CMake} works. In next chapters there will be more details about \textbf{CMake} and what is the main concept behind basing on the one used in project. 
 
 }
 
