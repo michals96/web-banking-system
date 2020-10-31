@@ -1,6 +1,7 @@
 \documentclass[a4paper,12pt]{article}
-
+\usepackage{xcolor}
 \usepackage{etoc}
+\usepackage{soul}
 \usepackage{blindtext}
 \usepackage{scrextend}
 \usepackage[utf8]{inputenc}
@@ -10,6 +11,9 @@
 \usepackage{color}
 \usepackage{geometry}
 \usepackage{regexpatch,fancyvrb,xparse}
+\usepackage{listings}
+\lstset{language=Pascal}
+
 
 \makeatletter
 \let\do@footnotetext\@footnotetext
@@ -75,19 +79,13 @@ Jednoczesnie Uczelnia informuje, ze zgodnie z art. 15a ww. ustawy o prawie autor
 \newpage
 \section*{Introduction}
 \addcontentsline{toc}{section}{\protect\numberline{}Introduction}%
-\tab {Software engineering is a very wide area of engineering which particularly concerns developing and maintaining programming products. A development process itself is a major challenge to all people involved, starting with developers creating the code, continuing with product owners who are managing teams and coordinating the work flow and ending-up with managers who are setting the direction of the whole process.
+\tab {Software engineering is a very wide area of engineering which particularly concerns developing and maintaining programming products. A development process itself is a major challenge to all people involved, starting with engineers creating the code, continuing with product owners who are managing teams and coordinating the work flow and ending-up with managers who are setting the direction of the whole process.
 
 \bigskip
-The main motivation to create this thesis was simply to present a development process that includes basic and nowadays necessary tools which are significantly helpful in such process.
-
-\bigskip
-To carry out the development and present all tools it was decided that an example application will be a C++ web application created with a GUI library in modern C++ called \textbf{Web Toolkit}. 
+The main motivation to create this thesis was simply to present a development process that includes basic and nowadays necessary tools which are significantly helpful in such process. Simultaneously creating a C++ web application was an equally important factor. To carry out the development and present all tools it was decided that an example C++ web application will be created with a GUI library in modern C++ called \textbf{Web Toolkit}. 
 
 \bigskip 
-Nowadays in a software engineering world there is a trend to migrate desktop applications to the internet, which has also impacted a lot GUI desktop libraries in decreasing their utilities. Foreground reason behind choosing C++ to create a web application, which is quite unusual, was to show the tremendous possibilities that this language still provides and to exhibit the capabilities of open source libraries shared among developers.
-
-\bigskip
-The following contents was divided into five chapters describing the development process and the application itself with bottom line two chapters summarizing thesis and listing literature.
+Nowadays in a software engineering world there is a trend to migrate desktop applications to the internet, which has also impacted a lot GUI desktop libraries in decreasing their utilities. The secondary reason behind choosing C++ to create a web application, which is quite unusual, was to show the tremendous possibilities that this language still provides and to exhibit the capabilities of open source libraries shared among developers and engineers. The bottom line is - next chapters are a review of possibilities that C++-based web library provides.
 
 \
 }
@@ -98,30 +96,32 @@ The following contents was divided into five chapters describing the development
 {\tab The application is a single-page service run on a local server with an \textbf{http://localhost:8080/} address. After starting, logging panel appears, giving the user an opportunity to type their credentials and log-in. 
 
 \bigskip
-The idea of the service is to provide to the user basic functionalities of a banking service like for instance transferring money or checking their balance. Those required implementing secure back-end layer with a database containing information about the users and transactions and a front-end layer which is transparent to the user. 
+The idea of the service is to provide basic functionalities of a banking service like for instance transferring money or checking their balance to the user. These required implementation of secure back-end layer with a database containing information about the users and transactions and a front-end layer which is transparent to the user. 
 
 \bigskip
-Regarding the credentials user will see different features after logging into the service. There might be many accounts created and held up in the database of the service but there are only two rights of access.}\\
+Regarding the credentials a user will see different features after logging into the service. There might be many accounts created and held up in the database of the service but there are only two rights of access.}\\
 \begin{labeling}{alligator}
 \item [\textbf{USER}] Transferring money and seeing current account's balance.
-\item [\textbf{ADMIN}] Sees details about every account in the service as well as has access to the logs from the application.
+\item [\textbf{ADMIN}] Seeing details about every account in the service as well as having access to the logs from the application.
 \end{labeling}
 
 \bigskip
-After user decides to quit the service he is given a possibility to log out of the service and whilst doing that the application returns to the logging page where session is refreshed and database is updated. If the user was an admin of the service, he has access to the console logs that are gathering and sniffing network traffic like HTTP methods for RESTful APIs.  
+After user decides to quit the service, a possibility of logging out is provided and whilst doing that the application returns to the logging page where session is refreshed and database is updated. If the user was an administrator of the service, an access to the console logs that are gathering and sniffing network traffic like HTTP methods for RESTful APIs is also granted.  
 
 \subsection{Programming environment}
-{\tab Developing any kind of programs usually requires specific environmental variables therefore a programmers task is to choose a specific set of tools which will be the most handy during the process.  
+{\tab Developing any kind of programs usually requires specific environmental variables therefore a programmer's task is to choose a specific set of tools which will be the most handy during the process.  
 
 \bigskip
-Regarding the specifics of the project the chosen set of tools:
+Regarding the specifics of the project, the chosen set of tools looks like following:
 \begin{labeling}{alligator}
-\item [\textbf{IDE}] Microsoft Visual Studio Community 2019
-\item [\textbf{LIBRARY}] Web Toolkit 4.3.1
-\item [\textbf{LIBRARY}] Boost C++ lib
-\item [\textbf{TOOL}] CMake
-\item [\textbf{TOOL}] Git BASH
+\item [\textbf{IDE}] Microsoft Visual Studio Community 2019,
+\item [\textbf{LIBRARY}] Web Toolkit 4.3.1,
+\item [\textbf{LIBRARY}] Boost C++ lib [latest version],
+\item [\textbf{TOOL}] CMake VERSION 2.4,
+\item [\textbf{TOOL}] Git BASH.
 \end{labeling}}
+
+The application was developed under Windows 10 64-bit operating system, but it could have been developed under any other platform that is supported by WebToolkit library.
 
 \newpage
 \subsubsection*{IDE - Integrated Development Environment}
@@ -129,7 +129,7 @@ Regarding the specifics of the project the chosen set of tools:
 \tab IDE is a program or a set of programs merged into one that usually gathers tools, libraries, debuggers, run time scripts and any other stuff necessary for the developer to write the code. The purpose of IDE is to allow easily and swiftly create code, but at the same time test it, compile it and run it in one place. 
 
 \bigskip
-The advantage of this solution is it gives the developer an opportunity to set up and scale his development environment adjusting it to the project needs. Usually IDE, as well as modern text editors, also support plugins which are nice addition the program, like for instance syntax highlighters, semantics hints, code analyzers or refactoring scripts.
+The advantage of this solution is that it gives the developer an opportunity to set up and scale his development environment adjusting it to the project needs. Usually IDE, as well as modern text editors, also support plugins which are nice addition to the program, like for instance syntax highlighters, semantics hints, code analyzers or refactoring scripts.
 
 \bigskip
 The chosen IDE for this project is \textbf{Microsoft Visual Studio Community 2019}. Web Toolkit library is supported on various platforms including Linux distributions (even less popular ones like ArchLinux, Slackware or Opensuse), Windows or other operating systems like Android, Raspberry Pi or even OS X. The consequence of choosing MSV IDE was using Windows platform and prebuilt Windows binaries of the WT library.
@@ -144,11 +144,22 @@ The chosen IDE for this project is \textbf{Microsoft Visual Studio Community 201
 	\item Microsoft Visual Web Developer ASP.NET
 	\item Microsoft Visual F\ttvar{#}
 \end{itemize}
+
+MSVC also provides a lot of built-in features. A lot of them occurred to be significantly useful in the process of developing this application. A few most important ones are
+\begin{itemize}
+	\item Debugger, Linker and Compiler
+	\item Projects and Build Systems
+	\item Writing and refactoring C++ code
+	\item Code analysis overview
+	\item Unit tests support
+	\item Universal Windows Apps like command line appliactions
+\end{itemize}
+
 }
 
 \subsubsection*{Boost C++ library}
 {
-\tab Boost is a collection of C++ libraries that enhances capabilities of development C++ code, which is also licensed by \textbf{Boost Software License}. For the project Boost is necessary to build Web Toolkit library as it's implementation uses Boost functionalities.
+\tab Boost is a collection of C++ libraries that enhances capabilities of C++ code development, which is also licensed by \textbf{Boost Software License}. For the project Boost is necessary to build Web Toolkit library as it's implementation uses Boost functionalities.
 
 \bigskip
 The most important features provided by Boost are
@@ -161,11 +172,13 @@ The most important features provided by Boost are
 	\item High level programming and functional objects
 	\item Parsers and graphs
 	\item Meta-programming with templates
-\end{itemize} 
+\end{itemize}
+	
+Boost library as a collection is not used in this project explicitly, as the application was developed in Microsoft Visual Studio environment with pre-built Windows binaries. However, for automation server, the project is built under linux machine where WebToolkit needs to be built manually, therefore boost is required. More details will be unveiled in "Automation server" chapter.
 }
 \subsubsection*{CMake}
 {
-\tab CMake is a cross platform tool that provides automatic management of compiling the code of an application. It's role is to create a configuration for project files of popular programming environments, which then are used in a process of compilation. The main advantage of using CMake is it's independence of the compiler and the platform. However CMake itself is not a standalone program, instead by creating files with rules for compilation dedicated to another program like IDE it forms a unified building environment. CMake stands for \textit{Cross-platform Make}.
+\tab CMake is a cross platform tool that provides automatic management of compiler that builds the code of an application. It's role is to create a configuration for project files of popular programming environments, which then are used in a process of compilation. The main advantage of using CMake is it's independence of the compiler and the platform. However CMake as a standalone program creates files with rules for compilation dedicated to another program like IDE and it forms a unified building environment. CMake stands for \textit{Cross-platform Make}.
 
 \bigskip
 The most important features provided by CMake are
@@ -180,12 +193,84 @@ The most important features provided by CMake are
 This project required including CMake tool because of various dependencies and complex building due to including Web Toolkit and Boost.  
 
 \bigskip
-To be able to exploit favors that CMake offers one must create \textbf{CMakeLists.txt} file placed in the main catalog of the project. The core of this file is a simple scripting language that describes rules and defines variables telling the compiler how to links files and what should be the outcome of the compilation process.
+To be able to explore favors that CMake offers one must create \textbf{CMakeLists.txt} file placed in the main catalog of the project. The core of this file is a simple scripting language that describes rules and defines variables telling the compiler how to link files and what should be the outcome of the compilation process.
+
+\bigskip
+Let's have an example project which structure looks like below\newline
+\begin{lstlisting}[frame=single]
+ .
+ |-- CMakeLists.txt
+ |-- build
+ |-- include
+ |   \-- Student.h
+ \-- src
+     |-- Student.cpp
+     \-- mainapp.cpp
+\end{lstlisting}
+
+
+The content of \textbf{*.cpp} and \textbf{*.h} files is irrelevant here, at this point it could be any code. In the main directory we have a simple \textbf{CMakeLists.txt} which is used to build the project. The code of our CMakeLists script:\newline
+
+\begin{lstlisting}[frame=single]
+cmake_minimum_required(VERSION 2.8.9)
+project(directory_test)
+
+#Bring the headers, such as Student.h into the project
+include_directories(include)
+
+#Can manually add the sources using the set command as follows:
+#set(SOURCES src/mainapp.cpp src/Student.cpp)
+
+#However, the file(GLOB...) allows for wildcard additions:
+file(GLOB SOURCES "src/*.cpp")
+
+add_executable(testStudent ${SOURCES})
+\end{lstlisting}
+
+The most important things that above CMake will perform (in order from the top) are
+\begin{itemize}
+	\item Include directories to let the CMake know where headers files with definitions are
+	\item Sources are also set, but the line is commented out as each file needs to be manually added in place
+	\item file() command to add source files to project's GLOB SOURCES
+	\item add\_executable() which uses SOURCES variable in order to build executable program
+\end{itemize}
+
+
+\noindent Now to invoke building using CMake:
+\begin{lstlisting}[language=bash]
+  $ mkdir build && cd build
+  $ cmake ..
+  $ make
+  $ ./testStudent
+\end{lstlisting}
+  
+  Commands above will create \hl{build} directory. From there cmake will create \textbf{Makefile} containing references to all sources and headers, which ultimately will create an executable that is ready to be run. This as a very basic example of how \textbf{CMake} works. In next chapters there will be more details about \textbf{CMake} and what is the main concept behind basing on the one used in project. 
+
 }
+
 \subsubsection*{Others}
 \textit{Git BASH} tool and \textit{Web Toolkit} library are described thoroughly in next chaptres.
 \newpage
 
+\section{WebToolkit C++ library}
+\subsection{Library introduction}
+\subsubsection{Introduction to Wt}
+\subsubsection{Introduction to Wt::Dbo}
+\subsubsection{Introduction to Wt::Auth}
+\subsection{Widgets gallery}
+\subsection{Library overview}
+
+\section{DevOps layer}
+\subsection{Distributed version-control system}}
+\subsubsection{GitHub}
+\subsection{Proprietary issue tracking}
+\subsubsection{JIRA Software}
+\subsection{Other Atlassian tools}
+\subsection{Containers}
+\subsubsection{Docker}
+\subsubsection{Containers vs OS-level virtualization}
+\subsection{Automation server}
+\subsubsection{GitHub CMake workflows}
 \paragraph{Example CMake file used in project}
 \begin{verbatim}
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
@@ -237,30 +322,9 @@ TARGET_LINK_LIBRARIES(ConsoleApplication1
   debug wtdbosqlite3d optimized wtdbosqlite3
   )
 \end{verbatim}
-
-\section{WebToolkit C++ library}
-\subsection{Library introduction}
-\subsubsection{Introduction to Wt}
-\subsubsection{Introduction to Wt::Dbo}
-\subsubsection{Introduction to Wt::Auth}
-\subsection{Widgets gallery}
-\subsection{Library overview}
-
-\section{DevOps layer}
-\subsection{Distributed version-control system}}
-\subsubsection{GitHub}
-\subsubsection{BitBucket}
-\subsection{Proprietary issue tracking}
-\subsubsection{JIRA Software}
-\subsubsection{Confluence}
-\subsection{Containers}
-\subsubsection{Docker}
-\subsubsection{Kubernetes}
-\subsubsection{Containers vs OS-level virtualization}
-\subsection{Automation server}
-\subsubsection{GitHub CMake workflows}
 \subsubsection{CircleCI}
 \subsubsection{Jenkins}
+\subsection{Doxygen docs}
 
 \section{Implementation}
 \subsection{Server side session}
