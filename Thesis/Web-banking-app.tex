@@ -84,7 +84,7 @@ Jednoczesnie Uczelnia informuje, ze zgodnie z art. 15a ww. ustawy o prawie autor
 
 \newpage
 \tableofcontents
-\newpage
+
 \section*{Introduction}
 \addcontentsline{toc}{section}{\protect\numberline{}Introduction}%
 \tab {Software engineering is a very wide area of engineering which particularly concerns developing and maintaining programming products. A development process itself is a major challenge to all people involved, starting with engineers creating the code, continuing with product owners who are managing teams and coordinating the work flow and ending-up with managers who are setting the direction of the whole process.
@@ -262,14 +262,36 @@ The most important things that above CMake will perform (in order from the top) 
 
 \section{WebToolkit C++ library}
 \subsection{Library introduction}
-{\tab \textbf{Web Toolkit} is an open-source C++ library that allows developers to create SAP web applications without writing single line of JavaScript code. The main concept behind \cite{singlepageapplications}SAP (\hl{Single Page Applications}) is they do not render HTML files, but instead they use asynchronous JavaScript (AJAX) to reload contents of the page in real time without refreshing the whole page. To some extent it might be a bit misleading, as with loading different content, the URL of the page changes as well, like in ordinary multi-page service.\\
+{\tab \textbf{Web Toolkit} is an open-source C++ library that allows developers to create SAP web applications without writing single line of JavaScript code. The main concept behind \cite{singlepageapplications}SAP (\hl{Single Page Applications}) is they do not render HTML files, but instead they use asynchronous JavaScript (AJAX) to reload contents of the page in real time without refreshing the whole page. To some extent it might be a bit misleading, as with loading different content, the URL of the page changes as well, like in ordinary multi-page service.
 
 \begin{figure}[h]
   \centering
     \includegraphics[width=1.0\textwidth]{spa}
-    \caption{A picture of a gull.}
+    \caption{Traditional Page VS SPA[2].}
 \end{figure}
 
+\bigskip
+As a SPA the application works on widgets which are the core of WebToolkit library. A developer should create a main widget, which is not visible to the user. Instead it works as a widget container that will hold other template widgets that will be pluggin in or plugged out depending on what content will be loaded on the page.  
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=1.0\textwidth]{spa-template}
+    \caption{Views in Traditional Page and SPA[2].}
+\end{figure} 
+
+\bigskip
+There are a lot of modern services that use SPA technology like facebook, airbnb, twitter, paypal, gmail or even netflix. The biggest benefits of this web application model are quick loading time, good caching abilities, improved user experiance or rapid front-end development. \\
+
+\bigskip
+Beyond usual frameworks dedicated for SPA services are
+\begin{itemize}
+	\item  Angular.js
+	\item React.js
+	\item Backbone.js
+	\item Ember.js
+\end{itemize}
+
+It is no secret that preferable programming technology stack for such development would be JavaScript, TypeScript, HTML, CSS and some back-end in Java, Python or PHP. With that being said, WebToolkit library seems to be very unorthodox tool for this task. The whole development process starts and ends with C++ code, which makes it interesting and unusual.
 
 \bigskip
 2. Features
