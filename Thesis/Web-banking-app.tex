@@ -20,7 +20,15 @@
     linkcolor=black,
     urlcolor=black
 }
-\lstset{language=Pascal}
+\lstset{
+    frame=tb, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{green}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{red} % string color
+}
 
 
 \makeatletter
@@ -205,7 +213,7 @@ To be able to explore favors that CMake offers one must create \textbf{CMakeList
 
 \bigskip
 Let's have an example project\cite{cmakeintroduction} which structure looks like below\newline
-\begin{lstlisting}[frame=single, caption={Example CMake project structure}, captionpos=b]
+\begin{lstlisting}[frame=single, language=C++, caption={Example CMake project structure}, captionpos=b]
  .
  |-- CMakeLists.txt
  |-- build
@@ -219,7 +227,7 @@ Let's have an example project\cite{cmakeintroduction} which structure looks like
 \bigskip
 The content of \textbf{*.cpp} and \textbf{*.h} files is irrelevant here, at this point it could be any code. In the main directory we have a simple \textbf{CMakeLists.txt} which is used to build the project. The code of our CMakeLists script:\newline
 
-\begin{lstlisting}[frame=single, caption={CMakeLists.txt of example project}, captionpos=b]
+\begin{lstlisting}[frame=single, language=C++, caption={CMakeLists.txt of example project}, captionpos=b]
 cmake_minimum_required(VERSION 2.8.9)
 project(directory_test)
 
@@ -261,7 +269,7 @@ The most important things that above CMake will perform (in order from the top) 
 \newpage
 
 \section{WebToolkit C++ library}
-\subsection{Library introduction}
+\subsection{Library overview}
 {\tab \textbf{Web Toolkit} is an open-source C++ library that allows developers to create SAP web applications without writing single line of JavaScript code. The main concept behind \cite{singlepageapplications}SAP (\hl{Single Page Applications}) is they do not render HTML files, but instead they use asynchronous JavaScript (AJAX) to reload contents of the page in real time without refreshing the whole page. To some extent it might be a bit misleading, as with loading different content, the URL of the page changes as well, like in ordinary multi-page service.
 
 \begin{figure}[h]
@@ -292,16 +300,184 @@ Beyond usual frameworks dedicated for SPA services are
 \end{itemize}
 
 It is no secret that preferable programming technology stack for such development would be JavaScript, TypeScript, HTML, CSS and some back-end in Java, Python or PHP. With that being said, WebToolkit library seems to be very unorthodox tool for this task. The whole development process starts and ends with C++ code, which makes it interesting and unusual.
+\newpage
+
+}
+\subsection{WebToolkit Features}
+{
+\tab WebToolkit library has a lot to offer. Now of course - creating web application in low-level language comes with a prize. It's biggest disadvantage is that while programming we have no control of HTML code. There is also a necessity of re-compiling the code with every change introduced where there is no such need when using regular tools. However - compilation time is quite fast and the library implementation is very robust. 
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.7\textwidth]{features}
+    \caption{WebToolkit logo and features\cite{wtlogo}.}
+\end{figure}
+
+\subsubsection*{Core Library} 
+{
+\tab What is really important is that core library is fully open source and still under development. It's implementation allows to integrate it with 3rd party JavaScript libraries, which is a nice addition for developers that create services with more advanced front-end layer. What is more, WT is fully compatible with HTML5 and HTML4 browsers. Thus, as a hybrid single page framework it supports browser history navigation. The bottom line is, WT is a high performance library which is something you would expect from a C++ library. It is optimized when it comes to asynchronous I/O, multi-threading and throughout all rendering.
 
 \bigskip
-2. Features
-3. Intro section in DOCS}
-\subsubsection{Introduction to Wt}
-\subsubsection{Introduction to Wt::Dbo}
-\subsubsection{Introduction to Wt::Auth}
-\subsection{Widgets gallery}
-\subsection{Library overview}
+Event handling is completed with C++11 lambdas or bound object methods, which are a part of C++11 signal/slot API for responding to various events. Server-initiated updates are also available through WebSockets and automatic fallaback to AJAX. The handling itself is also completed with efficient synchronization of browser using session, which incrementally renders updates of application states. The concept of session is thoroughly described in implementation chapter.
 
+\bigskip
+Core library also provides 2D and 3D painting support to users and developers. Through WT API it is possible to generate simple graphics objects like HTML5 canvas, inline SVG or inline VML. Browser native vectors are also leveraged by rendering common image formats like PNG, GIF or even PDF. WT broads the variety of graphics support by also supporting hardware-accelerated 3D painting API like for instance server-side OpenGL.
+}
+
+\subsubsection*{Security}
+{
+\tab As a completed web-development library, WebToolkit provides built-in security layer to the applications which contains:
+
+\begin{itemize}
+	\item kernel-level memory protection in isolated sessions
+	\item TLS/SSL support
+	\item Cross-Site Scripting (XSS) prevention
+	\item Request Forgery (CSRF) prevention
+	\item Application logic attack prevention
+	\item DoS mitigation
+	\item \textbf{Authentication module} (including support for OAuth 2.0 and OpenID Connect)
+\end{itemize}
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=1.1\textwidth]{auth-module}
+    \caption{Main classes of the authentication module\cite{authmodule}.}
+\end{figure}
+
+The authentication module itself occurred to be significantly important and helpful in Web Banking Application. Some of the classes which implement basic user features are presented above. What it means is that secure and robust service functionalities like signing in/out, registration or authentication are already provided.
+
+}
+
+\subsubsection*{Database support}
+{
+\tab As any other modern library, WT supports databases with a sub-library called Wt::Dbo, which by implementing ORM (Object-Relational Mapper) becomes a convenient way to communicate C++ application with SQL databases. What is more, Wt::Dbo as a self-contained sub-library is independent from Wt itself, which means it could be used for standalone back-end service. Other basic Wt::Dbo features are: 
+
+\begin{itemize}
+	\item Support for
+	\begin{itemize}
+     \item Sqlite3
+     \item Firebird
+     \item MariaDB
+     \item MySQL
+     \item SQL Server
+     \item PostgreSQL
+     \end{itemize}
+	\item Native SQL to query objects and fields
+	\item Session with first-level cache
+	\item DB transactions
+	\item CRUD operations
+	\item Many-to-One and Many-to-Many relations
+	\item Just C++ without XMLs or Macros
+
+\end{itemize}
+}
+
+\subsubsection*{Deployment}
+{
+\tab Extremely important thing in any application is process of Deployment. WT through various abstract interfaces connects with outer world. The basic one is built-in httpd but among others:
+
+\begin{itemize}
+	\item Built-in \textbf{HTTPD}
+	\begin{itemize}
+     \item Simple and high performance with multithreading and asynchronous I/O based on C++ asio library
+     \item Supports WebSockets and HTTP(s) with chunking and compression
+     \item Available for many platforms like Linux, Windows and any UNIX like systems
+     \end{itemize}
+	\item \textbf{FASTCGI}
+	\begin{itemize}
+     \item Integrated with common web servers like apache
+     \item Supported for Linux and UNIX
+     \end{itemize}
+	\item \textbf{ISAPI}
+	\begin{itemize}
+     \item Integrated with Microsoft IIS server
+     \item Completed with asynchronous API
+     \item Supported for Windows
+     \end{itemize}
+\end{itemize}
+}
+\newpage
+}
+
+\subsection{Hello World Application}
+{
+Lets go through simple Hello World applications just to get in touch with WebToolkit library environment.
+
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={A complete "Hello world" application \cite{helloworldapp}}, captionpos=b]
+#include <Wt/WBreak.h>
+#include <Wt/WContainerWidget.h>
+#include <Wt/WLineEdit.h>
+#include <Wt/WPushButton.h>
+#include <Wt/WText.h>
+
+class HelloApplication : public Wt::WApplication
+{
+public:
+    HelloApplication(const Wt::WEnvironment& env);
+
+private:
+    Wt::WLineEdit *nameEdit_;
+    Wt::WText *greeting_;
+};
+
+HelloApplication::HelloApplication(const Wt::WEnvironment& env)
+    : Wt::WApplication(env)
+{
+    setTitle("Hello world");
+
+    root()->addWidget(std::make_unique<Wt::WText>("Your name, please? "));
+    nameEdit_ = root()->addWidget(std::make_unique<Wt::WLineEdit>());
+    
+    Wt::WPushButton *button = 
+    	root()->addWidget(std::make_unique<Wt::WPushButton>("Greet me."));
+    	
+    root()->addWidget(std::make_unique<Wt::WBreak>());
+    greeting_ = root()->addWidget(std::make_unique<Wt::WText>());
+    
+    auto greet = [this]{
+      greeting_->setText("Hello there, " + nameEdit_->text());
+    };
+    button->clicked().connect(greet);
+}
+
+int main(int argc, char **argv)
+{
+    return Wt::WRun(argc, argv, [](const Wt::WEnvironment& env) {
+      return std::make_unique<HelloApplication>(env);
+    });
+}
+\end{lstlisting}
+
+\newpage
+Now when it comes to building, it could be done locally by setting up a localhost HTTP server. Having IDE set-up it is done automatically. Otherwise while operating on UNIX-like systems:
+
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Building "Hello world" application}, captionpos=b]
+$ g++ -std=c++14 -o hello hello.cc -lwthttp -lwt
+$ ./hello --docroot . --http-address 0.0.0.0 --http-port 9090
+\end{lstlisting}
+
+\bigskip
+The final result is:
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.7\textwidth]{hello-app}
+    \caption{Hello Application on WT.}
+\end{figure}
+
+\bigskip
+The above code presents basic concepts of the library workflow.
+
+\begin{labeling}{alligator}
+\item [\textbf{class HelloApplication}] A class that represents application and extends Wt::WApplication. Contains ctor that takes Wt::WEnvironment and private fields that represents input field and output greeting string wrapped in Wt::WText,
+\item [\textbf{LINE 20:}] Sets title of appliaction which will be visible in web browser's card,
+\item [\textbf{LINE 22-29:}] This part of the code handles adding widgets to the root which represents a container for the widgets. This is an implementation of SPA concept where we create widgets and plug them in or out, for instance by addWidget() function,
+\item [\textbf{LINE 31:}] Lambda expression that returns WText string which called upon clicking the button,
+\item [\textbf{LINE 34:}] Calling lambda expression from line 31 when button is clicked,
+\item [\textbf{MAIN:}] Creating and running application.
+\end{labeling} 
+
+
+}
+\subsection{Widgets gallery}
 \section{DevOps layer}
 \subsection{Distributed version-control system}}
 \subsubsection{GitHub}
@@ -365,7 +541,6 @@ TARGET_LINK_LIBRARIES(ConsoleApplication1
   )
 \end{verbatim}
 \subsubsection{CircleCI}
-\subsubsection{Jenkins}
 \subsection{Doxygen docs}
 
 \section{Implementation}
@@ -395,12 +570,25 @@ TARGET_LINK_LIBRARIES(ConsoleApplication1
   
 \bibitem{singlepageapplications}
   Single Page Applications,
-  \emph{https://www.excellentwebworld.com/what-is-a-single-page-application }.
+  \emph{https://www.excellentwebworld.com/what-is-a-single-page-application}.
+  
+\bibitem{wtlogo}
+  WT Logo and Features,
+  \emph{https://www.webtoolkit.eu/wt/features}.
+
+\bibitem{authmodule}
+  Introduction to Wt::Auth,
+  \emph{https://www.webtoolkit.eu/wt/doc/tutorial/auth.html}.
+  
+\bibitem{helloworldapp}
+  Wt Hello World Application,
+  \emph{https://www.webtoolkit.eu/wt/doc/tutorial/wt.html}.
 
 \end{thebibliography}
 
 \textbf{Additional materials} \begin{itemize}
-	\item Material 1
+	\item LaTeX wikibooks \newline \textit{https://en.wikibooks.org/wiki/LaTeX}
+
 \end{itemize}
 
 }
