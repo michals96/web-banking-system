@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,12pt]{book}
 \usepackage{xcolor}
 \usepackage{etoc}
 \usepackage{soul}
@@ -105,11 +105,12 @@ Nowadays in a software engineering world there is a trend to migrate desktop app
 
 \
 }
-\newpage
-\section{Projects assumptions}
 
-\subsection{Application's blue-print}
-{\tab The application is a single-page service run on a local server with an \textbf{http://localhost:8080/} address. After starting, logging panel appears, giving the user an opportunity to type their credentials and log-in. 
+\chapter{Projects assumptions}
+
+\section{Application's blue-print}
+{
+The application is a single-page service run on a local server with an \textbf{http://localhost:8080/} address. After starting, logging panel appears, giving the user an opportunity to type their credentials and log-in. 
 
 \bigskip
 The idea of the service is to provide basic functionalities of a banking service like for instance transferring money or checking their balance to the user. These required implementation of secure back-end layer with a database containing information about the users and transactions and a front-end layer which is transparent to the user. 
@@ -124,7 +125,7 @@ Regarding the credentials a user will see different features after logging into 
 \bigskip
 After user decides to quit the service, a possibility of logging out is provided and whilst doing that the application returns to the logging page where session is refreshed and database is updated. If the user was an administrator of the service, an access to the console logs that are gathering and sniffing network traffic like HTTP methods for RESTful APIs is also granted.  
 
-\subsection{Programming environment}
+\section{Programming environment}
 {\tab Developing any kind of programs usually requires specific environmental variables therefore a programmer's task is to choose a specific set of tools which will be the most handy during the process.  
 
 \bigskip
@@ -140,7 +141,7 @@ Regarding the specifics of the project, the chosen set of tools looks like follo
 The application was developed under Windows 10 64-bit operating system, but it could have been developed under any other platform that is supported by WebToolkit library.
 
 \newpage
-\subsubsection*{IDE - Integrated Development Environment}
+\subsection*{IDE - Integrated Development Environment}
 {
 \tab IDE is a program or a set of programs merged into one that usually gathers tools, libraries, debuggers, run time scripts and any other stuff necessary for the developer to write the code. The purpose of IDE is to allow easily and swiftly create code, but at the same time test it, compile it and run it in one place. 
 
@@ -268,8 +269,8 @@ The most important things that above CMake will perform (in order from the top) 
 \textit{Git BASH} tool and \textit{Web Toolkit} library are described thoroughly in next chapters.
 \newpage
 
-\section{WebToolkit C++ library}
-\subsection{Library overview}
+\chapter{WebToolkit C++ library}
+\section{Library overview}
 {\tab \textbf{Web Toolkit} is an open-source C++ library that allows developers to create SAP web applications without writing single line of JavaScript code. The main concept behind \cite{singlepageapplications}SAP (\hl{Single Page Applications}) is they do not render HTML files, but instead they use asynchronous JavaScript (AJAX) to reload contents of the page in real time without refreshing the whole page. To some extent it might be a bit misleading, as with loading different content, the URL of the page changes as well, like in ordinary multi-page service.
 
 \begin{figure}[h]
@@ -303,7 +304,7 @@ It is no secret that preferable programming technology stack for such developmen
 \newpage
 
 }
-\subsection{WebToolkit Features}
+\section{WebToolkit Features}
 {
 \tab WebToolkit library has a lot to offer. Now of course - creating web application in low-level language comes with a prize. It's biggest disadvantage is that while programming we have no control of HTML code. There is also a necessity of re-compiling the code with every change introduced where there is no such need when using regular tools. However - compilation time is quite fast and the library implementation is very robust. 
 \begin{figure}[h]
@@ -312,7 +313,7 @@ It is no secret that preferable programming technology stack for such developmen
     \caption{WebToolkit logo and features\cite{wtlogo}.}
 \end{figure}
 
-\subsubsection*{Core Library} 
+\subsection*{Core Library} 
 {
 \tab What is really important is that core library is fully open source and still under development. It's implementation allows to integrate it with 3rd party JavaScript libraries, which is a nice addition for developers that create services with more advanced front-end layer. What is more, WT is fully compatible with HTML5 and HTML4 browsers. Thus, as a hybrid single page framework it supports browser history navigation. The bottom line is, WT is a high performance library which is something you would expect from a C++ library. It is optimized when it comes to asynchronous I/O, multi-threading and throughout all rendering.
 
@@ -323,7 +324,7 @@ Event handling is completed with C++11 lambdas or bound object methods, which ar
 Core library also provides 2D and 3D painting support to users and developers. Through WT API it is possible to generate simple graphics objects like HTML5 canvas, inline SVG or inline VML. Browser native vectors are also leveraged by rendering common image formats like PNG, GIF or even PDF. WT broads the variety of graphics support by also supporting hardware-accelerated 3D painting API like for instance server-side OpenGL.
 }
 
-\subsubsection*{Security}
+\subsection*{Security}
 {
 \tab As a completed web-development library, WebToolkit provides built-in security layer to the applications which contains:
 
@@ -347,7 +348,7 @@ The authentication module itself occurred to be significantly important and help
 
 }
 
-\subsubsection*{Database support}
+\subsection*{Database support}
 {
 \tab As any other modern library, WT supports databases with a sub-library called Wt::Dbo, which by implementing ORM (Object-Relational Mapper) becomes a convenient way to communicate C++ application with SQL databases. What is more, Wt::Dbo as a self-contained sub-library is independent from Wt itself, which means it could be used for standalone back-end service. Other basic Wt::Dbo features are: 
 
@@ -371,7 +372,7 @@ The authentication module itself occurred to be significantly important and help
 \end{itemize}
 }
 
-\subsubsection*{Deployment}
+\subsection*{Deployment}
 {
 \tab Extremely important thing in any application is process of Deployment. WT through various abstract interfaces connects with outer world. The basic one is built-in httpd but among others:
 
@@ -398,7 +399,7 @@ The authentication module itself occurred to be significantly important and help
 \newpage
 }
 
-\subsection{Hello World Application}
+\section{Hello World Application}
 {
 Lets go through simple Hello World applications just to get in touch with WebToolkit library environment.
 
@@ -477,7 +478,7 @@ The above code presents basic concepts of the library workflow.
 
 
 }
-\subsection{Widgets gallery}
+\section{Widgets gallery}
 {
 \tab WT also offers a widgets gallery, which is nothing else but a bootstrap where most common widgets are already implemented and ready to be used. Among them there are layouts, forms widgets, navigation widgets, trees widgets, tables widgets, graphics widgets, charts widgets and media widgets. Basically whilst going through development process one should keep in mind this feature as it may save a lot of time and a lot of coding. 
 
@@ -489,17 +490,17 @@ The above code presents basic concepts of the library workflow.
 \end{figure} 
 }
 
-\section{DevOps layer}
-\subsection{Distributed version-control system}}
-\subsubsection{GitHub}
-\subsection{Proprietary issue tracking}
-\subsubsection{JIRA Software}
-\subsection{Other Atlassian tools}
-\subsection{Containers}
-\subsubsection{Docker}
-\subsubsection{Containers vs OS-level virtualization}
-\subsection{Automation server}
-\subsubsection{GitHub CMake workflows}
+\chapter{DevOps layer}
+\section{Distributed version-control system}}
+\section{GitHub}
+\section{Proprietary issue tracking}
+\subsection{JIRA Software}
+\section{Other Atlassian tools}
+\section{Containers}
+\subsection{Docker}
+\subsection{Containers vs OS-level virtualization}
+\section{Automation server}
+\subsection{GitHub CMake workflows}
 \paragraph{Example CMake file used in project}
 \begin{verbatim}
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
@@ -554,23 +555,23 @@ TARGET_LINK_LIBRARIES(ConsoleApplication1
 \subsubsection{CircleCI}
 \subsection{Doxygen docs}
 
-\section{Implementation}
-\subsection{Server side session}
-\subsection{Logging panel}
-\subsection{Database}
-\subsection{User features}
-\subsubsection{Transferring money}
-\subsubsection{Checking user balance}
-\subsection{Admin features}
-\subsubsection{Listing all users}
-\subsubsection{Access to server logs}
-\subsection{Modern C++ features}
+\chapter{Implementation}
+\section{Server side session}
+\section{Logging panel}
+\section{Database}
+\section{User features}
+\subsection{Transferring money}
+\subsection{Checking user balance}
+\section{Admin features}
+\subsection{Listing all users}
+\subsection{Access to server logs}
+\section{Modern C++ features}
 
-\section{Testing}
-\subsection{Unit testing}
-\subsection{Regression testing}
-\section{Summary}
-\section{Literature}
+\chapter{Testing}
+\section{Unit testing}
+\section{Regression testing}
+\chapter{Summary}
+\chapter{Literature}
 {
 
 \begin{thebibliography}{9}
