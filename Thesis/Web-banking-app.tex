@@ -318,13 +318,13 @@ It is no secret that preferable programming technology stack for such developmen
 
 \subsection*{Core Library} 
 {
-\tab What is really important is that core library is fully open source and still under development. It's implementation allows to integrate it with third party JavaScript libraries, which is a nice addition for developers that create services with more advanced front-end layer. What is more, Web Toolkit is fully compatible with HTML5 and HTML4 browsers. Thus, as a hybrid single page framework it supports browser history navigation. The bottom line is, WT is a high performance library which is something you would expect from a C++ library. It is optimized when it comes to asynchronous I/O, multi-threading and throughout all rendering.
+\tab What is really important is that core library is fully open source and still under development. It's implementation allows to integrate it with third party JavaScript libraries, which is a nice addition for developers that create services with more advanced front-end layer. What is more, Web Toolkit is fully compatible with HTML5~\cite{html5} and HTML4~\cite{html4} browsers. Thus, as a hybrid single page framework it supports browser history navigation. The bottom line is, WT is a high performance library which is something you would expect from a C++ library. It is optimized when it comes to asynchronous I/O, multi-threading and throughout all rendering.
 
 \bigskip
-Event handling is completed with C++11 lambdas or bound object methods, which are a part of C++11 signal/slot API for responding to various events. Server-initiated updates are also available through WebSockets and automatic fallaback to AJAX. The handling itself is also completed with efficient synchronization of browser using session, which incrementally renders updates of application states. The concept of session is thoroughly described in implementation chapter.
+Event handling is completed with C++11 lambdas~\cite{lambda} or bound object methods to retreive data that is bound to a function. Those are a part of C++11 signal/slot API for responding to various events. Server-initiated updates are also available through WebSockets and automatic fallaback to AJAX. Event handling itself is also completed with efficient synchronization of browser using session, which incrementally renders updates of application states.
 
 \bigskip
-Core library also provides 2D and 3D painting support to users and developers. Through WT API it is possible to generate simple graphics objects like HTML5 canvas, inline SVG or inline VML. Browser native vectors are also leveraged by rendering common image formats like PNG, GIF or even PDF. WT broads the variety of graphics support by also supporting hardware-accelerated 3D painting API like for instance server-side OpenGL.
+Core library also provides 2D and 3D painting support to users and developers. Through Web Toolkit API it is possible to generate simple graphics objects like HTML5 canvas, inline SVG~\cite{svg} or inline VML. Graphics is also leveraged by rendering common image formats like PNG, GIF or even PDF. WT broads the variety of graphics support by also supporting hardware-accelerated 3D painting API like for instance server-side OpenGL~\cite{opengl}.
 }
 
 \subsection*{Security}
@@ -332,13 +332,13 @@ Core library also provides 2D and 3D painting support to users and developers. T
 \tab As a completed web-development library, WebToolkit provides built-in security layer to the applications which contains:
 
 \begin{itemize}
-	\item kernel-level memory protection in isolated sessions
-	\item TLS/SSL support
-	\item Cross-Site Scripting (XSS) prevention
-	\item Request Forgery (CSRF) prevention
-	\item Application logic attack prevention
-	\item DoS mitigation
-	\item \textbf{Authentication module} (including support for OAuth 2.0 and OpenID Connect)
+	\item kernel-level memory protection in isolated sessions,
+	\item TLS/SSL support,
+	\item Cross-Site Scripting (XSS) prevention,
+	\item Request Forgery (CSRF) prevention,
+	\item Application logic attack prevention,
+	\item DoS mitigation,
+	\item \textbf{Authentication module} (including support for OAuth 2.0 and OpenID Connect).
 \end{itemize}
 
 \begin{figure}[h]
@@ -406,7 +406,7 @@ The authentication module itself occurred to be significantly important and help
 {
 Lets go through simple Hello World applications just to get in touch with WebToolkit library environment.
 
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={A complete "Hello world" application \cite{helloworldapp}}, captionpos=b]
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={A complete "Hello world" application \cite{helloworldapp}.}, captionpos=b]
 #include <Wt/WBreak.h>
 #include <Wt/WContainerWidget.h>
 #include <Wt/WLineEdit.h>
@@ -454,7 +454,7 @@ int main(int argc, char **argv)
 \newpage
 Now when it comes to building, it could be done locally by setting up a localhost HTTP server. Having IDE set-up it is done automatically. Otherwise while operating on UNIX-like systems:
 
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Building "Hello world" application}, captionpos=b]
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Building "Hello world" application.}, captionpos=b]
 $ g++ -std=c++14 -o hello hello.cc -lwthttp -lwt
 $ ./hello --docroot . --http-address 0.0.0.0 --http-port 9090
 \end{lstlisting}
@@ -464,7 +464,7 @@ The final result is:
 \begin{figure}[h]
   \centering
     \includegraphics[width=0.7\textwidth]{hello-app}
-    \caption{Hello Application on WT.}
+    \caption{Hello Application on Web Toolkit.}
 \end{figure}
 
 \bigskip
@@ -483,13 +483,13 @@ The above code presents basic concepts of the library workflow.
 }
 \section{Widgets gallery}
 {
-\tab WT also offers a widgets gallery, which is nothing else but a bootstrap where most common widgets are already implemented and ready to be used. Among them there are layouts, forms widgets, navigation widgets, trees widgets, tables widgets, graphics widgets, charts widgets and media widgets. Basically whilst going through development process one should keep in mind this feature as it may save a lot of time and a lot of coding. 
+\tab \textbf{Web Toolkit} also offers a widgets gallery, which is nothing else but a bootstrap where most common widgets are already implemented and ready to be used. Among them there are layouts, forms widgets, navigation widgets, trees widgets, tables widgets, graphics widgets, charts widgets and media widgets. Basically whilst going through development process one should keep in mind this feature as it may save a lot of time and a lot of coding. 
 
 \bigskip
 \begin{figure}[h]
   \centering
     \includegraphics[width=1.0\textwidth]{gallery}
-    \caption{Wt Widget Gallery. \cite{widgetsgallery}}
+    \caption{Web Toolkit Widget Gallery.~\cite{widgetsgallery}.}
 \end{figure} 
 }
 
@@ -652,7 +652,27 @@ TARGET_LINK_LIBRARIES(ConsoleApplication1
 \bibitem{php}
   PHP,
   \emph{https://www.php.net/}.
-
+  
+\bibitem{html5}
+  HTML5,
+  \emph{https://developer.mozilla.org/pl/docs/HTML/HTML5}.
+  
+\bibitem{html4}
+  HTML4,
+  \emph{https://www.w3.org/TR/html5-diff/}.
+  
+\bibitem{lambda}
+  C++11 lambda expressions,
+  \emph{https://en.cppreference.com/w/cpp/language/lambda}.
+  
+\bibitem{opengl}
+  OpenGL,
+  \emph{https://www.opengl.org/}.
+  
+\bibitem{svg}
+  HTML5 SVG,
+  \emph{https://css-tricks.com/using-svg/}.
+  
 \end{thebibliography}
 
 \textbf{Additional materials} \begin{itemize}
