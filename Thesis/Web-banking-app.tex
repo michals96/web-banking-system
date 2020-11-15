@@ -295,19 +295,21 @@ On the other hand a regular static page has a lot to offer too. It servers HTML 
 \bigskip
 Beyond usual frameworks dedicated for SPA services are
 \begin{itemize}
-	\item  Angular.js
-	\item React.js
-	\item Backbone.js
-	\item Ember.js
+	\item Angular.js,
+	\item React.js,
+	\item Backbone.js,
+	\item Ember.js.
 \end{itemize}
 
-It is no secret that preferable programming technology stack for such development would be JavaScript, TypeScript, HTML, CSS and some back-end in Java, Python or PHP. With that being said, WebToolkit library seems to be very unorthodox tool for this task. The whole development process starts and ends with C++ code, which makes it interesting and unusual.
+It is no secret that preferable programming technology stack for such development would be JavaScript~\cite{javascript}, TypeScript~\cite{typescript}, HTML~\cite{html}, CSS~\cite{css} and some back-end in Java~\cite{java}, Python~\cite{python} or PHP~\cite{php}. With that being said, WebToolkit library seems to be very unorthodox tool for this task. The whole development process starts and ends with C++ code, which makes it interesting and unusual.
+
 \newpage
 
 }
 \section{WebToolkit Features}
 {
-\tab WebToolkit library has a lot to offer. Now of course - creating web application in low-level language comes with a prize. It's biggest disadvantage is that while programming we have no control of HTML code. There is also a necessity of re-compiling the code with every change introduced where there is no such need when using regular tools. However - compilation time is quite fast and the library implementation is very robust. 
+\tab \textbf{Web Toolkit} library has a lot to offer. Now of course - creating web application in C++ language comes with a prize. It's biggest disadvantage is that while programming we have no control of HTML code. There is also a necessity of re-compiling the code with every change introduced where there is no such need when using standard web development tools (like javascript application with node.js or php application with XAMPP). However, having said that it is worth mentioning that Web Toolkit is appreciated for plenty features that it provides to the users.
+ 
 \begin{figure}[h]
   \centering
     \includegraphics[width=0.7\textwidth]{features}
@@ -316,7 +318,7 @@ It is no secret that preferable programming technology stack for such developmen
 
 \subsection*{Core Library} 
 {
-\tab What is really important is that core library is fully open source and still under development. It's implementation allows to integrate it with 3rd party JavaScript libraries, which is a nice addition for developers that create services with more advanced front-end layer. What is more, WT is fully compatible with HTML5 and HTML4 browsers. Thus, as a hybrid single page framework it supports browser history navigation. The bottom line is, WT is a high performance library which is something you would expect from a C++ library. It is optimized when it comes to asynchronous I/O, multi-threading and throughout all rendering.
+\tab What is really important is that core library is fully open source and still under development. It's implementation allows to integrate it with third party JavaScript libraries, which is a nice addition for developers that create services with more advanced front-end layer. What is more, Web Toolkit is fully compatible with HTML5 and HTML4 browsers. Thus, as a hybrid single page framework it supports browser history navigation. The bottom line is, WT is a high performance library which is something you would expect from a C++ library. It is optimized when it comes to asynchronous I/O, multi-threading and throughout all rendering.
 
 \bigskip
 Event handling is completed with C++11 lambdas or bound object methods, which are a part of C++11 signal/slot API for responding to various events. Server-initiated updates are also available through WebSockets and automatic fallaback to AJAX. The handling itself is also completed with efficient synchronization of browser using session, which incrementally renders updates of application states. The concept of session is thoroughly described in implementation chapter.
@@ -622,6 +624,34 @@ TARGET_LINK_LIBRARIES(ConsoleApplication1
 \bibitem{netflix}
   Netflix,
   \emph{https://www.netflix.com}.
+
+\bibitem{javascript}
+  JavaScript,
+  \emph{https://www.javascript.com/}.
+  
+\bibitem{typescript}
+  TypeScript,
+  \emph{https://www.typescriptlang.org/}.
+  
+\bibitem{html}
+  HTML,
+  \emph{https://www.w3schools.com/html/}.
+  
+\bibitem{css}
+  CSS,
+  \emph{https://www.w3schools.com/css/}.
+ 
+\bibitem{java}
+  Java,
+  \emph{https://www.java.com/pl/}.
+  
+\bibitem{python}
+  Python,
+  \emph{https://www.python.org/}.
+  
+\bibitem{php}
+  PHP,
+  \emph{https://www.php.net/}.
 
 \end{thebibliography}
 
