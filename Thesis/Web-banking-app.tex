@@ -93,7 +93,7 @@ Jednoczesnie Uczelnia informuje, ze zgodnie z art. 15a ww. ustawy o prawie autor
 \newpage
 \tableofcontents
 
-\section*{Introduction}
+\chapter*{Introduction}
 \addcontentsline{toc}{section}{\protect\numberline{}Introduction}%
 \tab {Software engineering is a very wide area of engineering which particularly concerns developing and maintaining programming products. A development process itself is a major challenge to all people involved, starting with engineers creating the code, continuing with product owners who are managing teams and coordinating the work flow and ending-up with managers who are setting the direction of the whole process.
 
@@ -102,8 +102,6 @@ The main motivation to create this thesis was simply to present a development pr
 
 \bigskip 
 Nowadays in a software engineering world there is a trend to migrate desktop applications to the internet, which has also impacted a lot GUI desktop libraries in decreasing their utilities. The secondary reason behind choosing C++ to create a web application, which is quite unusual, was to show the tremendous possibilities that this language still provides and to exhibit the capabilities of open source libraries shared among developers and engineers. The bottom line is - next chapters are a review of possibilities that C++-based web library provides.
-
-\
 }
 
 \chapter{Projects assumptions}
@@ -152,24 +150,24 @@ The advantage of this solution is that it gives the developer an opportunity to 
 The chosen IDE for this project is \textbf{Microsoft Visual Studio Community 2019}. Web Toolkit library is supported on various platforms including Linux distributions (even less popular ones like ArchLinux, Slackware or Opensuse), Windows or other operating systems like Android, Raspberry Pi or even OS X. The consequence of choosing MSV IDE was using Windows platform and prebuilt Windows binaries of the WT library.
 
 \bigskip
-\textbf{Microsoft Visual Studio} is and IDE produced by Microsoft Company and it allows creating cross-platform software with graphical user interface. It basically supports every programming language but the basic package contains support for 
+\textbf{Microsoft Visual Studio} is an IDE produced by Microsoft Company and it allows creating cross-platform software with graphical user interface. It basically supports every programming language but the basic package contains support for 
 \begin{itemize}
-	\item Microsoft Visual C\ttvar{#}
-	\item Microsoft Visual C++
-	\item Microsoft Visual Basic
-	\item Microsoft Visual J\ttvar{#}
-	\item Microsoft Visual Web Developer ASP.NET
-	\item Microsoft Visual F\ttvar{#}
+	\item Microsoft Visual C,\ttvar{#}
+	\item Microsoft Visual C++,
+	\item Microsoft Visual Basic,
+	\item Microsoft Visual J,\ttvar{#}
+	\item Microsoft Visual Web Developer ASP.NET,
+	\item Microsoft Visual F.\ttvar{#}
 \end{itemize}
 
-MSVC also provides a lot of built-in features. A lot of them occurred to be significantly useful in the process of developing this application. A few most important ones are
+Microsoft Visual Studio (MSVC) also provides a lot of built-in features. Many of them occurred to be significantly useful in the process of developing this application. A few most important ones are
 \begin{itemize}
-	\item Debugger, Linker and Compiler
-	\item Projects and Build Systems
-	\item Writing and refactoring C++ code
-	\item Code analysis overview
-	\item Unit tests support
-	\item Universal Windows Apps like command line appliactions
+	\item debugger, linker and compiler,
+	\item projects and build systems,
+	\item writing and refactoring C++ code,
+	\item code analysis overview,
+	\item unit tests support,
+	\item universal windows apps like command line appliactions.
 \end{itemize}
 
 }
@@ -181,40 +179,40 @@ MSVC also provides a lot of built-in features. A lot of them occurred to be sign
 \bigskip
 The most important features provided by Boost are
 \begin{itemize}
-	\item Algorithms
-	\item Concurrent programming
-	\item Complex containers
-	\item Correctness validating and enhanced unit testing
-	\item Additional data structures (like bimap, fusion, tuple etc)
-	\item High level programming and functional objects
-	\item Parsers and graphs
-	\item Meta-programming with templates
+	\item algorithms,
+	\item concurrent programming,
+	\item complex containers,
+	\item correctness validating and enhanced unit testing,
+	\item additional data structures (like bimap, fusion, tuple etc),
+	\item high level programming and functional objects,
+	\item parsers and graphs,
+	\item meta-programming with templates.
 \end{itemize}
 	
-Boost library as a collection is not used in this project explicitly, as the application was developed in Microsoft Visual Studio environment with pre-built Windows binaries. However, for automation server, the project is built under linux machine where WebToolkit needs to be built manually, therefore boost is required. More details will be unveiled in "Automation server" chapter.
+Boost library as a collection is not used in this project explicitly, as the application was developed in Microsoft Visual Studio environment with pre-built Windows binaries. However, for automation server, the project is built with linux machine where WebToolkit needs to be built manually, therefore boost is required.
 }
 \subsubsection*{CMake}
 {
-\tab CMake is a cross platform tool that provides automatic management of compiler that builds the code of an application. It's role is to create a configuration for project files of popular programming environments, which then are used in a process of compilation. The main advantage of using CMake is it's independence of the compiler and the platform. However CMake as a standalone program creates files with rules for compilation dedicated to another program like IDE and it forms a unified building environment. CMake stands for \textit{Cross-platform Make}.
+\tab CMake is a cross platform tool that provides automatic management of compiler that builds the code of an application. It's role is to create a configuration for project files of popular programming environments, which then are used in a process of compilation. The main advantage of using CMake is it's independence of the compiler and the platform. Moreover CMake as a standalone program creates files with rules for compilation dedicated to another program like IDE and it forms a unified building environment. CMake stands for \textit{Cross-platform Make}.
 
 \bigskip
 The most important features provided by CMake are
 \begin{itemize}
-	\item Platform independence
-	\item Cross compilation
-	\item Out-of-source building
-	\item Building projects with complex catalog structure 
-	\item Unit testing support
-	\item Detecting dependencies and outer libraries
+	\item platform independence,
+	\item cross compilation,
+	\item out-of-source building,
+	\item building projects with complex catalog structure,
+	\item unit testing support,
+	\item detecting dependencies and outer libraries.
 \end{itemize}
 This project required including CMake tool because of various dependencies and complex building due to including Web Toolkit and Boost.  
 
 \bigskip
-To be able to explore favors that CMake offers one must create \textbf{CMakeLists.txt} file placed in the main catalog of the project. The core of this file is a simple scripting language that describes rules and defines variables telling the compiler how to link files and what should be the outcome of the compilation process.
+To be able to explore favors that CMake offers one must create \textbf{CMakeLists.txt} file placed in the desired catalog of the project. The core of this file is a simple scripting language that describes rules and defines variables telling the compiler how to link files and what should be the outcome of the compilation process.
 
 \bigskip
-Let's have an example project\cite{cmakeintroduction} which structure looks like below\newline
-\begin{lstlisting}[frame=single, language=C++, caption={Example CMake project structure}, captionpos=b]
+Let's have an example project\cite{cmakeintroduction} which structure looks like below.\newline
+\begin{lstlisting}[frame=single, language=C++, caption={Example CMake project structure.}, captionpos=b]
  .
  |-- CMakeLists.txt
  |-- build
@@ -226,13 +224,13 @@ Let's have an example project\cite{cmakeintroduction} which structure looks like
 \end{lstlisting}
 
 \bigskip
-The content of \textbf{*.cpp} and \textbf{*.h} files is irrelevant here, at this point it could be any code. In the main directory we have a simple \textbf{CMakeLists.txt} which is used to build the project. The code of our CMakeLists script:\newline
+The content of \textbf{*.cpp} and \textbf{*.h} files is irrelevant here, at this point it could be any code. In the main directory there is a simple \textbf{CMakeLists.txt} which is used to build the project. The code of the \textbf{CMakeLists} script:\newline
 
-\begin{lstlisting}[frame=single, language=C++, caption={CMakeLists.txt of example project}, captionpos=b]
+\begin{lstlisting}[frame=single, language=C++, caption={CMakeLists.txt of example project.}, captionpos=b]
 cmake_minimum_required(VERSION 2.8.9)
 project(directory_test)
 
-#Bring the headers, such as Student.h into the project
+#Specifies include directories to use when compiling a given target
 include_directories(include)
 
 #Can manually add the sources using the set command as follows:
@@ -244,9 +242,9 @@ file(GLOB SOURCES "src/*.cpp")
 add_executable(testStudent ${SOURCES})
 \end{lstlisting}
 \bigskip
-The most important things that above CMake will perform (in order from the top) are
+The most important things while building the project that above CMake will perform (in order from the top) are
 \begin{itemize}
-	\item Include directories to let the CMake know where headers files with definitions are
+	\item Include directories to specify headers files directories
 	\item Sources are also set, but the line is commented out as each file needs to be manually added in place
 	\item file() command to add source files to project's GLOB SOURCES
 	\item add\_executable() which uses SOURCES variable in order to build executable program
@@ -255,73 +253,78 @@ The most important things that above CMake will perform (in order from the top) 
 
 \noindent Now to invoke building using CMake:
 \begin{lstlisting}[language=bash]
-  $ mkdir build && cd build
+  $ cd build
   $ cmake ..
   $ make
   $ ./testStudent
 \end{lstlisting}
   
-\bigskip Commands above will create \hl{build} directory. From there cmake will create \textbf{Makefile} containing references to all sources and headers, which ultimately will create an executable that is ready to be run. This as a very basic example of how \textbf{CMake} works. In next chapters there will be more details about \textbf{CMake} and what is the main concept behind basing on the one used in project. 
+\bigskip First current directory is changed to build, where output files will be stored. From there cmake will create \textbf{Makefile} containing references to all sources and headers, which ultimately will create an executable that is ready to be run. This as a very basic example of how \textbf{CMake} works. In next chapters there will be more details about \textbf{CMake} and what is the main concept behind basing on the one used in project. 
 
 }
 
-\subsubsection*{Others}
-\textit{Git BASH} tool and \textit{Web Toolkit} library are described thoroughly in next chapters.
-\newpage
-
 \chapter{WebToolkit C++ library}
 \section{Library overview}
-{\tab \textbf{Web Toolkit} is an open-source C++ library that allows developers to create SAP web applications without writing single line of JavaScript code. The main concept behind \cite{singlepageapplications}SAP (\hl{Single Page Applications}) is they do not render HTML files, but instead they use asynchronous JavaScript (AJAX) to reload contents of the page in real time without refreshing the whole page. To some extent it might be a bit misleading, as with loading different content, the URL of the page changes as well, like in ordinary multi-page service.
+{\tab \textbf{Web Toolkit} is an open-source C++ library that allows developers to create Single Page web applications without writing single line of JavaScript code. The main concept behind SAP~\cite{singlepageapplications}(\hl{Single Page Applications}) is they do not render HTML files, but instead they use asynchronous JavaScript to reload contents of the page in real time without refreshing the whole page. To some extent it might be a bit misleading, as with loading different content, the URL of the page changes as well, like in ordinary multi-page service.
 
 \begin{figure}[h]
   \centering
     \includegraphics[width=1.0\textwidth]{spa}
-    \caption{Traditional Page VS SPA[2].}
+    \caption{Traditional Page vs SPA.}
 \end{figure}
 
 \bigskip
-As a SPA the application works on widgets which are the core of WebToolkit library. A developer should create a main widget, which is not visible to the user. Instead it works as a widget container that will hold other template widgets that will be pluggin in or plugged out depending on what content will be loaded on the page.  
+As a SPA, web-banking application works on widgets which are the core of WebToolkit library. A widget itself is a specific type of user-computer interaction with a graphical interface such as button or a scroll bar, which in WebToolkit case is wrapped in C++ code. A developer should create a main widget, which is not visible to the user. Instead it works as a widget container that will hold other template widgets that will be plugged in or plugged out depending on what content will be loaded on the page.  
 
-\begin{figure}[h]
-  \centering
-    \includegraphics[width=1.0\textwidth]{spa-template}
-    \caption{Views in Traditional Page and SPA[2].}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1.0\textwidth]{spa-template}
+\caption{Views in Traditional Page and SPA[2].}
 \end{figure} 
 
 \bigskip
-There are a lot of modern services that use SPA technology like facebook, airbnb, twitter, paypal, gmail or even netflix. The biggest benefits of this web application model are quick loading time, good caching abilities, improved user experiance or rapid front-end development. \\
+There are a lot of modern services that use SPA technology like facebook~\cite{facebook}, airbnb~\cite{airbnb}, twitter~\cite{twitter}, paypal~\cite{paypal}, gmail~\cite{gmail} or even netflix~\cite{netflix}. The biggest benefits of this web application model are quick loading time, good caching abilities, improved user experiance or rapid front-end development. 
+
+\bigskip
+The most important thing about Single Page Application model is very rapid and fast user experience as the page does not refresh or re-render. However, since the page works on widgets usually the HTML contents of the page is rather empty. Often it's just a few tags, scripts and imports while the rest of the contents is loaded dynamically for instance by asynchronous javascript. This is a big disadvantage when it comes to search engines that are using crawlers. Instead of seeing the web contents they will see a short HTML file with not too much to process, since crawlers never wait for asynchronously loaded data. This SEO problem makes Single Page applications a bad choice for services relying on search engines and positioning.
+
+\bigskip
+On the other hand a regular static page has a lot to offer too. It servers HTML file instantly, but it requires refreshing and rendering new page. It reduces the amount of javascript code that is needed but it also allows crawlers to see the same content that users can see. The disadvantage of this type of page should be pretty obvious now - it allows to create services with limited dynamic content. It might be a poor choice to go for when a service needs to serve content that changes quite frequently.
+
 
 \bigskip
 Beyond usual frameworks dedicated for SPA services are
 \begin{itemize}
-	\item  Angular.js
-	\item React.js
-	\item Backbone.js
-	\item Ember.js
+	\item Angular.js,
+	\item React.js,
+	\item Backbone.js,
+	\item Ember.js.
 \end{itemize}
 
-It is no secret that preferable programming technology stack for such development would be JavaScript, TypeScript, HTML, CSS and some back-end in Java, Python or PHP. With that being said, WebToolkit library seems to be very unorthodox tool for this task. The whole development process starts and ends with C++ code, which makes it interesting and unusual.
+It is no secret that preferable programming technology stack for such development would be JavaScript~\cite{javascript}, TypeScript~\cite{typescript}, HTML~\cite{html}, CSS~\cite{css} and some back-end in Java~\cite{java}, Python~\cite{python} or PHP~\cite{php}. With that being said, WebToolkit library seems to be very unorthodox tool for this task. The whole development process starts and ends with C++ code, which makes it interesting and unusual.
+
 \newpage
 
 }
 \section{WebToolkit Features}
 {
-\tab WebToolkit library has a lot to offer. Now of course - creating web application in low-level language comes with a prize. It's biggest disadvantage is that while programming we have no control of HTML code. There is also a necessity of re-compiling the code with every change introduced where there is no such need when using regular tools. However - compilation time is quite fast and the library implementation is very robust. 
+\tab \textbf{Web Toolkit} library has a lot to offer. Now of course - creating web application in C++ language comes with a prize. It's biggest disadvantage is that while programming we have no control of HTML code. There is also a necessity of re-compiling the code with every change introduced where there is no such need when using standard web development tools (like javascript application with node.js or php application with XAMPP). However, having said that it is worth mentioning that Web Toolkit is appreciated for plenty features that it provides to the users.
+ 
 \begin{figure}[h]
   \centering
     \includegraphics[width=0.7\textwidth]{features}
-    \caption{WebToolkit logo and features\cite{wtlogo}.}
+    \caption{WebToolkit logo and features~\cite{wtlogo}.}
 \end{figure}
 
 \subsection*{Core Library} 
 {
-\tab What is really important is that core library is fully open source and still under development. It's implementation allows to integrate it with 3rd party JavaScript libraries, which is a nice addition for developers that create services with more advanced front-end layer. What is more, WT is fully compatible with HTML5 and HTML4 browsers. Thus, as a hybrid single page framework it supports browser history navigation. The bottom line is, WT is a high performance library which is something you would expect from a C++ library. It is optimized when it comes to asynchronous I/O, multi-threading and throughout all rendering.
+\tab What is really important is that core library is fully open source and still under development. It's implementation allows to integrate it with third party JavaScript libraries, which is a nice addition for developers that create services with more advanced front-end layer. What is more, Web Toolkit is fully compatible with HTML5~\cite{html5} and HTML4~\cite{html4} browsers. Thus, as a hybrid single page framework it supports browser history navigation. The bottom line is, WT is a high performance library which is something you would expect from a C++ library. It is optimized when it comes to asynchronous I/O, multi-threading and throughout all rendering.
 
 \bigskip
-Event handling is completed with C++11 lambdas or bound object methods, which are a part of C++11 signal/slot API for responding to various events. Server-initiated updates are also available through WebSockets and automatic fallaback to AJAX. The handling itself is also completed with efficient synchronization of browser using session, which incrementally renders updates of application states. The concept of session is thoroughly described in implementation chapter.
+Event handling is completed with C++11 lambdas~\cite{lambda} or bound object methods to retreive data that is bound to a function. Those are a part of C++11 signal/slot API for responding to various events. Server-initiated updates are also available through WebSockets and automatic fallaback to AJAX. Event handling itself is also completed with efficient synchronization of browser using session, which incrementally renders updates of application states.
 
 \bigskip
-Core library also provides 2D and 3D painting support to users and developers. Through WT API it is possible to generate simple graphics objects like HTML5 canvas, inline SVG or inline VML. Browser native vectors are also leveraged by rendering common image formats like PNG, GIF or even PDF. WT broads the variety of graphics support by also supporting hardware-accelerated 3D painting API like for instance server-side OpenGL.
+Core library also provides 2D and 3D painting support to users and developers. Through Web Toolkit API it is possible to generate simple graphics objects like HTML5 canvas, inline SVG~\cite{svg} or inline VML. Graphics is also leveraged by rendering common image formats like PNG, GIF or even PDF. WT broads the variety of graphics support by also supporting hardware-accelerated 3D painting API like for instance server-side OpenGL~\cite{opengl}.
 }
 
 \subsection*{Security}
@@ -329,13 +332,13 @@ Core library also provides 2D and 3D painting support to users and developers. T
 \tab As a completed web-development library, WebToolkit provides built-in security layer to the applications which contains:
 
 \begin{itemize}
-	\item kernel-level memory protection in isolated sessions
-	\item TLS/SSL support
-	\item Cross-Site Scripting (XSS) prevention
-	\item Request Forgery (CSRF) prevention
-	\item Application logic attack prevention
-	\item DoS mitigation
-	\item \textbf{Authentication module} (including support for OAuth 2.0 and OpenID Connect)
+	\item kernel-level memory protection in isolated sessions,
+	\item TLS/SSL support,
+	\item Cross-Site Scripting (XSS) prevention,
+	\item Request Forgery (CSRF) prevention,
+	\item Application logic attack prevention,
+	\item DoS mitigation,
+	\item \textbf{Authentication module} (including support for OAuth 2.0 and OpenID Connect).
 \end{itemize}
 
 \begin{figure}[h]
@@ -403,7 +406,7 @@ The authentication module itself occurred to be significantly important and help
 {
 Lets go through simple Hello World applications just to get in touch with WebToolkit library environment.
 
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={A complete "Hello world" application \cite{helloworldapp}}, captionpos=b]
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={A complete "Hello world" application \cite{helloworldapp}.}, captionpos=b]
 #include <Wt/WBreak.h>
 #include <Wt/WContainerWidget.h>
 #include <Wt/WLineEdit.h>
@@ -451,7 +454,7 @@ int main(int argc, char **argv)
 \newpage
 Now when it comes to building, it could be done locally by setting up a localhost HTTP server. Having IDE set-up it is done automatically. Otherwise while operating on UNIX-like systems:
 
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Building "Hello world" application}, captionpos=b]
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Building "Hello world" application.}, captionpos=b]
 $ g++ -std=c++14 -o hello hello.cc -lwthttp -lwt
 $ ./hello --docroot . --http-address 0.0.0.0 --http-port 9090
 \end{lstlisting}
@@ -461,7 +464,7 @@ The final result is:
 \begin{figure}[h]
   \centering
     \includegraphics[width=0.7\textwidth]{hello-app}
-    \caption{Hello Application on WT.}
+    \caption{Hello Application on Web Toolkit.}
 \end{figure}
 
 \bigskip
@@ -480,13 +483,13 @@ The above code presents basic concepts of the library workflow.
 }
 \section{Widgets gallery}
 {
-\tab WT also offers a widgets gallery, which is nothing else but a bootstrap where most common widgets are already implemented and ready to be used. Among them there are layouts, forms widgets, navigation widgets, trees widgets, tables widgets, graphics widgets, charts widgets and media widgets. Basically whilst going through development process one should keep in mind this feature as it may save a lot of time and a lot of coding. 
+\tab \textbf{Web Toolkit} also offers a widgets gallery, which is nothing else but a bootstrap where most common widgets are already implemented and ready to be used. Among them there are layouts, forms widgets, navigation widgets, trees widgets, tables widgets, graphics widgets, charts widgets and media widgets. Basically whilst going through development process one should keep in mind this feature as it may save a lot of time and a lot of coding. 
 
 \bigskip
 \begin{figure}[h]
   \centering
     \includegraphics[width=1.0\textwidth]{gallery}
-    \caption{Wt Widget Gallery. \cite{widgetsgallery}}
+    \caption{Web Toolkit Widget Gallery.~\cite{widgetsgallery}.}
 \end{figure} 
 }
 
@@ -573,9 +576,7 @@ TARGET_LINK_LIBRARIES(ConsoleApplication1
 \chapter{Summary}
 \chapter{Literature}
 {
-
 \begin{thebibliography}{9}
-
 \bibitem{cmakeintroduction}
   Introduction to CMake,
   \emph{http://derekmolloy.ie/hello-world-introductions-to-cmake}.
@@ -599,14 +600,85 @@ TARGET_LINK_LIBRARIES(ConsoleApplication1
 \bibitem{widgetsgallery}
   Wt Widgets Gallery,
   \emph{https://www.webtoolkit.eu/widgets/forms/}.
+  
+\bibitem{facebook}
+  Facebook,
+  \emph{https://www.facebook.com}.
+  
+\bibitem{airbnb}
+  airbnb,
+  \emph{https://www.airbnb.com}.
+  
+\bibitem{twitter}
+  Twitter,
+  \emph{https://www.twitter.com}.
+  
+\bibitem{paypal}
+  payPal,
+  \emph{https://www.paypal.com}.
+  
+\bibitem{gmail}
+  gmail,
+  \emph{https://www.gmail.com}.
+  
+\bibitem{netflix}
+  Netflix,
+  \emph{https://www.netflix.com}.
 
+\bibitem{javascript}
+  JavaScript,
+  \emph{https://www.javascript.com/}.
+  
+\bibitem{typescript}
+  TypeScript,
+  \emph{https://www.typescriptlang.org/}.
+  
+\bibitem{html}
+  HTML,
+  \emph{https://www.w3schools.com/html/}.
+  
+\bibitem{css}
+  CSS,
+  \emph{https://www.w3schools.com/css/}.
+ 
+\bibitem{java}
+  Java,
+  \emph{https://www.java.com/pl/}.
+  
+\bibitem{python}
+  Python,
+  \emph{https://www.python.org/}.
+  
+\bibitem{php}
+  PHP,
+  \emph{https://www.php.net/}.
+  
+\bibitem{html5}
+  HTML5,
+  \emph{https://developer.mozilla.org/pl/docs/HTML/HTML5}.
+  
+\bibitem{html4}
+  HTML4,
+  \emph{https://www.w3.org/TR/html5-diff/}.
+  
+\bibitem{lambda}
+  C++11 lambda expressions,
+  \emph{https://en.cppreference.com/w/cpp/language/lambda}.
+  
+\bibitem{opengl}
+  OpenGL,
+  \emph{https://www.opengl.org/}.
+  
+\bibitem{svg}
+  HTML5 SVG,
+  \emph{https://css-tricks.com/using-svg/}.
+  
 \end{thebibliography}
 
 \textbf{Additional materials} \begin{itemize}
 	\item LaTeX wikibooks \newline \textit{https://en.wikibooks.org/wiki/LaTeX}
 
 \end{itemize}
-
 }
 \newpage
 
