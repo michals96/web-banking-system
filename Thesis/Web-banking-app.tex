@@ -471,11 +471,11 @@ The final result is:
 The above code presents basic concepts of the library workflow.
 
 \begin{labeling}{alligator}
-\item [\textbf{class HelloApplication}] A class that represents application and extends Wt::WApplication. Contains ctor that takes Wt::WEnvironment and private fields that represents input field and output greeting string wrapped in Wt::WText,
-\item [\textbf{LINE 20:}] Sets title of appliaction which will be visible in web browser's card,
-\item [\textbf{LINE 22-29:}] This part of the code handles adding widgets to the root which represents a container for the widgets. This is an implementation of SPA concept where we create widgets and plug them in or out, for instance by addWidget() function,
-\item [\textbf{LINE 31:}] Lambda expression that returns WText string which called upon clicking the button,
-\item [\textbf{LINE 34:}] Calling lambda expression from line 31 when button is clicked,
+\item [\textbf{class HelloApplication}] A class that represents application and extends Wt::WApplication. Contains ctor that takes Wt::WEnvironment and private fields that represents input field and output greeting string wrapped in Wt::WText.
+\item [\textbf{LINE 20:}] Sets title of appliaction which will be visible in web browser's card.
+\item [\textbf{LINE 22-29:}] This part of the code handles adding widgets to the root which represents a container for the widgets. This is an implementation of SPA concept where we create widgets and plug them in or out, for instance by addWidget() function.
+\item [\textbf{LINE 31:}] Lambda expression that returns WText string which is called upon clicking the button.
+\item [\textbf{LINE 34:}] Calling lambda expression from line 31 when button is clicked.
 \item [\textbf{MAIN:}] Creating and running application.
 \end{labeling} 
 
@@ -498,65 +498,12 @@ The above code presents basic concepts of the library workflow.
 \section{GitHub}
 \section{Proprietary issue tracking}
 \subsection{JIRA Software}
-\section{Other Atlassian tools}
 \section{Containers}
 \subsection{Docker}
 \subsection{Containers vs OS-level virtualization}
-\section{Automation server}
+\section{Automation server and regression testing}
 \subsection{GitHub CMake workflows}
-\paragraph{Example CMake file used in project}
-\begin{verbatim}
-CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
-Project(ConsoleApplication1)
-
-# If Visual Studio IDE
-IF(MSVC_IDE)
-	# Copy user file
-  FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.vcxproj.user DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-ENDIF(MSVC_IDE)
-
-# If Eclipse IDE
-IF(${CMAKE_EXTRA_GENERATOR} MATCHES ".*Eclipse.*")
-	IF(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-		# Copy debug user file
-    FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}-debug.exe.launch DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-	ENDIF()
-	IF(${CMAKE_BUILD_TYPE} STREQUAL "Release")
-		# Copy release user file
-    FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}-release.exe.launch DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-	ENDIF()
-ENDIF()
-
-# Copy resources to build tree
-# FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-
-SET(ConsoleApplication1_SRC src/Main.cpp)
-
-# If Visual Studio IDE
-IF(MSVC_IDE)
-	SET(ConsoleApplication1_SRC ${ConsoleApplication1_SRC} src/Main.cpp)
-ENDIF(MSVC_IDE)
-
-ADD_EXECUTABLE(ConsoleApplication1 ${ConsoleApplication1_SRC})
-
-ADD_SUBDIRECTORY("wt-4.3.1/" "Wt 4.3.1 msvs2019 x64/lib/")
-# Set Wt include and library paths
-INCLUDE_DIRECTORIES("Wt 4.3.1 msvs2019 x64/include/")
-
-INCLUDE_DIRECTORIES("include")
-FILE(GLOB SOURCES "src/*.cpp")
-ADD_EXECUTABLE(ConsoleApplication1 ${SOURCES})
-TARGET_LINK_DIRECTORIES(ConsoleApplication1 PUBLIC "Wt 4.3.1 msvs2019 x64/lib/")
-
-TARGET_LINK_LIBRARIES(ConsoleApplication1
-  debug wtd optimized wt
-  debug wthttpd optimized wthttp
-  debug wtdbod optimized wtdbo
-  debug wtdbosqlite3d optimized wtdbosqlite3
-  )
-\end{verbatim}
-\subsubsection{CircleCI}
-\subsection{Doxygen docs}
+\subsection{CircleCI}
 
 \chapter{Implementation}
 \section{Server side session}
@@ -569,10 +516,8 @@ TARGET_LINK_LIBRARIES(ConsoleApplication1
 \subsection{Listing all users}
 \subsection{Access to server logs}
 \section{Modern C++ features}
-
-\chapter{Testing}
 \section{Unit testing}
-\section{Regression testing}
+
 \chapter{Summary}
 \chapter{Literature}
 {
