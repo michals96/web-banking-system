@@ -490,18 +490,145 @@ The above code presents basic concepts of the library workflow.
   \centering
     \includegraphics[width=1.0\textwidth]{gallery}
     \caption{Web Toolkit Widget Gallery.~\cite{widgetsgallery}.}
-\end{figure} 
+\end{figure}
+    
+     
 }
 
 \chapter{DevOps layer}
+{
+\tab DevOps stands for development and operations and it is a modern approach for software engineering. Its core is to integrate developer teams with other sections invloved in the process. According to this definition, devOps engineer is someone who is fluent with development cycle. It is also someone who can improve the process. Naturally there are a lot of cutting-edge tools which are significantly helpful in DevOps engineering. 
+
+\bigskip
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=1.0\textwidth]{devops}
+    \caption{DevOps process.~\cite{devops}.}
+\end{figure}
+    
+Figure 3.1 shows describes basic elements of DevOps approach which are
+\begin{itemize}
+	\item building the product that is being developed,
+	\item coding,
+	\item planning the whole process,
+	\item monitoring the development,
+	\item operating,
+	\item deploying for instance to cloud,
+	\item releasing to client,
+	\item and testing throughout the whole time.
+\end{itemize} 
+	
+\bigskip
+Creating web banking application was also about carrying out the development process based on devOps approach. 
+}
 \section{Distributed version-control system}}
+{
+\tab First tool that was used in this project was version-control system called \textbf{Git}. It is a tool that allows developers to track changes in code of the project, as well as making them. Every change introduces a new version of the code which is stored in history. The biggest advantage of this feature is capability of restoring previous version of the code which presents tremendous enhancement to reponsing to unwanted changes.
+
+\bigskip
+Git also allows to track changes in graphic files. Moreover it provides branching feature, which simplifies developing code simultaneously by many developers at the same time. By invoking simple command line functions developer can communicate his local repository with remote repository. Many version-control systems have graphic interfaces too.
+
+\bigskip
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=1.0\textwidth]{git}
+    \caption{Distributed version-control system workflow.~\cite{git}}
+\end{figure}   
+}
 \section{GitHub}
+{
+\tab Web banking application was being developed using GitHub, which is a GIT version-control system hosting dedicated for programming projects. A remote repository was stored there, which contained:
+
+\begin{itemize}
+	\item applications code,
+	\item CMake building scripts,
+	\item YAML docker images for automation server,
+	\item web toolkit library,
+	\item static resources like images,
+	\item unit and regression tests,
+	\item this theesis,
+	\item and most importantly - information about all changes introduced to the project.
+\end{itemize}
+	
+\bigskip
+Creating this application required over 150 commits, 18 branches and more than 20 pull requests.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=1.0\textwidth]{repo}
+    \caption{Web banking application github repository.~\cite{repo}}
+\end{figure} 
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.7\textwidth]{languages}
+    \caption{Languages statistics on Web banking application repository.~\cite{repo}}
+\end{figure} 
+    
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.7\textwidth]{pullrequests}
+    \caption{A small batch of a few pull requests done during the implementation.~\cite{repo}}
+\end{figure} 
+    
+A pull request itself is a github feature which allows programmers to do a review of a code that has been developed during a certain amount of time and is now to be ready to be merged to the main branch of the repository, which is usually the branch that is frequently being built and released to the client. This process performs a quality gate to the code and also increases readability of the changes introduced to the product. Figure 3.5 shows a few pull requests that were put out during the development. Each one of the pull requests has its unique name, id and can be also labeled by fancy labels (like feature, bug, improvement, back-end and others) which can be modified by repository owners. Before merging, the product is being built with the upcoming changes, which is another quality gate. If the built is successful and the reviewers approved the code - a programmer is allowed to merge the code and close the pull request. Another interesting thing is that every pull request or commit may be pre-tagged with a \textbf{WBS-number}, which stands for "WebBankingApplication-number of the story" and is thoroughly explained in the next section of this chapter. 
+}
 \section{Proprietary issue tracking}
+{
+\tab Another tool that came in really handy during development is proprietary issue tracking. It is a system which reflects changes introduced to the project and ultimately allows to track and manage the progress. 
+}
 \subsection{JIRA Software}
-\section{Containers}
-\subsection{Docker}
-\subsection{Containers vs OS-level virtualization}
+{
+\tab Example issue tracking system which was used in the project is JIRA Software. With its graphic user interface it can provide a projects board, which regarding Agile framework chosen in a development process, could reflect issues work flow in a different way. In the project we could group issues by those that are meant to be done, those that are being currently developed and those that are already done.
+
+\bigskip
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=1.0\textwidth]{kanban}
+    \caption{JIRA Kanban board used during projects development.~\cite{jiraboard}}
+\end{figure} 
+    
+\bigskip Kanban board is a board that reflects "waterfall" work flow, where issues are reported and resolved as development goes, without working in a frequent time rate like in Scrum where developers could work for example in two week sprint methodology. Nevertheless, before starting programming Web banking application, the whole development process needed to be thought through and planned well. After planning, issues were created and added to the board. With creating every part of the project there was an issue that reflected actual state of the task that is being worked on. Swift GUI of JIRA Software allows to easily do drag-and-drop, starting with issues in "To Do", ending up with issues in "Done" table.
+    
+\bigskip
+In this project issues were group by
+\begin{itemize}
+	\item engineering thesis issues (mostly chapters),
+	\item theesis improvements,
+	\item application improvements,
+	\item general improvements,
+	\item and code of the application.
+\end{itemize}
+	
+JIRA Software allows developers to connect project issue tracking with its repository and during this development it was no different - github repository was connectet with JIRA. What it does is it detects branches and pull requests by id in commits (mentioned in previous section) that are binded to the given story or issue. It improves managing the project work flow by allowing to track the code that was merged to accomplish particular issues. All a developer needs to do is to remember to include repository acronym in commit message as a tag. In this case it was "WBS". There is a possibility to set on a repository that commits without project tag cannot be push onto remote repository, which is guarding the quality of branching.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=1.0\textwidth]{issue}
+    \caption{Adding project tags to commit messages on a repository that is connected with jira board detects the code created to resolve particular story ("Development" panel on the right).~\cite{jiraboard}}
+\end{figure} 
+    
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.5\textwidth]{applicationstory}
+    \caption{Example story with subtasks.~\cite{jiraboard}}
+\end{figure}
+    
+\bigskip
+Apart from project board JIRA provides many other features like for example simple reports, that are usually presented on graphs that are available by a single click.      
+Estimating due dates and development duration is also a very important part of tracking issues. However in this project only due dates were estimated  as Kanban framework does not expect estimating the duration for each issue. All in all, the project was planned for 5 stories, with around 38 subtasks. Those which were not chosen to be developed and were not completed were archived in backlog section of the board.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=1.0\textwidth]{chart1}
+    \caption{Created vs Resolved Issues Report. This chart shows the number of issues created vs. the number of issues resolved in the last 100 days.~\cite{jiraboard}}
+\end{figure}
+    
+}
+
 \section{Automation server and regression testing}
+\subsection{Docker}
+\subsubsection{Containers vs OS-level virtualization}
 \subsection{GitHub CMake workflows}
 \subsection{CircleCI}
 
@@ -517,7 +644,6 @@ The above code presents basic concepts of the library workflow.
 \subsection{Access to server logs}
 \section{Modern C++ features}
 \section{Unit testing}
-
 \chapter{Summary}
 \chapter{Literature}
 {
@@ -617,6 +743,22 @@ The above code presents basic concepts of the library workflow.
 \bibitem{svg}
   HTML5 SVG,
   \emph{https://css-tricks.com/using-svg/}.
+
+\bibitem{devops}
+  devOps logo,
+  \emph{https://www.netsparker.com/devops-security-tools/}.
+  
+\bibitem{git}
+  Git workflow,
+  \emph{https://panizkomputerem.pl/czym-jest-git/}.
+  
+\bibitem{repo}
+  Applications github repository,
+  \emph{https://github.com/michals96/web-banking-system}.   
+
+\bibitem{jiraboard}
+  JIRA board,
+  \emph{https://www.atlassian.com/pl/software/jira}.   
   
 \end{thebibliography}
 
