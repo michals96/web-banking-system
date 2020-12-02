@@ -627,10 +627,119 @@ Estimating due dates and development duration is also a very important part of t
 }
 
 \section{Automation server and regression testing}
-\subsection{Docker}
-\subsubsection{Containers vs OS-level virtualization}
-\subsection{GitHub CMake workflows}
-\subsection{CircleCI}
+{
+\tab Software development should not be done without assuring that the quality of the product is there. Among many quality gates like code review or unit testing there is also another one equally important - regression testing. It is being run on an automation server, which usually is another software that helps to automate the building process by configuring tasks, so called "jobs". It can also be used as a documentation generator. It is a common practice to run regression testing as well, which are nothing but a functional or non-functional test scenarios that ensure that the code that is about to be merged won't have a negative impact on the product. In a nutshell - regression testing will also verify if the software that is being developed works at all the time, considering that the regression tests might be run not only when a programmer tries to modify the code, but also when the code is merged. As a matter fact, there are many testing approaches when it comes to regression. For instance - the tests that are causing the highest traffic on the automation server might be run over night or during the weekend when developers are not working. It is a very powerful tool which can have a major impact on the quality of the development.
+
+\bigskip During implementing web banking application, an automation server was set up, which was connected to the repository where the code was stored. With each pull request, automation server took changes that were about to be merged. Then the server has been building specific branch and if the build was successful, it went to another job which was running the regression test. If every job has passed successfully, then the developer was allowed to merged the code - that is assuming that the code review was already done.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=1.0\textwidth]{regression}
+    \caption{Regression testing.~\cite{reg}}
+\end{figure}
+}
+\subsection{GitHub CMake}
+{
+The automation server that was used in a project is GitHub CMake. It is basically provided by github and it's free. All it takes is to define a CMake file that describes building dependencies for the project. Automation server will fetch it and build the application on it's remote machine with Linux's Ubuntu distribution. From this point, when the application is remotely build, regression testing might be started.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.8\textwidth]{checks}
+    \caption{When a pull request is created, automation server triggers and verifies incoming changes by building the project and running testes.}
+\end{figure}
+    
+\bigskip To be able to add a test case scenario, first it must be implemented. In web banking application ctest was used, which is just a part of CMake and as an executable it enables testing, adds tests, runs them and reports results.
+
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Example ctest file used in project. It is quite self-explanatory, if first input argument equals 0, the scenario prints 'SUCCESS' and exits with 0 status. Otherwise it prints 'FAIL' and exit with 1 status.}, captionpos=b, float]
+#ifndef _WIN32
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char** argv) {
+    if (argc < 2) {
+        printf("usage: test <argument>\n");
+        printf("If <argument> is 0, print SUCCESS. Otherwise print FAIL.\n");
+        exit(1);
+    }
+
+    if (atoi(argv[1]) == 0) {
+        printf("SUCCESS\n");
+        exit(0);
+    }
+    else {
+        printf("FAIL\n");
+        exit(1);
+    }
+}
+#endif
+\end{lstlisting}
+
+\bigskip Having test implemented in place, a scenarios must be defined in CMake file, that will report the results. 
+\bigskip
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Example CMakeLists file used to define scenarios. In first two lines source code file and executable are set. Then by callig add test a scenario is added with input arguments. In the next lines, set test properties will define expected behaviour.}, captionpos=b]
+SET(CTEST_SRC {CTEST_SRC} ctest.cpp)
+add_executable(test {CTEST_SRC})
+
+add_test(usage_test test)
+set_tests_properties(usage_test PROPERTIES WILL_FAIL TRUE)
+
+add_test(success_test test 0)
+set_tests_properties(success_test PROPERTIES PASS_REGULAR_EXPRESSION "SUCCESS")
+
+add_test(fail_test test 1)
+set_tests_properties(fail_test PROPERTIES WILL_FAIL TRUE)
+
+add_test(fail_test_output test 1)
+set_tests_properties(fail_test_output PROPERTIES PASS_REGULAR_EXPRESSION "FAIL")
+\end{lstlisting}
+
+\bigskip Including above CMakeLists file in the project will trigger running four test case scenarios with each regression run.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.8\textwidth]{testreg}
+    \caption{Regression job responsible for running tests and verifying the results.}
+\end{figure}
+}
+\subsubsection{Regression Docker file}
+{
+\tab Docker is a software that realizes the concept of virtualization at OS level. By composing a docker image, a developer is able to create precise programming environment in a container, in which it possible to run any desired application. It is a lighter way of virtualization, rather than setting up a virtual machine.      
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.8\textwidth]{scheme}
+    \caption{Github CMake provides Linux virtual machine for the developers, where Docker container with a specific environment is set up. Web banking application does just that.}
+\end{figure} 
+    
+\bigskip 
+To set up the machine responsible for automation one must place docker file all necessary dependencies. The jobs that has been set up are: 
+    
+\begin{labeling}{alligator}
+\item [\textbf{Set up job}] Loads Ubuntu 18.04.5 LTS operating system, prepares workflow directory and all required actions.
+
+\item [\textbf{Run actions/checkout@v2}] Fetches the repository, gets git version and authorizes user.
+
+\item [\textbf{Get Boost libraries}] Downloads and installs Boost.
+
+\item [\textbf{Create build environment}] Makes build directory for output files.
+
+\item [\textbf{Configure CMake}] Identifies compilers.
+
+\item [\textbf{Build}] Builds the project.
+
+\item [\textbf{Test}] Runs regressions tests.|
+
+\item [\textbf{Post Run actions/checkout@v2}] Post job cleanup.
+
+\item [\textbf{Complete job}] Cleaning up orphan processes.
+\end{labeling} 
+    
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.4\textwidth]{jobs}
+    \caption{Github CMake jobs.}
+\end{figure}  
+}
 
 \chapter{Implementation}
 \section{Server side session}
@@ -642,7 +751,6 @@ Estimating due dates and development duration is also a very important part of t
 \section{Admin features}
 \subsection{Listing all users}
 \subsection{Access to server logs}
-\section{Modern C++ features}
 \section{Unit testing}
 \chapter{Summary}
 \chapter{Literature}
@@ -760,6 +868,9 @@ Estimating due dates and development duration is also a very important part of t
   JIRA board,
   \emph{https://www.atlassian.com/pl/software/jira}.   
   
+\bibitem{reg}
+  Regression testing,
+  \emph{https://www.maveryx.com/automated-regression/?cn-reloaded=1}. 
 \end{thebibliography}
 
 \textbf{Additional materials} \begin{itemize}
