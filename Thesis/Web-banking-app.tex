@@ -497,7 +497,7 @@ The above code presents basic concepts of the library workflow.
 
 \chapter{DevOps layer}
 {
-\tab DevOps stands for development and operations and it is a modern approach for software engineering. Its core is to integrate developer teams with other sections invloved in the process. According to this definition, devOps engineer is someone who is fluent with development cycle. It is also someone who can improve the process. Naturally there are a lot of cutting-edge tools which are significantly helpful in DevOps engineering. 
+\tab DevOps stands for development and operations and it is a modern approach for software engineering. Its core is to integrate developer teams with other sections invloved in the process. According to this definition, devOps engineer is someone who is fluent with development cycle and it is also someone who can improve the process. Naturally there are a lot of cutting-edge tools which are significantly helpful in DevOps engineering. 
 
 \bigskip
 \begin{figure}[h]
@@ -506,7 +506,7 @@ The above code presents basic concepts of the library workflow.
     \caption{DevOps process.~\cite{devops}.}
 \end{figure}
     
-Figure 3.1 shows describes basic elements of DevOps approach which are
+Figure 3.1 shows basic elements of devOps approach which are
 \begin{itemize}
 	\item building the product that is being developed,
 	\item coding,
@@ -526,7 +526,7 @@ Creating web banking application was also about carrying out the development pro
 \tab First tool that was used in this project was version-control system called \textbf{Git}. It is a tool that allows developers to track changes in code of the project, as well as making them. Every change introduces a new version of the code which is stored in history. The biggest advantage of this feature is capability of restoring previous version of the code which presents tremendous enhancement to reponsing to unwanted changes.
 
 \bigskip
-Git also allows to track changes in graphic files. Moreover it provides branching feature, which simplifies developing code simultaneously by many developers at the same time. By invoking simple command line functions developer can communicate his local repository with remote repository. Many version-control systems have graphic interfaces too.
+What is more, Git provides branching feature, which simplifies developing code simultaneously by many developers at the same time. By invoking simple command line functions developer can communicate his local repository with remote repository. Many version-control systems have graphic interfaces too.
 
 \bigskip
 \begin{figure}[h]
@@ -562,7 +562,7 @@ Creating this application required over 150 commits, 18 branches and more than 2
 \begin{figure}[h]
   \centering
     \includegraphics[width=0.7\textwidth]{languages}
-    \caption{Languages statistics on Web banking application repository.~\cite{repo}}
+    \caption{Languages statistics on Web banking application repository. The majority of is HTML code, because of the static resoruces of WebToolkit library, which handle HTML.~\cite{repo}}
 \end{figure} 
     
 \begin{figure}[h]
@@ -637,6 +637,7 @@ Estimating due dates and development duration is also a very important part of t
     \includegraphics[width=1.0\textwidth]{regression}
     \caption{Regression testing.~\cite{reg}}
 \end{figure}
+
 }
 \subsection{GitHub CMake}
 {
@@ -647,10 +648,11 @@ The automation server that was used in a project is GitHub CMake. It is basicall
     \includegraphics[width=0.8\textwidth]{checks}
     \caption{When a pull request is created, automation server triggers and verifies incoming changes by building the project and running testes.}
 \end{figure}
-    
+\pagebreak
 \bigskip To be able to add a test case scenario, first it must be implemented. In web banking application ctest was used, which is just a part of CMake and as an executable it enables testing, adds tests, runs them and reports results.
-
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Example ctest file used in project. It is quite self-explanatory, if first input argument equals 0, the scenario prints 'SUCCESS' and exits with 0 status. Otherwise it prints 'FAIL' and exit with 1 status.}, captionpos=b, float]
+    
+\bigskip
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Example ctest file used in project. It is quite self-explanatory, if first input argument equals 0, the scenario prints 'SUCCESS' and exits with 0 status. Otherwise it prints 'FAIL' and exit with 1 status.}, captionpos=b]
 #ifndef _WIN32
 #include <stdio.h>
 #include <stdlib.h>
@@ -739,6 +741,43 @@ To set up the machine responsible for automation one must place docker file all 
     \includegraphics[width=0.4\textwidth]{jobs}
     \caption{Github CMake jobs.}
 \end{figure}  
+\pagebreak
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={cmake.yaml docker image used in project to set up automation server.}, captionpos=b]
+name: CMake
+
+on: [push]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Get Boost libraries
+      run: sudo apt-get install libboost-all-dev
+      
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{runner.workspace}}/build
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{runner.workspace}}/build
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+    - name: Build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: cmake --build . --config $BUILD_TYPE
+
+    - name: Test
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: ctest -C $BUILD_TYPE
+\end{lstlisting}
 }
 
 \chapter{Implementation}
