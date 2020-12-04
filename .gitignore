@@ -12,7 +12,6 @@
 *.pdf
 *.gz
 *.db
-*.PNG
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
