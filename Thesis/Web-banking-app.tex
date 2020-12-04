@@ -648,11 +648,11 @@ The automation server that was used in a project is GitHub CMake. It is basicall
     \includegraphics[width=0.8\textwidth]{checks}
     \caption{When a pull request is created, automation server triggers and verifies incoming changes by building the project and running testes.}
 \end{figure}
-\pagebreak
+
 \bigskip To be able to add a test case scenario, first it must be implemented. In web banking application ctest was used, which is just a part of CMake and as an executable it enables testing, adds tests, runs them and reports results.
     
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Example ctest file used in project. It is quite self-explanatory, if first input argument equals 0, the scenario prints 'SUCCESS' and exits with 0 status. Otherwise it prints 'FAIL' and exit with 1 status.}, captionpos=b]
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Example ctest file used in project. It is quite self-explanatory, if first input argument equals 0, the scenario prints 'SUCCESS' and exits with 0 status. Otherwise it prints 'FAIL' and exit with 1 status.}, captionpos=b, float]
 #ifndef _WIN32
 #include <stdio.h>
 #include <stdlib.h>
@@ -741,8 +741,8 @@ To set up the machine responsible for automation one must place docker file all 
     \includegraphics[width=0.4\textwidth]{jobs}
     \caption{Github CMake jobs.}
 \end{figure}  
-\pagebreak
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={cmake.yaml docker image used in project to set up automation server.}, captionpos=b]
+
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={cmake.yaml docker image used in project to set up automation server.}, captionpos=b, float]
 name: CMake
 
 on: [push]
