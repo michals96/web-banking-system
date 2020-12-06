@@ -504,7 +504,7 @@ The above code presents basic concepts of the library workflow.
 \bigskip
 \begin{figure}[H]
   \centering
-    \includegraphics[width=1.0\textwidth]{devops}
+    \includegraphics[width=0.8\textwidth]{devops}
     \caption{DevOps process.~\cite{devops}.}
 \end{figure}
     
@@ -1246,7 +1246,41 @@ At the very beginning sqlite database object is created. Then all necessary prop
 
 
 \section{Database}
-The reason behind choosing sqlite is because it is nativie-supported by Web Toolkit and it's very light and simple
+The database that was chosen for this application was sqlite3 data base. It is implemented in C language and it supports basic SQL language queries. The reason behind choosing sqlite is because it is natively supported by Web Toolkit and it's very light and simple. In the data base used in project we have three tables.
+
+\subsection*{Authentication identity}
+{
+This table contains one of two reflections of users in the service. Those are actually the ones used for authentication during logging into the service. The most valuable information that this table carries is identity of the user auth info id which later on creates one-to-one relation with Authentication information table.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{auth_identity}
+\caption{Authentication identity table.}
+\end{figure}
+
+}
+\subsection*{Authentication information}
+{
+This table in realtion with Authentication identity creates a whole piece of record that is used to authenticate any user. It stores valuable and fragile information like password. Because of this fact, the password is encrypted with bcrypt method. In the database there is a password salt and password hash column - with those information it is possible to decrypt each password, but for the sake of security such information should not be stored in a plain text. There is also a table named "failed login attempts" which will increment with every failed login attempt an user makes.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{auth_info}
+\caption{Authentication information table.}
+\end{figure}
+
+}
+
+\subsection*{User}
+{
+User table is the second one containing information about the users in the table, but this one is actually the one that is object-relational mapped from the code to the database object. Records from this table are also the ones used for transactions and other Web Banking Application features different then logging and authentication. It stores information about users name, balance and version, which actually shows an amount of changes that has been made to each record. For example if a guest's version is 17, it means that it was involved in 17 transactions.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{user}
+\caption{User table.}
+\end{figure}
+}
 \chapter{Summary}
 {
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
