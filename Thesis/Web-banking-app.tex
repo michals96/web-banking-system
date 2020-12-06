@@ -1099,9 +1099,154 @@ private:
 \end{lstlisting}
 
 Most of the methods are just getters to the private fields which are mostly WebToolkit built-in type variables. They are already provided with many valuable methods like for instance querying the database objects directly. The most important part of session logic are topUsers() and addToBalance() methods and those are the ones that we will focus on. 
+
+\bigskip
+When it comes to topUsers() method, it is used in every method that tries to modify the state of the database or in method that wants to fetch information about the users in the service.
+
+\bigskip
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Session::topUsers() method.}, captionpos=b]
+std::vector<User> Session::topUsers(int limit)
+{
+	dbo::Transaction transaction(session_);
+
+	Users top = session_.find<User>().orderBy("balance desc").limit(limit);
+
+	std::vector<User> result;
+	
+	for (Users::const_iterator i = top.begin(); i != top.end(); ++i) 
+	{
+		dbo::ptr<User> user = *i;
+		result.push_back(*user);
+
+		result.back().name = user->name;
+	}
+
+	transaction.commit();
+
+	return result;
+}
+\end{lstlisting}
+
+\bigskip
+In the very beginning a transaction object is created using current session. Then all users are being assigned to top variable. This is the place in code where idea behind session concept clarifies. To fetch all users from database, find() method is being called on current session with chain of orderBy and limit methods. This will trigger a native query on a sqlite application database, which is actually visible in an application admin console. Second part of this method just iterates through User object pushing back each user to the vector which is being returned as a result. Of course, before returning this vector, a transaction must be commited.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{transaction}
+\caption{This is a really classic model for a database transaction. First a transaction is being made, then it's being created and when it's done, it is commited.}
+\end{figure}
+
+\bigskip
+The second equally important method is addToBalance(). As mentioned before, it is quite self-explanatory. It's job is to find two users, the one that wants to wire some money and the one that the money will be transferred to. Next thing that this functions does, is it updates balances of both subjects of this transaction. The whole logic is completed by commiting such transaction, which obviously needs to be opened at the very beginning.
+
+\bigskip
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Session::addToBalance() method.}, captionpos=b]
+void Session::addToBalance(std::string tgtName, std::string srcName, int amount)
+{
+	dbo::Transaction transaction(session_);
+
+	dbo::ptr<User> targetUser = 
+		session_.find<User>().where("name = ?").bind(tgtName);
+
+	targetUser.modify()->balance += amount;
+
+	dbo::ptr<User> srcUser = 
+		session_.find<User>().where("name = ?").bind(srcName);
+
+	srcUser.modify()->balance -= amount;
+
+	transaction.commit();
+}
+\end{lstlisting}
+
 }
 \section{User entity}
+{
+\tab User class is probably the most important class in Web Banking Application. It is a class that defines a structure of an user object that is being mapped to a database object. Later on, all operations rely on this content like for instance logging to the service or making transactions which is a core of the banking application.
+
+\bigskip
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={User class.}, captionpos=b]
+class User;
+typedef Wt::Auth::Dbo::AuthInfo<User> AuthInfo;
+typedef dbo::collection< dbo::ptr<User> > Users;
+
+class User
+{
+public:
+	User();
+    std::string name;
+    int balance;
+    dbo::collection<dbo::ptr<AuthInfo>> authInfos;
+
+    template<class Action>
+    void persist(Action& a)
+    {
+        dbo::field(a, name, "name");
+        dbo::field(a, balance, "balance");
+        dbo::hasMany(a, authInfos, dbo::ManyToOne, "user");
+    }
+};
+
+DBO_EXTERN_TEMPLATES(User);
+\end{lstlisting}
+}
+
+What is really interesting about this class is the way Web Toolkit transforms this class into the database object. To achieve this, it uses ORM operation. It stands for Object-Relational Mapping and it is a way of mapping an objective architecture of a single system to the database that has relational character. Such implementation is a common approach for applications that are implemented in an objective language using objective pattern. In this class there is only one persist() method defined. In this member function we define how Web Toolkit should map class member variables to database fields, so whenever an User object is created in code, Web Toolkit already knows how to put it into the database, if necessary. Other than that there are no methods whatsoever and the constructor is default. The class itself is rather really simple, there are three fields. Name, balance and authInfos for authentication upon logging. It is a built-in functionality provided by Web Toolkit. Let's jump into an example code which will get us closer to the idea behind using this class with object relational mapping.
+
+\bigskip
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Example usage of object-relational mapping on User class. This logic happens in constructor of Session class, which is called upon turning the application on.}, captionpos=b]
+	auto sqlite3 = cpp14::make_unique<Dbo::backend::Sqlite3>
+	(WApplication::instance()->appRoot() + "WebBankingUserDatabase.db");
+
+	sqlite3->setProperty("show-queries", "true");
+
+	session_.setConnection(std::move(sqlite3));
+	session_.mapClass<User>("user");
+	session_.mapClass<AuthInfo>("auth_info");
+	session_.mapClass<AuthInfo::AuthIdentityType>("auth_identity");
+	session_.mapClass<AuthInfo::AuthTokenType>("auth_token");
+	
+	dbo::Transaction transaction(session_);
+	try {
+		session_.createTables();
+	
+		// Creating and inserting Auth Users
+		Auth::User guestUser = users_->registerNew();
+		guestUser.addIdentity(Auth::Identity::LoginName, "guest");
+		myPasswordService.updatePassword(guestUser, "guest");
+		
+		/*
+		Creating other auth users
+		...
+		*/
+		
+		// Creating reflection of Auth Users used in transactions
+		std::unique_ptr<User> userGuest{ new User() };
+		userGuest->name = "guest";
+		userGuest->balance = 10000;
+		dbo::ptr<User> userPtr = session_.add(std::move(userGuest));
+		
+		/*
+		Creating other reflection users
+		...
+		*/
+		
+		log("info") << "Database created";
+	}
+	catch (...) {
+		log("info") << "Using existing database";
+	}
+
+	transaction.commit();
+		
+\end{lstlisting}
+	
+\bigskip
+At the very beginning sqlite database object is created. Then all necessary properties are set, including connecting current session with this database and setting mapping properties to user and authentication model. Then, as usually, a transaction is created and later on in a try block it is executed. At the beginning of try block createTables() function is being called on session object. If WebBankingUserDatabase.db already exists it will throw an exception which is then catched. This will cause in using already existing database. Otherwise try block will go further where new users are created and added to the database. Each user has to have two identities, first one for authentication purposes with login and password. Second one for business logic, which is a "reflection" of authentication user. 
+
+
 \section{Database}
+The reason behind choosing sqlite is because it is nativie-supported by Web Toolkit and it's very light and simple
 \chapter{Summary}
 {
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
