@@ -72,7 +72,7 @@ C++ on the example of a banking service}}\\
 %% ------------------------ OPIEKUN PRACY ------------------------------------
 {\Large \sf Supervisor: {\bf \textsf{Dr Grzegorz Gach}}}\\
 \vspace{22ex}
-{\large \bf \textsf{Cracow, June 2021}}
+{\large \bf \textsf{Cracow, Januray 2021}}
 \end{center}
 %% =====  STRONA TYTULOWA PRACY MAGISTERSKIEJKIEJ ====
 
@@ -497,11 +497,12 @@ The above code presents basic concepts of the library workflow.
 }
 
 \chapter{DevOps layer}
+\section{Introduction}
 {
 \tab DevOps stands for development and operations and it is a modern approach for software engineering. Its core is to integrate developer teams with other sections invloved in the process. According to this definition, devOps engineer is someone who is fluent with development cycle and it is also someone who can improve the process. Naturally there are a lot of cutting-edge tools which are significantly helpful in DevOps engineering. 
 
 \bigskip
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
     \includegraphics[width=1.0\textwidth]{devops}
     \caption{DevOps process.~\cite{devops}.}
@@ -530,7 +531,7 @@ Creating web banking application was also about carrying out the development pro
 What is more, Git provides branching feature, which simplifies developing code simultaneously by many developers at the same time. By invoking simple command line functions developer can communicate his local repository with remote repository. Many version-control systems have graphic interfaces too.
 
 \bigskip
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
     \includegraphics[width=1.0\textwidth]{git}
     \caption{Distributed version-control system workflow.~\cite{git}}
@@ -554,19 +555,19 @@ What is more, Git provides branching feature, which simplifies developing code s
 \bigskip
 Creating this application required over 150 commits, 18 branches and more than 20 pull requests.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
     \includegraphics[width=1.0\textwidth]{repo}
     \caption{Web banking application github repository.~\cite{repo}}
 \end{figure} 
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
     \includegraphics[width=0.7\textwidth]{languages}
     \caption{Languages statistics on Web banking application repository. The majority of is HTML code, because of the static resoruces of WebToolkit library, which handle HTML.~\cite{repo}}
 \end{figure} 
     
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
     \includegraphics[width=0.7\textwidth]{pullrequests}
     \caption{A small batch of a few pull requests done during the implementation.~\cite{repo}}
@@ -583,7 +584,7 @@ A pull request itself is a github feature which allows programmers to do a revie
 \tab Example issue tracking system which was used in the project is JIRA Software. With its graphic user interface it can provide a projects board, which regarding Agile framework chosen in a development process, could reflect issues work flow in a different way. In the project we could group issues by those that are meant to be done, those that are being currently developed and those that are already done.
 
 \bigskip
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
     \includegraphics[width=1.0\textwidth]{kanban}
     \caption{JIRA Kanban board used during projects development.~\cite{jiraboard}}
@@ -603,13 +604,13 @@ In this project issues were group by
 	
 JIRA Software allows developers to connect project issue tracking with its repository and during this development it was no different - github repository was connectet with JIRA. What it does is it detects branches and pull requests by id in commits (mentioned in previous section) that are binded to the given story or issue. It improves managing the project work flow by allowing to track the code that was merged to accomplish particular issues. All a developer needs to do is to remember to include repository acronym in commit message as a tag. In this case it was "WBS". There is a possibility to set on a repository that commits without project tag cannot be push onto remote repository, which is guarding the quality of branching.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
     \includegraphics[width=1.0\textwidth]{issue}
     \caption{Adding project tags to commit messages on a repository that is connected with jira board detects the code created to resolve particular story ("Development" panel on the right).~\cite{jiraboard}}
 \end{figure} 
     
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
     \includegraphics[width=0.5\textwidth]{applicationstory}
     \caption{Example story with subtasks.~\cite{jiraboard}}
@@ -619,7 +620,7 @@ JIRA Software allows developers to connect project issue tracking with its repos
 Apart from project board JIRA provides many other features like for example simple reports, that are usually presented on graphs that are available by a single click.      
 Estimating due dates and development duration is also a very important part of tracking issues. However in this project only due dates were estimated  as Kanban framework does not expect estimating the duration for each issue. All in all, the project was planned for 5 stories, with around 38 subtasks. Those which were not chosen to be developed and were not completed were archived in backlog section of the board.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
     \includegraphics[width=1.0\textwidth]{chart1}
     \caption{Created vs Resolved Issues Report. This chart shows the number of issues created vs. the number of issues resolved in the last 100 days.~\cite{jiraboard}}
@@ -633,7 +634,7 @@ Estimating due dates and development duration is also a very important part of t
 
 \bigskip During implementing web banking application, an automation server was set up, which was connected to the repository where the code was stored. With each pull request, automation server took changes that were about to be merged. Then the server has been building specific branch and if the build was successful, it went to another job which was running the regression test. If every job has passed successfully, then the developer was allowed to merged the code - that is assuming that the code review was already done.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
     \includegraphics[width=1.0\textwidth]{regression}
     \caption{Regression testing.~\cite{reg}}
@@ -644,7 +645,7 @@ Estimating due dates and development duration is also a very important part of t
 {
 The automation server that was used in a project is GitHub CMake. It is basically provided by github and it's free. All it takes is to define a CMake file that describes building dependencies for the project. Automation server will fetch it and build the application on it's remote machine with Linux's Ubuntu distribution. From this point, when the application is remotely build, regression testing might be started.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
     \includegraphics[width=0.8\textwidth]{checks}
     \caption{When a pull request is created, automation server triggers and verifies incoming changes by building the project and running testes.}
@@ -698,7 +699,7 @@ set_tests_properties(fail_test_output PROPERTIES PASS_REGULAR_EXPRESSION "FAIL")
 
 \bigskip Including above CMakeLists file in the project will trigger running four test case scenarios with each regression run.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
     \includegraphics[width=0.8\textwidth]{testreg}
     \caption{Regression job responsible for running tests and verifying the results.}
@@ -708,7 +709,7 @@ set_tests_properties(fail_test_output PROPERTIES PASS_REGULAR_EXPRESSION "FAIL")
 {
 \tab Docker is a software that realizes the concept of virtualization at OS level. By composing a docker image, a developer is able to create precise programming environment in a container, in which it possible to run any desired application. It is a lighter way of virtualization, rather than setting up a virtual machine.      
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
     \includegraphics[width=0.8\textwidth]{scheme}
     \caption{Github CMake provides Linux virtual machine for the developers, where Docker container with a specific environment is set up. Web banking application does just that.}
@@ -737,7 +738,7 @@ To set up the machine responsible for automation one must place docker file all 
 \item [\textbf{Complete job}] Cleaning up orphan processes.
 \end{labeling} 
     
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
     \includegraphics[width=0.4\textwidth]{jobs}
     \caption{Github CMake jobs.}
@@ -1102,8 +1103,23 @@ Most of the methods are just getters to the private fields which are mostly WebT
 \section{User entity}
 \section{Database}
 \chapter{Summary}
-\chapter{Literature}
 {
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+Why do we use it?
+It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+
+
+Where does it come from?
+Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+
+The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.
+
+Where can I get some?
+There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+
+
+}
 \begin{thebibliography}{9}
 \bibitem{cmakeintroduction}
   Introduction to CMake,
@@ -1226,8 +1242,6 @@ Most of the methods are just getters to the private fields which are mostly WebT
 	\item LaTeX wikibooks \newline \textit{https://en.wikibooks.org/wiki/LaTeX}
 
 \end{itemize}
-}
-\newpage
 
 \linespread{1.3}
 \selectfont
