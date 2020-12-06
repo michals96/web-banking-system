@@ -13,6 +13,7 @@
 \usepackage{regexpatch,fancyvrb,xparse}
 \usepackage{listings}
 \usepackage{hyperref}
+\usepackage{float}
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -781,16 +782,325 @@ jobs:
 }
 
 \chapter{Implementation}
-\section{Server side session}
-\section{Logging panel}
+
+The Web Banking Application contains four major fields which will be described in further sections. Among those, there are:
+  
+\begin{itemize}
+\setlength\itemsep{0em}
+\item core class,
+\item widgets,
+\item session,
+\item user entity,
+\item and database.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{uml2}
+\caption{UML implementation diagram of the application.}
+\end{figure}
+
+\section{Web Banking core class}
+{
+This class is the main class that holds all necessary service functionalities and business logic.  
+\bigskip
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={WebBankingApplication.cpp.}, captionpos=b]
+class WebBankingApplication : public Wt::WContainerWidget
+{
+public:
+	WebBankingApplication();
+	void handleInternalPath(const std::string& internalPath);
+	
+private:
+	UserBalanceWidget    *userBalance;
+	WStackedWidget       *mainStack;
+	WContainerWidget     *userLinks;
+	WContainerWidget	 *adminLinks;
+	ListAccountsWidget   *accounts;
+	TransactionsWidget   *transactions;
+	LogsWidget			 *logs;
+
+	WAnchor* balanceAnchor;
+	WAnchor* transactionAnchor;
+	WAnchor* listUsersAnchor;
+	WAnchor* serviceLogsAnchor;
+
+	Session session;
+
+	void onAuthEvent();
+	void showUserBalance();
+	void showAllAccounts();
+	void showTransactionPanel();
+	void showServiceLogs();
+};
+\end{lstlisting}
+
+\bigskip
+This class derives  from Wt::WContainerWidget class, which is built-in WebToolkit class that behaves like a container for widgets. In the application the logic is that widgets are created and depending on which one user wants to use, the application plugs in or plugs them out of the WebBankingClass container. In the constructor of this class the application creates a Session, which is a link between processes and connects with it. Then it creates Wt::WtStackedWidget object, which will hold widgets and plugs in logging page widget into it. At the end it connects with handleInternalPath signal and start processing the whole environment. 
+
+\bigskip
+Constatly calling handleInternalPath() function will put on a guardian, which will react to any changes in URL internal path. The logic inside of this function is whenever a path is changed, different widget will be plugged in the container, which ultimately will cause in rendering different content for the application user.
+
+\bigskip
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={handleInternalPath() function.}, captionpos=b]
+void WebBankingApplication::handleInternalPath(const std::string& internalPath)
+{
+	if (session.login().loggedIn() && session.userName() != "admin") 
+	{
+		if (internalPath == "/balance")
+		{
+
+			showUserBalance();
+		}
+		else if (internalPath == "/transaction")
+		{
+
+			showTransactionPanel();
+		}
+		else
+		{
+			WApplication::instance()->setInternalPath("/", true);
+		}
+	}
+	else if (session.login().loggedIn() && session.userName() == "admin")
+	{
+		if (internalPath == "/accounts")
+		{
+			showAllAccounts();
+		}
+		else if (internalPath == "/logs")
+		{
+			showServiceLogs();
+		}
+		else
+		{
+			WApplication::instance()->setInternalPath("/", true);
+		}
+	}
+	else if (session.login().loggedIn() == false)
+	{
+		WApplication::instance()->setInternalPath("", true);
+	}
+}
+};
+\end{lstlisting}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{logpage}
+\caption{This is the page that renders to user when he turns the application on. Default logging widget is plugged in.}
+\end{figure}  
+
+Other members of this class are just widgets and methods responsible for plugging them-in, which is the topic of the next section.
+}
+\section{Widgets}
+{
+\section*{List accounts widget}
+{
+
+This widget renders one of admin functionalities. It is responsible for listing all users in the service with their balance. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{listaccounts}
+\caption{This is the page that renders to user when he logs as an admin and chooses to list all accounts.}
+\end{figure}  
+
+The code of this class is rather really simple. It derives from WContainerWidget and has only two methods. First one is constructor, which only initializes parent class and session. Second one is update() function which is responsible for composing the widget with table.
+
+\bigskip
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={ListAccountsWidget::update() function.}, captionpos=b]
+void ListAccountsWidget::update()
+{
+    clear();
+
+    this->addWidget(cpp14::make_unique<WText>
+    ("<h2> All accounts in the bank </h2>"));
+
+    std::vector<User> top = session_->getUsers();
+
+    WTable* table = this->addWidget(cpp14::make_unique<WTable>());
+
+    table->elementAt(0, 0)->addWidget(cpp14::make_unique<WText>("ID"));
+    table->elementAt(0, 1)->addWidget(cpp14::make_unique<WText>("Name"));
+    table->elementAt(0, 2)->addWidget(cpp14::make_unique<WText>("Balance"));
+    table->setHeaderCount(1);
+
+    for (auto& user : top) {
+        int row = table->rowCount();
+
+        table->elementAt(row, 0)->addWidget
+        (cpp14::make_unique<WText>(user.id));
+        
+        table->elementAt(row, 1)->addWidget
+        (cpp14::make_unique<WText>(user.name));
+        
+        table->elementAt(row, 2)->addWidget
+        (cpp14::make_unique<WText>(asString(user.balance)));
+    }
+}
+\end{lstlisting}
+
+At the beginning of update() function in this widget, a list of users is fetched from the database by calling getUsers() and it is being assigned to the top vector. Then a very basic table is being constructed in a for loop regarding the information about users in top vector. When the iteration is finished, the widget is composed and rendered. Plugging the widget to the front page was already done in line 10, by callid addWidget() function on this object.
+}
+
+\section*{Logs widget}
+{
+This widget is responsible for rendering service logs from the transactions that has been conducted among certain accounts. It is a second and the last admin functionality.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{servicelogs}
+\caption{This is the page that renders to user when he logs as an admin and chooses to list all transactions.}
+\end{figure}
+
+\bigskip
+The implementation is just the same as in every widget in this application. Derivation from WContainerWidget, constructor, update method for constructing the widget and a session member.
+
+\bigskip
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={LogsWidget::update() function.}, captionpos=b]
+void LogsWidget::update()
+{
+	clear();
+
+	auto groupBox = Wt::cpp14::make_unique<Wt::WGroupBox>("Service logs");
+	groupBox->addStyleClass("centered-example");
+
+	std::ifstream file("logs.txt");
+	if (file.is_open()) {
+		std::string line;
+		while (std::getline(file, line)) {
+			groupBox->addNew<Wt::WText>(line.c_str());
+		}
+
+		this->addWidget(std::move(groupBox));
+
+		file.close();
+	}
+}
+\end{lstlisting}
+
+What is interesting about this widget is its construction in update() function. As in every widget, in the beginning all widgets from the page are removed by calling clear() function. Then, a group box is created, which is  another type of table that is built in and provided by default Web Toolkit library. Then, a file called logs.txt is being opened. It is a file that contains informations about transactions - when a transaction is made, logs are appended to this file. If it doesn't exist, no logs are rendered. As the file is loaded, it is iterated line by line. With each iteration a line with transaction information is added to the groupBox, which ultimately constructs the whole widget. Then it is added to the page. From the security point of view this is not the safest approach for storing and fetching any kind of service logs, especially as fragile ones as the ones from banking application. To increase security of this mechanism the logs could have been encrypted and decrypted upon loading. Better yet, they could have been stored as an object in a database, which could have been stored in a various places limiting an access to those logs, by for instance authorizing potential clients. 
+}
+
+\section*{Transaction widget}
+{
+This widget is the first one that is provided by the service to the user without admin permissions. It is a panel, that allows user to actually conduct a simple transaction which is wiring money.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{wire}
+\caption{This is the page that renders to user without admin permissions when chooses to make a transaction.}
+\end{figure}
+
+The wiring menu is rather simple. At the very top there is a slider where user can point out how much money he wants to wire. It is a nice show-how of the Web Toolkit library. By using built in slider widget it is possible to create an animation on the page without writing single javascript line of code. Then a user can choose to who he wants to wire the money. The last box is where a user can start a transaction and while it's being processed, he can stop it or reset the whole menu. When a transfer is completed, a notification appears.
+
+\bigskip 
+Although TransactionsWidget implementation is rather classic as it is for every widget in this application, there are a few additions to this particular widget. There is member log() function that is being called upon every transaction and it appends to logs.txt file information about the transfer that has just been made. The update function has a lot of boilerplate code which is responsible for the built in widgets (like the slider), so instead focusing on the whole update() function let's just take a look about the most important part which is the lambda responsible for handling the wiring itself.
+
+\bigskip
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Part of TransactionWidget::update() function.}, captionpos=b]
+intervalTimer->timeout().connect([=] {
+	bar->setValue(bar->value() + 1);
+	if (bar->value() == 10) {
+		session_->addToBalance(transactionUsers[cb->currentIndex()].name,
+		session_->userName(), slider->value());
+		
+		log(transactionUsers[cb->currentIndex()].name, 
+		session_->userName(), slider->value(), true);
+		
+		stopButton->clicked().emit(Wt::WMouseEvent());
+		startButton->disable();
+		
+		this->addWidget(cpp14::make_unique<WBreak>());
+		this->addWidget(std::move(cpp14::make_unique<WText>("Transfer 
+		complete!")));
+	}
+});
+\end{lstlisting}
+
+In the beginning of this lambda function, we connect a timeout(), which is a signal emmited after the timer times out, to the intervalTimer which generates those signals when a start() function is being called. So basically whenever user presses "Start" button to wire money, this lambda is being called. First we increment the value of the slider by one just to get the animation going. It's just a visual efect, but it also gives user a chance to stop the transaction. When the bar slider has reached an end, addToBalance() function is called, which finds source and target user and updates their balances by adding or subtracting money. Then a log() function is called - at this point we know what it's responsible for. The rest of the logic is just disabling start button, clicking stop button and printing "Transfer complete!" notification.
+}
+
+\section*{User balance widget}
+{
+This is the second and the last widget provided by the service to the user without admin permissions. It is a very basic one, which prints the information about current user's balance.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{balance}
+\caption{This is the page that renders to user without admin permissions when he chooses to see the balance.}
+\end{figure}
+
+The update() function for this widget is very transparent. What it does is it just fetches users from the database and the user that is just logged. Then it compares logged user to the one in a database and if it finds the user, it fetches his balance. Lastly, the balance is added to the simple groupBox, which is later added to the widget container and that is how user balance widget is being composed.
+
+\bigskip
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={UserBalanceWidget::update() function.}, captionpos=b]
+void UserBalanceWidget::update()
+{
+	clear();
+
+	int userBalance = 0;
+
+	std::string userName = session_->userName();
+	std::vector<User> top = session_->topUsers();
+
+	for (auto& user : top) {
+		if (user.name == userName) {
+			userBalance = user.balance;
+		}
+	}
+
+	auto groupBox = Wt::cpp14::make_unique<Wt::WGroupBox>(userName + " balance");
+	groupBox->addStyleClass("centered-example");
+
+	std::string userBalanceStr = std::to_string(userBalance);
+	groupBox->addNew<Wt::WText>("<h2>" + userBalanceStr + "$</h2>");
+	this->addWidget(std::move(groupBox));
+}
+\end{lstlisting}
+}
+
+}
+\section{Session}
+{
+Knowing that HTTP is a stateless protocol we have to point out one very important thing. WWW server will process each transaction independently, without looking for any relations to other transactions commited by the user. This means that it is almost impossible for an application to track all systems of authorization that require to track every user activity within the application. For example - if we log in the service at the logging page, how does the service know at the next page that we are still logged in? The answer is it doesn't. To be more precise - it doesn't until it's provided with lasting entity carrying information, that could be passed between components. The answer to this challenge is session. It is a class that is equipped with business logic that allows it to carry valuable information from the service point of view and may be passed between components. It can be simulated when we use dynamic language like C++. In many languages it is a common practice to implement session, like for instance when coding a server-side of the application in PHP. 
+
+\bigskip
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Session.h file.}, captionpos=b]
+typedef Auth::Dbo::UserDatabase<AuthInfo> UserDatabase;
+
+class Session
+{
+public:
+	static void configureAuth();
+
+	Session();
+	~Session();
+
+	Auth::AbstractUserDatabase& users();
+	Wt::Auth::Login& login();
+	std::vector<User> topUsers(int limit);
+	std::string userName() const;
+	int findId();
+	void addToBalance(std::string tgtName, std::string srcName, int amount);
+
+	static const Auth::AuthService& auth();
+	static const Auth::AbstractPasswordService& passwordAuth();
+	static const std::vector<const Auth::OAuthService*>& oAuth();
+
+private:
+	mutable Dbo::Session session_;
+	Wt::Auth::Login login_;
+	std::unique_ptr<UserDatabase> users_;
+	Dbo::ptr<User> user() const;
+};
+\end{lstlisting}
+
+Most of the methods are just getters to the private fields which are mostly WebToolkit built-in type variables. They are already provided with many valuable methods like for instance querying the database objects directly. The most important part of session logic are topUsers() and addToBalance() methods and those are the ones that we will focus on. 
+}
+\section{User entity}
 \section{Database}
-\section{User features}
-\subsection{Transferring money}
-\subsection{Checking user balance}
-\section{Admin features}
-\subsection{Listing all users}
-\subsection{Access to server logs}
-\section{Unit testing}
 \chapter{Summary}
 \chapter{Literature}
 {
