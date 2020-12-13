@@ -870,25 +870,24 @@ private:
 \end{lstlisting}
 
 \bigskip
-This class derives  from Wt::WContainerWidget class, which is built-in WebToolkit class that behaves like a container for widgets. In the application the logic is that widgets are created and depending on which one user wants to use, the application plugs in or plugs them out of the WebBankingClass container. In the constructor of this class the application creates a Session, which is a link between processes and connects with it. Then it creates Wt::WtStackedWidget object, which will hold widgets and plugs in logging page widget into it. At the end it connects with handleInternalPath signal and start processing the whole environment. 
+This class derives  from Wt::WContainerWidget class, which is built-in WebToolkit class that behaves like a container for widgets. In the application the logic is that widgets are created and they are supposed to reflect each page and feature. Depending on which content user wants to see, the application plugs in or plugs out specific widget which is responsible for rendering particular content of the WebBankingClass container. In the constructor of this class the application creates a Session, which is a link between processes and components. Then it creates Wt::WtStackedWidget object, which will hold widgets and plugs in logging page widget into it. At the end it connects with handleInternalPath signal and start processing the whole environment. 
 
 \bigskip
 Constatly calling handleInternalPath() function will put on a guardian, which will react to any changes in URL internal path. The logic inside of this function is whenever a path is changed, different widget will be plugged in the container, which ultimately will cause in rendering different content for the application user.
 
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={handleInternalPath() function.}, captionpos=b]
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={handleInternalPath() function. It reacts to URL changes. Regarding the internal path, different content is being rendered. For instance if path is changed to localhost:8080/balance then this function checks if user is logged in. If so, showUserBalance() function is being called, which clears all current widgets and plugs in user balance widget, which will cause in displaying the balance of the currently logged in user. If the user is not logged, the path will be immediately changed to localhost:8080 and the logging page will be rendered.}, captionpos=b]
 void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 {
+	// Check if user is logged in as an user
 	if (session.login().loggedIn() && session.userName() != "admin") 
 	{
-		if (internalPath == "/balance")
-		{
-
+		if (internalPath == "/balance") 
+		{								
 			showUserBalance();
 		}
 		else if (internalPath == "/transaction")
 		{
-
 			showTransactionPanel();
 		}
 		else
@@ -896,6 +895,7 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 			WApplication::instance()->setInternalPath("/", true);
 		}
 	}
+	// Check if user is logged in as an admin
 	else if (session.login().loggedIn() && session.userName() == "admin")
 	{
 		if (internalPath == "/accounts")
@@ -916,12 +916,11 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 		WApplication::instance()->setInternalPath("", true);
 	}
 }
-};
 \end{lstlisting}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1.0\textwidth]{logpage}
+\includegraphics[width=0.8\textwidth]{logpage}
 \caption{This is the page that renders to user when he turns the application on. Default logging widget is plugged in.}
 \end{figure}  
 
@@ -932,7 +931,7 @@ Other members of this class are just widgets and methods responsible for pluggin
 \section*{List accounts widget}
 {
 
-This widget renders one of admin functionalities. It is responsible for listing all users in the service with their balance. 
+\tab This widget renders one of admin functionalities. It is responsible for listing all users in the service with the details like their balances. It could simulate a very simple functionality that could be provided to the administrator by the real banking service. 
 
 \begin{figure}[H]
 \centering
@@ -940,10 +939,10 @@ This widget renders one of admin functionalities. It is responsible for listing 
 \caption{This is the page that renders to user when he logs as an admin and chooses to list all accounts.}
 \end{figure}  
 
-The code of this class is rather really simple. It derives from WContainerWidget and has only two methods. First one is constructor, which only initializes parent class and session. Second one is update() function which is responsible for composing the widget with table.
+The code of this class is simple. It derives from WContainerWidget and has only two methods. First one is constructor, which only initializes parent class and session. Second one is update() function which is responsible for composing the widget with table.
 
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={ListAccountsWidget::update() function.}, captionpos=b]
+\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={ListAccountsWidget::update() function. Assuming that you use a compiler with C++14 support you can use std::make unique instead of Wt::cpp14::make unique. In the application std::make unique was used because it allows us to have a better control of the lifetime of the widget. For instance if we want to, we can retrieve a std::unique ptr with  WObject::removeChild() function, which ultimately will unplug a single widget. The disadvantage of using this smart pointer is the fact that we are dealing with a raw pointer and as always it's ownership must be changed carefully, otherwise it might cause a memory leak.}, captionpos=b]
 void ListAccountsWidget::update()
 {
     clear();
@@ -951,7 +950,7 @@ void ListAccountsWidget::update()
     this->addWidget(cpp14::make_unique<WText>
     ("<h2> All accounts in the bank </h2>"));
 
-    std::vector<User> top = session_->getUsers();
+    const std::vector<User> &top = session_->getUsers();
 
     WTable* table = this->addWidget(cpp14::make_unique<WTable>());
 
@@ -980,11 +979,11 @@ At the beginning of update() function in this widget, a list of users is fetched
 
 \section*{Logs widget}
 {
-This widget is responsible for rendering service logs from the transactions that has been conducted among certain accounts. It is a second and the last admin functionality.
+This widget is responsible for rendering service logs from the transactions that has been conducted among certain accounts. It is a second and the last admin functionality. The most common reason for having logs in any application is the fact that they allow to track any malicious behaviors in the system. Their purpose is to save and store information about the traffic which is happening in the programs components. In the web banking application an admin can go through service logs which contain information about every transaction - as we could imagine a real banking application admin could do.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{servicelogs}
+\includegraphics[width=0.6\textwidth]{servicelogs}
 \caption{This is the page that renders to user when he logs as an admin and chooses to list all transactions.}
 \end{figure}
 
@@ -1014,7 +1013,10 @@ void LogsWidget::update()
 }
 \end{lstlisting}
 
-What is interesting about this widget is its construction in update() function. As in every widget, in the beginning all widgets from the page are removed by calling clear() function. Then, a group box is created, which is  another type of table that is built in and provided by default Web Toolkit library. Then, a file called logs.txt is being opened. It is a file that contains informations about transactions - when a transaction is made, logs are appended to this file. If it doesn't exist, no logs are rendered. As the file is loaded, it is iterated line by line. With each iteration a line with transaction information is added to the groupBox, which ultimately constructs the whole widget. Then it is added to the page. From the security point of view this is not the safest approach for storing and fetching any kind of service logs, especially as fragile ones as the ones from banking application. To increase security of this mechanism the logs could have been encrypted and decrypted upon loading. Better yet, they could have been stored as an object in a database, which could have been stored in a various places limiting an access to those logs, by for instance authorizing potential clients. 
+What is interesting about this widget is it's construction in update() function. As in every widget, in the beginning all widgets from the page are removed by calling clear() function. Then, a group box is created, which is  another type of table that is built in and provided by default Web Toolkit library. The reason why a group box was chosen was just to present another widget from the widget gallery, which is full of interesting widgets that are ready to use. Then, a file called logs.txt is being opened. It is a file that contains information about transactions - when a transaction is made, logs are appended to this file. If it doesn't exist, no logs are rendered. As the file is loaded, it is iterated line by line. With each iteration a line with transaction information is added to the groupBox, which ultimately constructs the whole widget. Then it is added to the page. 
+
+\bigskip
+From the security point of view this is not the safest approach for storing and fetching any kind of service logs, especially as sensitive ones as the ones from the banking application, which contain personal data. Regardless the type of the application, the service logs are always of a great importance as usually they could reveal system vulnerabilities to the potential hacker. To increase security of this mechanism the logs could have been encrypted and decrypted upon loading. Better yet, they could have been stored as an object in a database, which could have been stored in a various places limiting an access to those logs, by for instance authorizing potential clients. 
 }
 
 \section*{Transaction widget}
