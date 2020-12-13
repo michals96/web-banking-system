@@ -824,9 +824,9 @@ The Web Banking Application contains four major fields which will be described i
 
 \section{Web Banking core class}
 {
-This class is the main class that holds all necessary service functionalities and business logic.  
+The class represented in listing~\ref{lst:coreclass} is the main class that holds all necessary service functionalities and business logic.  
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={WebBankingApplication.cpp.}, captionpos=b]
+\begin{lstlisting}[frame=single,label={lst:coreclass}, basicstyle=\small, language=C++, caption={WebBankingApplication.h file. Most members are private because they are supposed only to be used in this class, apart from handleInternalPath() which could be used in other widgets that would want to impact the url path. The biggest disadvantage of current implementation is the class became really swell and in future it should be separated into two classes holding user and admin features individually. However the current solution is really simple, which is its biggest advantage. If a programmer would like to add a new page representing new feature, he should first create a new widget were rules of rendering content would be described. Then he should have add an object of this widget in this class and create a function which would clear current widget container and plug the new widget. This function would be called in handle internal path and it would be triggered upon URL change, which as we now would happen by clicking new WAnchor object. }, captionpos=b]
 class WebBankingApplication : public Wt::WContainerWidget
 {
 public:
@@ -834,22 +834,34 @@ public:
 	void handleInternalPath(const std::string& internalPath);
 	
 private:
-	UserBalanceWidget    *userBalance;
+	// Acts like a container for widgets
 	WStackedWidget       *mainStack;
-	WContainerWidget     *userLinks;
-	WContainerWidget	 *adminLinks;
+	// Widgets responsible for user and admin features
+	UserBalanceWidget    *userBalance;
 	ListAccountsWidget   *accounts;
 	TransactionsWidget   *transactions;
 	LogsWidget			 *logs;
-
+	// Widgets that show box with links
+	// for admin and user
+	WContainerWidget     *userLinks;
+	WContainerWidget	 *adminLinks;
+	
+	// WAchor is a link which
+	// changes URL upon clicking
 	WAnchor* balanceAnchor;
 	WAnchor* transactionAnchor;
 	WAnchor* listUsersAnchor;
 	WAnchor* serviceLogsAnchor;
-
+	
 	Session session;
-
-	void onAuthEvent();
+	
+	// This function veryfies if user is logged in
+	// and who is logged in. Regarding this information
+	// it renders admin menu, user menu or login panel.
+	void onAuthEvent();	
+	
+	// Those functions are reponsible for
+	// plugging individual widgets
 	void showUserBalance();
 	void showAllAccounts();
 	void showTransactionPanel();
