@@ -231,8 +231,8 @@ This project required including CMake tool because of various dependencies and c
 To be able to explore favors that CMake offers one must create \textbf{CMakeLists.txt} file placed in the desired catalog of the project. The core of this file is a simple scripting language that describes rules and defines variables telling the compiler how to link files and what should be the outcome of the compilation process.
 
 \bigskip
-Let's have an example project\cite{cmakeintroduction} which structure looks like below.\newline
-\begin{lstlisting}[frame=single, language=C++, caption={Example CMake project structure.}, captionpos=b]
+Let's have an example project\cite{cmakeintroduction} which structure looks like below~\ref{lst:cmakelst}.\newline
+\begin{lstlisting}[frame=single,label={lst:cmakelst},language=C++, caption={Example CMake project structure.}, captionpos=b]
  .
  |-- CMakeLists.txt
  |-- build
@@ -244,9 +244,9 @@ Let's have an example project\cite{cmakeintroduction} which structure looks like
 \end{lstlisting}
 
 \bigskip
-The content of \textbf{*.cpp} and \textbf{*.h} files is irrelevant here, at this point it could be any code. In the main directory there is a simple \textbf{CMakeLists.txt} which is used to build the project. The code of the \textbf{CMakeLists} script:\newline
+The content of \textbf{*.cpp} and \textbf{*.h} files is irrelevant here, at this point it could be any code. In the main directory there is a simple \textbf{CMakeLists.txt} which is used to build the project. The code of the \textbf{CMakeLists} script~\ref{lst:cmakelisting}:\newline
 
-\begin{lstlisting}[frame=single, language=C++, caption={CMakeLists.txt of example project.}, captionpos=b]
+\begin{lstlisting}[frame=single,label={lst:cmakelisting}, language=C++, caption={CMakeLists.txt of example project.}, captionpos=b]
 cmake_minimum_required(VERSION 2.8.9)
 project(directory_test)
 
@@ -291,15 +291,17 @@ The most important things while building the project that above CMake will perfo
   \centering
     \includegraphics[width=1.0\textwidth]{spa}
     \caption{Traditional Page vs SPA.}
+    \label{fig:tpvsspa}
 \end{figure}
 
 \bigskip
-As a SPA, web-banking application works on widgets which are the core of WebToolkit library. A widget itself is a specific type of user-computer interaction with a graphical interface such as button or a scroll bar, which in WebToolkit case is wrapped in C++ code. A developer should create a main widget, which is not visible to the user. Instead it works as a widget container that will hold other template widgets that will be plugged in or plugged out depending on what content will be loaded on the page.  
+As a SPA, web-banking application works on widgets which are the core of WebToolkit library. A widget itself is a specific type of user-computer interaction with a graphical interface such as button or a scroll bar, which in WebToolkit case is wrapped in C++ code. A developer should create a main widget, which is not visible to the user. Instead it works as a widget container that will hold other template widgets that will be plugged in or plugged out depending on what content will be loaded on the page. This logic is presented on figure~\ref{fig:tpvsspa} and~\ref{fig:spaviews}.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1.0\textwidth]{spa-template}
 \caption{Views in Traditional Page and SPA[2].}
+\label{fig:spaviews}
 \end{figure} 
 
 \bigskip
@@ -328,12 +330,13 @@ It is no secret that preferable programming technology stack for such developmen
 }
 \section{WebToolkit Features}
 {
-\tab \textbf{Web Toolkit} library has a lot to offer. Now of course - creating web application in C++ language comes with a prize. It's biggest disadvantage is that while programming we have no control of HTML code. There is also a necessity of re-compiling the code with every change introduced where there is no such need when using standard web development tools (like javascript application with node.js or php application with XAMPP). However, having said that it is worth mentioning that Web Toolkit is appreciated for plenty features that it provides to the users.
+\tab \textbf{Web Toolkit} library has a lot to offer. Now of course - creating web application in C++ language comes with a prize. It's biggest disadvantage is that while programming we have no control of HTML code. There is also a necessity of re-compiling the code with every change introduced where there is no such need when using standard web development tools (like javascript application with node.js or php application with XAMPP). However, having said that it is worth mentioning that Web Toolkit~\ref{fig:wtlogoz} is appreciated for plenty features that it provides to the users.
  
 \begin{figure}[h]
   \centering
     \includegraphics[width=0.7\textwidth]{features}
     \caption{WebToolkit logo and features~\cite{wtlogo}.}
+    \label{fig:wtlogoz}
 \end{figure}
 
 \subsection*{Core Library} 
@@ -358,13 +361,14 @@ Core library also provides 2D and 3D painting support to users and developers. T
 	\item Request Forgery (CSRF) prevention,
 	\item Application logic attack prevention,
 	\item DoS mitigation,
-	\item \textbf{Authentication module} (including support for OAuth 2.0 and OpenID Connect).
+	\item \textbf{Authentication module} (including support for OAuth 2.0 and OpenID Connect) figure~\ref{fig:authmod}.
 \end{itemize}
 
 \begin{figure}[h]
   \centering
     \includegraphics[width=1.1\textwidth]{auth-module}
     \caption{Main classes of the authentication module\cite{authmodule}.}
+    \label{fig:authmod}
 \end{figure}
 
 The authentication module itself occurred to be significantly important and helpful in Web Banking Application. Some of the classes which implement basic user features are presented above. What it means is that secure and robust service functionalities like signing in/out, registration or authentication are already provided.
@@ -424,9 +428,9 @@ The authentication module itself occurred to be significantly important and help
 
 \section{Hello World Application}
 {
-Lets go through simple Hello World applications just to get in touch with WebToolkit library environment.
+Lets go through simple Hello World application (listing~\ref{lst:hellowtapp}) just to get in touch with WebToolkit library environment.
 
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={A complete "Hello world" application \cite{helloworldapp}.}, captionpos=b]
+\begin{lstlisting}[frame=single, label={lst:hellowtapp}, basicstyle=\small, language=C++, caption={A complete "Hello world" application \cite{helloworldapp}.}, captionpos=b]
 #include <Wt/WBreak.h>
 #include <Wt/WContainerWidget.h>
 #include <Wt/WLineEdit.h>
@@ -472,19 +476,20 @@ int main(int argc, char **argv)
 \end{lstlisting}
 
 \newpage
-Now when it comes to building, it could be done locally by setting up a localhost HTTP server. Having IDE set-up it is done automatically. Otherwise while operating on UNIX-like systems:
+Now when it comes to building, it could be done locally by setting up a localhost HTTP server. Having IDE set-up it is done automatically. Otherwise while operating on UNIX-like systems it would require a few commands presented on listing~\ref{lst:linuxcom}.
 
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Building "Hello world" application.}, captionpos=b]
+\begin{lstlisting}[frame=single,label={lst:linuxcom}, basicstyle=\small, language=C++, caption={Building "Hello world" application.}, captionpos=b]
 $ g++ -std=c++14 -o hello hello.cc -lwthttp -lwt
 $ ./hello --docroot . --http-address 0.0.0.0 --http-port 9090
 \end{lstlisting}
 
 \bigskip
-The final result is:
+The final result is shown in figure~\ref{fig:finalres}
 \begin{figure}[h]
   \centering
     \includegraphics[width=0.7\textwidth]{hello-app}
     \caption{Hello Application on Web Toolkit.}
+    \label{fig:finalres}
 \end{figure}
 
 \bigskip
@@ -503,13 +508,14 @@ The above code presents basic concepts of the library workflow.
 }
 \section{Widgets gallery}
 {
-\tab \textbf{Web Toolkit} also offers a widgets gallery, which is nothing else but a bootstrap where most common widgets are already implemented and ready to be used. Among them there are layouts, forms widgets, navigation widgets, trees widgets, tables widgets, graphics widgets, charts widgets and media widgets. Basically whilst going through development process one should keep in mind this feature as it may save a lot of time and a lot of coding. 
+\tab \textbf{Web Toolkit} also offers a widgets gallery, which is nothing else but a bootstrap where most common widgets are already implemented and ready to be used. Among them there are layouts, forms widgets, navigation widgets, trees widgets, tables widgets, graphics widgets, charts widgets and media widgets. Basically whilst going through development process one should keep in mind this feature as it may save a lot of time and a lot of coding. The layout of widgets gallery is presented in figure~\ref{fig:widgal} 
 
 \bigskip
 \begin{figure}[h]
   \centering
     \includegraphics[width=1.0\textwidth]{gallery}
-    \caption{Web Toolkit Widget Gallery.~\cite{widgetsgallery}.}
+    \caption{Web Toolkit Widget Gallery~\cite{widgetsgallery}.}
+    \label{fig:widgal}
 \end{figure}
     
      
@@ -525,9 +531,10 @@ The above code presents basic concepts of the library workflow.
   \centering
     \includegraphics[width=0.8\textwidth]{devops}
     \caption{DevOps process.~\cite{devops}.}
+    \label{fig:devopsflow}
 \end{figure}
     
-Figure 3.1 shows basic elements of devOps approach which are
+Figure~\ref{fig:devopsflow} shows basic elements of devOps approach which are
 \begin{itemize}
 	\item building the product that is being developed,
 	\item coding,
@@ -547,18 +554,19 @@ Creating web banking application was also about carrying out the development pro
 \tab First tool that was used in this project was version-control system called \textbf{Git}. It is a tool that allows developers to track changes in code of the project, as well as making them. Every change introduces a new version of the code which is stored in history. The biggest advantage of this feature is capability of restoring previous version of the code which presents tremendous enhancement to reponsing to unwanted changes.
 
 \bigskip
-What is more, Git provides branching feature, which simplifies developing code simultaneously by many developers at the same time. By invoking simple command line functions developer can communicate his local repository with remote repository. Many version-control systems have graphic interfaces too.
+What is more, Git provides branching feature, which simplifies developing code simultaneously by many developers at the same time. By invoking simple command line functions developer can communicate his local repository with remote repository. This workflow is presented on figure~\ref{fig:vcflow}. Many version-control systems have graphic interfaces too.
 
 \bigskip
 \begin{figure}[H]
   \centering
     \includegraphics[width=1.0\textwidth]{git}
-    \caption{Distributed version-control system workflow.~\cite{git}}
+    \caption{Distributed version-control system workflow~\cite{git}.}
+    \label{fig:vcflow}
 \end{figure}   
 }
 \section{GitHub}
 {
-\tab Web banking application was being developed using GitHub, which is a GIT version-control system hosting dedicated for programming projects. A remote repository was stored there, which contained:
+\tab Web banking application was being developed using GitHub, which is a GIT version-control system hosting dedicated for programming projects - it's layout is presented on figure \ref{fig:githublayout}. A remote repository was stored there, which contained:
 
 \begin{itemize}
 	\item applications code,
@@ -572,27 +580,30 @@ What is more, Git provides branching feature, which simplifies developing code s
 \end{itemize}
 	
 \bigskip
-Creating this application required over 150 commits, 18 branches and more than 20 pull requests.
+Creating this application required over 150 commits, 18 branches and more than 20 pull requests. More statistics regarding percentage of programming languages used in project are presented on figure~\ref{fig:stats}.
 
 \begin{figure}[H]
   \centering
     \includegraphics[width=1.0\textwidth]{repo}
-    \caption{Web banking application github repository.~\cite{repo}}
+    \caption{Web banking application github repository~\cite{repo}.}
+    \label{fig:githublayout}
 \end{figure} 
 
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.7\textwidth]{languages}
-    \caption{Languages statistics on Web banking application repository. The majority of is HTML code, because of the static resoruces of WebToolkit library, which handle HTML.~\cite{repo}}
+    \caption{Languages statistics on Web banking application repository. The majority of is HTML code, because of the static resoruces of WebToolkit library, which handle HTML~\cite{repo}.}
+    \label{fig:stats}
 \end{figure} 
     
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.7\textwidth]{pullrequests}
-    \caption{A small batch of a few pull requests done during the implementation.~\cite{repo}}
+    \caption{A small batch of a few pull requests done during the implementation~\cite{repo}.}
+    \label{fig:requests}
 \end{figure} 
     
-A pull request itself is a github feature which allows programmers to do a review of a code that has been developed during a certain amount of time and is now to be ready to be merged to the main branch of the repository, which is usually the branch that is frequently being built and released to the client. This process performs a quality gate to the code and also increases readability of the changes introduced to the product. Figure 3.5 shows a few pull requests that were put out during the development. Each one of the pull requests has its unique name, id and can be also labeled by fancy labels (like feature, bug, improvement, back-end and others) which can be modified by repository owners. Before merging, the product is being built with the upcoming changes, which is another quality gate. If the built is successful and the reviewers approved the code - a programmer is allowed to merge the code and close the pull request. Another interesting thing is that every pull request or commit may be pre-tagged with a \textbf{WBS-number}, which stands for "WebBankingApplication-number of the story" and is thoroughly explained in the next section of this chapter. 
+A pull request itself is a github feature which allows programmers to do a review of a code that has been developed during a certain amount of time and is now to be ready to be merged to the main branch of the repository, which is usually the branch that is frequently being built and released to the client. This process performs a quality gate to the code and also increases readability of the changes introduced to the product. Figure~\ref{fig:requests} shows a few pull requests that were put out during the development. Each one of the pull requests has its unique name, id and can be also labeled by fancy labels (like feature, bug, improvement, back-end and others) which can be modified by repository owners. Before merging, the product is being built with the upcoming changes, which is another quality gate. If the built is successful and the reviewers approved the code - a programmer is allowed to merge the code and close the pull request. Another interesting thing is that every pull request or commit may be pre-tagged with a \textbf{WBS-number}, which stands for "WebBankingApplication-number of the story" and is thoroughly explained in the next section of this chapter. 
 }
 \section{Proprietary issue tracking}
 {
@@ -600,16 +611,17 @@ A pull request itself is a github feature which allows programmers to do a revie
 }
 \subsection{JIRA Software}
 {
-\tab An issue tracking system which was used in the project is JIRA Software. With its graphic user interface it can provide a projects board  which reflects Agile framework chosen in a development process and later on it could impact on the way of presenting issues work flow in a different way. Agile framework is a set of organization patterns and work flow patterns that are followed in order to improve to development process. In the project we could group issues by those that are meant to be done, those that are being currently developed and those that are already done.
+\tab An issue tracking system which was used in the project is JIRA Software. With its graphic user interface it can provide a projects board  which reflects Agile framework chosen in a development process (presented on figure~\ref{fig:jiraboard}) and later on it could impact on the way of presenting issues work flow in a different way. Agile framework is a set of organization patterns and work flow patterns that are followed in order to improve to development process. In the project we could group issues by those that are meant to be done, those that are being currently developed and those that are already done.
 
 \bigskip
 \begin{figure}[H]
   \centering
     \includegraphics[width=1.0\textwidth]{kanban}
-    \caption{JIRA Kanban board used during projects development.~\cite{jiraboard}}
+    \caption{JIRA Kanban board used during projects development~\cite{jiraboard}.}
+    \label{fig:jiraboard}
 \end{figure} 
     
-\bigskip Kanban board is a board that reflects another work flow, where issues are reported and resolved as development goes, without working in a frequent time rate like in Scrum where developers could work for example in two week sprint methodology. Nevertheless, before starting programming Web banking application, the whole development process needed to be thought through and planned well. After planning, issues were created and added to the board. With creating every part of the project there was an issue that reflected actual state of the task that is being worked on. Swift GUI of JIRA Software allows to easily do drag-and-drop, starting with issues in "To Do", ending up with issues in "Done" table.
+\bigskip Kanban board is a board that reflects another work flow, where issues are reported and resolved as development goes, without working in a frequent time rate like in Scrum where developers could work for example in two week sprint methodology. Nevertheless, before starting programming Web banking application, the whole development process needed to be thought through and planned well. After planning, issues were created and added to the board. With creating every part of the project there was an issue that reflected actual state of the task that is being worked on. Example issue management in JIRA is presented on figures~\ref{fig:first} and~\ref{fig:second}. Swift GUI of JIRA Software allows to easily do drag-and-drop, starting with issues in "To Do", ending up with issues in "Done" table.
     
 \bigskip
 In this project issues were group by
@@ -626,23 +638,26 @@ JIRA Software allows developers to connect project issue tracking with its repos
 \begin{figure}[H]
   \centering
     \includegraphics[width=1.0\textwidth]{issue}
-    \caption{Adding project tags to commit messages on a repository that is connected with jira board detects the code created to resolve particular story ("Development" panel on the right).~\cite{jiraboard}}
+    \caption{Adding project tags to commit messages on a repository that is connected with jira board detects the code created to resolve particular story ("Development" panel on the right)~\cite{jiraboard}.}
+    \label{fig:first}
 \end{figure} 
     
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.5\textwidth]{applicationstory}
-    \caption{Example story with subtasks.~\cite{jiraboard}}
+    \caption{Example story with subtasks~\cite{jiraboard}.}
+    \label{fig:second}
 \end{figure}
     
 \bigskip
-Apart from project board JIRA provides many other features like for example simple reports, that are usually presented on graphs that are available by a single click.      
+Apart from project board JIRA provides many other features like for example simple reports (figure~\ref{fig:report}), that are usually presented on graphs that are available by a single click.      
 Estimating due dates and development duration is also a very important part of tracking issues. However in this project only due dates were estimated  as Kanban framework does not expect estimating the duration for each issue. All in all, the project was planned for 5 stories, with around 38 subtasks. Those which were not chosen to be developed and were not completed were archived in backlog section of the board.
 
 \begin{figure}[H]
   \centering
     \includegraphics[width=1.0\textwidth]{chart1}
-    \caption{ This chart shows the number of issues created vs. the number of issues resolved in the last 100 days.~\cite{jiraboard}}
+    \caption{ This chart shows the number of issues created vs. the number of issues resolved in the last 100 days~\cite{jiraboard}.}
+    \label{fig:report}
 \end{figure}
     
 }
@@ -653,12 +668,13 @@ Estimating due dates and development duration is also a very important part of t
 
 \bigskip During implementing web banking application, an automation server was set up, which was connected to the repository where the code was stored. This server was also set up on a GitHub, as a part of the repository. Anyone who owns a repository in this service can set such server by himself. All it is required is to go into actions section of repository settings and choosing a specific workflow that we would like to set up. Everything can be done in a few minutes and it does not require any specific knowledge. It is provided by GitHub for free with certain limitations - 20,000 minutes a month of testing is available. Anything more than this requires subscribing to the paid edition.  
 
-\bigskip With each pull request, automation server took changes that were about to be merged. Then the server has been building specific branch and if the build was successful, it went to another job which was running the regression test. If every job has passed successfully, then the developer was allowed to merged the code - that is assuming that the code review was already done.
+\bigskip With each pull request, automation server took changes that were about to be merged. Then the server has been building specific branch and if the build was successful, it went to another job which was running the regression test. If every job has passed successfully, then the developer was allowed to merged the code - that is assuming that the code review was already done and all the test passed. This workflow is presented on figure~\ref{fig:automation}
 
 \begin{figure}[H]
   \centering
     \includegraphics[width=1.0\textwidth]{regression}
-    \caption{Regression testing.~\cite{reg}}
+    \caption{Regression testing~\cite{reg}.}
+    \label{fig:automation}
 \end{figure}
 
 }
@@ -670,12 +686,13 @@ Estimating due dates and development duration is also a very important part of t
   \centering
     \includegraphics[width=0.8\textwidth]{checks}
     \caption{When a pull request is created, automation server triggers and verifies incoming changes by building the project and running testes.}
+    \label{fig:fivth}
 \end{figure}
 
-\bigskip To be able to add a test case scenario, first it must be implemented. In web banking application ctest was used, which is just a part of CMake and as an executable it enables testing, adds tests, runs them and reports results.
+\bigskip To be able to add a test case scenario, first it must be implemented. In web banking application ctest was used, which is just a part of CMake and as an executable it enables testing, adds tests, runs them and reports results. Listing~\ref{lst:scenario} presents example ctest used in project.
     
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Example ctest file used in project. It is quite self-explanatory, if first input argument equals 0, the scenario prints 'SUCCESS' and exits with 0 status. Otherwise it prints 'FAIL' and exit with 1 status.}, captionpos=b, float]
+\begin{lstlisting}[frame=single, label={lst:scenario}, basicstyle=\small, language=C++, caption={Example ctest file used in project. It is quite self-explanatory, if first input argument equals 0, the scenario prints 'SUCCESS' and exits with 0 status. Otherwise it prints 'FAIL' and exit with 1 status.}, captionpos=b, float]
 #ifndef _WIN32
 #include <stdio.h>
 #include <stdlib.h>
@@ -699,9 +716,9 @@ int main(int argc, char** argv) {
 #endif
 \end{lstlisting}
 
-\bigskip Having test implemented in place, a scenarios must be defined in CMake file, that will report the results. 
+\bigskip Having test implemented in place, a scenarios must be defined in CMake file (listing~\ref{lst:third}), that will report the results. 
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Example CMakeLists file used to define scenarios. In first two lines source code file and executable are set. Then by callig add test a scenario is added with input arguments. In the next lines, set test properties will define expected behaviour.}, captionpos=b]
+\begin{lstlisting}[frame=single, label={lst:third}, basicstyle=\small, language=C++, caption={Example CMakeLists file used to define scenarios. In first two lines source code file and executable are set. Then by callig add test a scenario is added with input arguments. In the next lines, set test properties will define expected behaviour.}, captionpos=b]
 SET(CTEST_SRC {CTEST_SRC} ctest.cpp)
 add_executable(test {CTEST_SRC})
 
@@ -718,44 +735,38 @@ add_test(fail_test_output test 1)
 set_tests_properties(fail_test_output PROPERTIES PASS_REGULAR_EXPRESSION "FAIL")
 \end{lstlisting}
 
-\bigskip Including above CMakeLists file in the project will trigger running four test case scenarios with each regression run.
+\bigskip Including above CMakeLists file in the project will trigger running four test case scenarios with each regression run. The results will occur on an automation server and on github pull requests - figures~\ref{fig:fourth} and \ref{fig:fivth}.
 
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.8\textwidth]{testreg}
     \caption{Regression job responsible for running tests and verifying the results.}
+    \label{fig:fourth}
 \end{figure}
 }
 \subsubsection{Regression Docker file}
 {
-\tab Docker is a software that realizes the concept of virtualization at OS level. By composing a docker image, a developer is able to create precise programming environment in a container, in which it possible to run any desired application. It is a lighter way of virtualization, rather than setting up a virtual machine.      
+\tab Docker is a software that realizes the concept of virtualization at OS level. By composing a docker image, a developer is able to create precise programming environment in a container, in which it possible to run any desired application. It is a lighter way of virtualization, rather than setting up a virtual machine. Figure~\ref{fig:container} presents an example of container which was used in the project.
 
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.8\textwidth]{scheme}
     \caption{Github CMake provides Linux virtual machine for the developers, where Docker container with a specific environment is set up.}
+    \label{fig:container}
 \end{figure} 
     
 \bigskip 
-To set up the machine responsible for automation one must place docker file all necessary dependencies. The jobs that has been set up are: 
+To set up the machine responsible for automation one must place docker file all necessary dependencies. The jobs that has been set up are (figure~\ref{fig:cmakejobs} and listing~\ref{lst:cmakeyaml}): 
     
 \begin{labeling}{alligator}
 \item [\textbf{Set up job}] Loads Ubuntu 18.04.5 LTS operating system, prepares workflow directory and all required actions.
-
 \item [\textbf{Run actions/checkout@v2}] Fetches the repository, gets git version and authorizes user.
-
 \item [\textbf{Get Boost libraries}] Downloads and installs Boost.
-
 \item [\textbf{Create build environment}] Makes build directory for output files.
-
 \item [\textbf{Configure CMake}] Identifies compilers.
-
 \item [\textbf{Build}] Builds the project.
-
 \item [\textbf{Test}] Runs regressions tests.
-
 \item [\textbf{Post Run actions/checkout@v2}] Post job cleanup.
-
 \item [\textbf{Complete job}] Cleaning up orphan processes.
 \end{labeling} 
     
@@ -763,9 +774,10 @@ To set up the machine responsible for automation one must place docker file all 
   \centering
     \includegraphics[width=0.4\textwidth]{jobs}
     \caption{Github CMake jobs.}
+    \label{fig:cmakejobs}
 \end{figure}  
 
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={cmake.yaml docker image used in project to set up automation server.}, captionpos=b, float]
+\begin{lstlisting}[frame=single, label={lst:cmakeyaml}, basicstyle=\small, language=C++, caption={cmake.yaml docker image used in project to set up automation server.}, captionpos=b, float]
 name: CMake
 
 on: [push]
@@ -805,7 +817,7 @@ jobs:
 
 \chapter{Implementation}
 
-The Web Banking Application contains four major fields which will be described in further sections. Among those, there are:
+The Web Banking Application contains four major fields (presented at figure~\ref{fig:uml}) which will be described in further sections. Among those, there are:
   
 \begin{itemize}
 \setlength\itemsep{0em}
@@ -820,6 +832,7 @@ The Web Banking Application contains four major fields which will be described i
 \centering
 \includegraphics[width=0.7\textwidth]{uml2}
 \caption{UML implementation diagram of the application.}
+\label{fig:uml}
 \end{figure}
 
 \section{Web Banking core class}
@@ -873,10 +886,10 @@ private:
 This class derives  from Wt::WContainerWidget class, which is built-in WebToolkit class that behaves like a container for widgets. In the application the logic is that widgets are created and they are supposed to reflect each page and feature. Depending on which content user wants to see, the application plugs in or plugs out specific widget which is responsible for rendering particular content of the WebBankingClass container. In the constructor of this class the application creates a Session, which is a link between processes and components. Then it creates Wt::WtStackedWidget object, which will hold widgets and plugs in logging page widget into it. At the end it connects with handleInternalPath signal and start processing the whole environment. 
 
 \bigskip
-Constatly calling handleInternalPath() function will put on a guardian, which will react to any changes in URL internal path. The logic inside of this function is whenever a path is changed, different widget will be plugged in the container, which ultimately will cause in rendering different content for the application user.
+Constatly calling handleInternalPath()(listing ~\ref{lst:handle}) function will put on a guardian, which will react to any changes in URL internal path. The logic inside of this function is whenever a path is changed, different widget will be plugged in the container, which ultimately will cause in rendering different content for the application user.
 
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={handleInternalPath() function. It reacts to URL changes. Regarding the internal path, different content is being rendered. For instance if path is changed to localhost:8080/balance then this function checks if user is logged in. If so, showUserBalance() function is being called, which clears all current widgets and plugs in user balance widget, which will cause in displaying the balance of the currently logged in user. If the user is not logged, the path will be immediately changed to localhost:8080 and the logging page will be rendered.}, captionpos=b]
+\begin{lstlisting}[frame=single, label={lst:handle}, basicstyle=\small, language=C++, caption={handleInternalPath() function. It reacts to URL changes. Regarding the internal path, different content is being rendered. For instance if path is changed to localhost:8080/balance then this function checks if user is logged in. If so, showUserBalance() function is being called, which clears all current widgets and plugs in user balance widget, which will cause in displaying the balance of the currently logged in user. If the user is not logged, the path will be immediately changed to localhost:8080 and the logging page will be rendered.}, captionpos=b]
 void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 {
 	// Check if user is logged in as an user
@@ -922,27 +935,29 @@ void WebBankingApplication::handleInternalPath(const std::string& internalPath)
 \centering
 \includegraphics[width=0.8\textwidth]{logpage}
 \caption{This is the page that renders to user when he turns the application on. Default logging widget is plugged in.}
+\label{fig:loginpage}
 \end{figure}  
 
-Other members of this class are just widgets and methods responsible for plugging them-in, which is the topic of the next section.
+An example widget that is being rendered upon turning the application on is presented at figure~\ref{fig:loginpage}. Other members of this class are just widgets and methods responsible for plugging them-in, which is the topic of the next section.
 }
 \section{Widgets}
 {
 \section*{List accounts widget}
 {
 
-\tab This widget renders one of admin functionalities. It is responsible for listing all users in the service with the details like their balances. It could simulate a very simple functionality that could be provided to the administrator by the real banking service. 
+\tab This widget renders one of admin functionalities - figure~\ref{fig:accounts}. It is responsible for listing all users in the service with the details like their balances. It could simulate a very simple functionality that could be provided to the administrator by the real banking service. 
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{listaccounts}
 \caption{This is the page that renders to user when he logs as an admin and chooses to list all accounts.}
+\label{fig:accounts}
 \end{figure}  
 
-The code of this class is simple. It derives from WContainerWidget and has only two methods. First one is constructor, which only initializes parent class and session. Second one is update() function which is responsible for composing the widget with table.
+The code of this class is simple. It derives from WContainerWidget and has only two methods. First one is constructor, which only initializes parent class and session. Second one is update() function (listing~\ref{lst:updatefun}) which is responsible for composing the widget with table.
 
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={ListAccountsWidget::update() function. Assuming that you use a compiler with C++14 support you can use std::make unique instead of Wt::cpp14::make unique. In the application std::make unique was used because it allows us to have a better control of the lifetime of the widget. For instance if we want to, we can retrieve a std::unique ptr with  WObject::removeChild() function, which ultimately will unplug a single widget. The disadvantage of using this smart pointer is the fact that we are dealing with a raw pointer and as always it's ownership must be changed carefully, otherwise it might cause a memory leak.}, captionpos=b]
+\begin{lstlisting}[frame=single, label={lst:updatefun}, basicstyle=\small, language=C++, caption={ListAccountsWidget::update() function. Assuming that you use a compiler with C++14 support you can use std::make unique instead of Wt::cpp14::make unique. In the application std::make unique was used because it allows us to have a better control of the lifetime of the widget. For instance if we want to, we can retrieve a std::unique ptr with  WObject::removeChild() function, which ultimately will unplug a single widget. The disadvantage of using this smart pointer is the fact that we are dealing with a raw pointer and as always it's ownership must be changed carefully, otherwise it might cause a memory leak.}, captionpos=b]
 void ListAccountsWidget::update()
 {
     clear();
@@ -979,19 +994,20 @@ At the beginning of update() function in this widget, a list of users is fetched
 
 \section*{Logs widget}
 {
-This widget is responsible for rendering service logs from the transactions that has been conducted among certain accounts. It is a second and the last admin functionality. The most common reason for having logs in any application is the fact that they allow to track any malicious behaviors in the system. Their purpose is to save and store information about the traffic which is happening in the programs components. In the web banking application an admin can go through service logs which contain information about every transaction - as we could imagine a real banking application admin could do.
+This widget is responsible for rendering service logs (figure~\ref{fig:logslist}) from the transactions that has been conducted among certain accounts. It is a second and the last admin functionality. The most common reason for having logs in any application is the fact that they allow to track any malicious behaviors in the system. Their purpose is to save and store information about the traffic which is happening in the programs components. In the web banking application an admin can go through service logs which contain information about every transaction - as we could imagine a real banking application admin could do.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.6\textwidth]{servicelogs}
 \caption{This is the page that renders to user when he logs as an admin and chooses to list all transactions.}
+\label{fig:logslist}
 \end{figure}
 
 \bigskip
-The implementation is just the same as in every widget in this application. Derivation from WContainerWidget, constructor, update method for constructing the widget and a session member.
+The implementation is just the same as in every widget in this application. Derivation from WContainerWidget, constructor, update method for constructing the widget (listing ~\ref{lst:secondupdate}) and a session member.
 
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={LogsWidget::update() function.}, captionpos=b]
+\begin{lstlisting}[frame=single, label={lst:secondupdate}, basicstyle=\small, language=C++, caption={LogsWidget::update() function.}, captionpos=b]
 void LogsWidget::update()
 {
 	clear();
@@ -1021,21 +1037,22 @@ From the security point of view this is not the safest approach for storing and 
 
 \section*{Transaction widget}
 {
-This widget is the first one that is provided by the service to the user without admin permissions. It is a panel, that allows user to actually conduct a simple transaction which is wiring money.
+This widget is the first one that is provided by the service to the user without admin permissions. It is a panel, that allows user to actually conduct a simple transaction which is wiring money - figure~\ref{fig:transactionwid}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{wire}
 \caption{This is the page that renders to user without admin permissions when chooses to make a transaction.}
+\label{fig:transactionwid}
 \end{figure}
 
 The wiring menu is rather simple. At the very top there is a slider where user can point out how much money he wants to wire. It is a nice show-how of the Web Toolkit library. By using built in slider widget it is possible to create an animation on the page without writing single javascript line of code. Then a user can choose to who he wants to wire the money. The last box is where a user can start a transaction and while it's being processed, he can stop it or reset the whole menu. When a transfer is completed, a notification appears.
 
 \bigskip 
-Although TransactionsWidget implementation is rather classic as it is for every widget in this application, there are a few additions to this particular widget. There is member log() function that is being called upon every transaction and it appends to logs.txt file information about the transfer that has just been made. The update function has a lot of boilerplate code which is responsible for the built in widgets (like the slider), so instead focusing on the whole update() function let's just take a look about the most important part which is the lambda responsible for handling the wiring itself.
+Although TransactionsWidget implementation is rather classic as it is for every widget in this application, there are a few additions to this particular widget. There is member log() function that is being called upon every transaction and it appends to logs.txt file information about the transfer that has just been made. The update function has a lot of boilerplate code which is responsible for the built in widgets (like the slider), so instead focusing on the whole update() function let's just take a look about the most important part which is the lambda responsible for handling the wiring itself - listing~\ref{lst:lambdasfirst}.
 
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Part of TransactionWidget::update() function.}, captionpos=b]
+\begin{lstlisting}[frame=single, label={lst:lambdasfirst}, basicstyle=\small, language=C++, caption={Part of TransactionWidget::update() function.}, captionpos=b]
 intervalTimer->timeout().connect([=] {
 	bar->setValue(bar->value() + 1);
 	if (bar->value() == 10) {
@@ -1060,18 +1077,19 @@ In the beginning of this lambda function, we connect a timeout(), which is a sig
 
 \section*{User balance widget}
 {
-This is the second and the last widget provided by the service to the user without admin permissions. It is a very basic one, which prints the information about current user's balance.
+This is the second and the last widget provided by the service to the user without admin permissions. It is a very basic one, which prints the information about current user's balance and it is presented in figure~\ref{fig:userbalancewidget}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{balance}
 \caption{This is the page that renders to user without admin permissions when he chooses to see the balance.}
+\label{fig:userbalancewidget}
 \end{figure}
 
-The update() function for this widget is very transparent. What it does is it just fetches users from the database and the user that is just logged. Then it compares logged user to the one in a database and if it finds the user, it fetches his balance. Lastly, the balance is added to the simple groupBox, which is later added to the widget container and that is how user balance widget is being composed.
+The update() function for this widget is very transparent (listing \ref{lst:usrbalanceupdate}). What it does is it just fetches users from the database and the user that is just logged. Then it compares logged user to the one in a database and if it finds the user, it fetches his balance. Lastly, the balance is added to the simple groupBox, which is later added to the widget container and that is how user balance widget is being composed.
 
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={UserBalanceWidget::update() function.}, captionpos=b]
+\begin{lstlisting}[frame=single, label={lst:usrbalanceupdate}, basicstyle=\small, language=C++, caption={UserBalanceWidget::update() function.}, captionpos=b]
 void UserBalanceWidget::update()
 {
 	clear();
@@ -1100,10 +1118,10 @@ void UserBalanceWidget::update()
 }
 \section{Session}
 {
-Knowing that HTTP is a stateless protocol we have to point out one very important thing. WWW server will process each transaction independently, without looking for any relations to other transactions commited by the user. This means that it is almost impossible for an application to track all systems of authorization that require to track every user activity within the application. For example - if we log in the service at the logging page, how does the service know at the next page that we are still logged in? The answer is it doesn't. To be more precise - it doesn't until it's provided with lasting entity carrying information, that could be passed between components. The answer to this challenge is session. It is a class that is equipped with business logic that allows it to carry valuable information from the service point of view and may be passed between components. It can be simulated when we use dynamic language like C++. In many languages it is a common practice to implement session, like for instance when coding a server-side of the application in PHP. 
+Knowing that HTTP is a stateless protocol we have to point out one very important thing. WWW server will process each transaction independently, without looking for any relations to other transactions commited by the user. This means that it is almost impossible for an application to track all systems of authorization that require to track every user activity within the application. For example - if we log in the service at the logging page, how does the service know at the next page that we are still logged in? The answer is it doesn't. To be more precise - it doesn't until it's provided with lasting entity carrying information, that could be passed between components. The answer to this challenge is session. It is a class that is equipped with business logic that allows it to carry valuable information from the service point of view and may be passed between components (implementation in listing~\ref{lst:sessionclass}). It can be simulated when we use dynamic language like C++. In many languages it is a common practice to implement session, like for instance when coding a server-side of the application in PHP. 
 
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Session.h file.}, captionpos=b]
+\begin{lstlisting}[frame=single, label={lst:sessionclass}, basicstyle=\small, language=C++, caption={Session.h file.}, captionpos=b]
 typedef Auth::Dbo::UserDatabase<AuthInfo> UserDatabase;
 
 class Session
@@ -1136,10 +1154,10 @@ private:
 Most of the methods are just getters to the private fields which are mostly WebToolkit built-in type variables. They are already provided with many valuable methods like for instance querying the database objects directly. The most important part of session logic are topUsers() and addToBalance() methods and those are the ones that we will focus on. 
 
 \bigskip
-When it comes to topUsers() method, it is used in every method that tries to modify the state of the database or in method that wants to fetch information about the users in the service.
+When it comes to topUsers() method (listing~\ref{lst:topusers}), it is used in every method that tries to modify the state of the database or in method that wants to fetch information about the users in the service.
 
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Session::topUsers() method.}, captionpos=b]
+\begin{lstlisting}[frame=single, label={lst:topusers}, basicstyle=\small, language=C++, caption={Session::topUsers() method.}, captionpos=b]
 std::vector<User> Session::topUsers(int limit)
 {
 	dbo::Transaction transaction(session_);
@@ -1163,19 +1181,20 @@ std::vector<User> Session::topUsers(int limit)
 \end{lstlisting}
 
 \bigskip
-In the very beginning a transaction object is created using current session. Then all users are being assigned to top variable. This is the place in code where idea behind session concept clarifies. To fetch all users from database, find() method is being called on current session with chain of orderBy and limit methods. This will trigger a native query on a sqlite application database, which is actually visible in an application admin console. Second part of this method just iterates through User object pushing back each user to the vector which is being returned as a result. Of course, before returning this vector, a transaction must be commited.
+In the very beginning a transaction object is created using current session. Then all users are being assigned to top variable. This is the place in code where idea behind session concept clarifies. To fetch all users from database, find() method is being called on current session with chain of orderBy and limit methods. This will trigger a native query on a sqlite application database, which is actually visible in an application admin console. Second part of this method just iterates through User object pushing back each user to the vector which is being returned as a result. Of course, before returning this vector, a transaction must be commited - just like in figure~\ref{fig:committransaction}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1.0\textwidth]{transaction}
 \caption{This is a really classic model for a database transaction. First a transaction is being made, then it's being created and when it's done, it is commited.}
+\label{fig:committransaction}
 \end{figure}
 
 \bigskip
-The second equally important method is addToBalance(). As mentioned before, it is quite self-explanatory. It's job is to find two users, the one that wants to wire some money and the one that the money will be transferred to. Next thing that this functions does, is it updates balances of both subjects of this transaction. The whole logic is completed by commiting such transaction, which obviously needs to be opened at the very beginning.
+The second equally important method is addToBalance()(listing~\ref{fig:addtobalance}). As mentioned before, it is quite self-explanatory. It's job is to find two users, the one that wants to wire some money and the one that the money will be transferred to. Next thing that this functions does, is it updates balances of both subjects of this transaction. The whole logic is completed by commiting such transaction, which obviously needs to be opened at the very beginning.
 
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Session::addToBalance() method.}, captionpos=b]
+\begin{lstlisting}[frame=single, label={fig:addtobalance}, basicstyle=\small, language=C++, caption={Session::addToBalance() method.}, captionpos=b]
 void Session::addToBalance(std::string tgtName, std::string srcName, int amount)
 {
 	dbo::Transaction transaction(session_);
@@ -1197,10 +1216,10 @@ void Session::addToBalance(std::string tgtName, std::string srcName, int amount)
 }
 \section{User entity}
 {
-\tab User class is probably the most important class in Web Banking Application. It is a class that defines a structure of an user object that is being mapped to a database object. Later on, all operations rely on this content like for instance logging to the service or making transactions which is a core of the banking application.
+\tab User class (listing~\ref{fig:userentity}) is probably the most important class in Web Banking Application. It is a class that defines a structure of an user object that is being mapped to a database object. Later on, all operations rely on this content like for instance logging to the service or making transactions which is a core of the banking application.
 
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={User class.}, captionpos=b]
+\begin{lstlisting}[frame=single, label={fig:userentity}, basicstyle=\small, language=C++, caption={User class.}, captionpos=b]
 class User;
 typedef Wt::Auth::Dbo::AuthInfo<User> AuthInfo;
 typedef dbo::collection< dbo::ptr<User> > Users;
@@ -1226,10 +1245,10 @@ DBO_EXTERN_TEMPLATES(User);
 \end{lstlisting}
 }
 
-What is really interesting about this class is the way Web Toolkit transforms this class into the database object. To achieve this, it uses ORM operation. It stands for Object-Relational Mapping and it is a way of mapping an objective architecture of a single system to the database that has relational character. Such implementation is a common approach for applications that are implemented in an objective language using objective pattern. In this class there is only one persist() method defined. In this member function we define how Web Toolkit should map class member variables to database fields, so whenever an User object is created in code, Web Toolkit already knows how to put it into the database, if necessary. Other than that there are no methods whatsoever and the constructor is default. The class itself is rather really simple, there are three fields. Name, balance and authInfos for authentication upon logging. It is a built-in functionality provided by Web Toolkit. Let's jump into an example code which will get us closer to the idea behind using this class with object relational mapping.
+What is really interesting about this class is the way Web Toolkit transforms this class into the database object. To achieve this, it uses ORM operation. It stands for Object-Relational Mapping and it is a way of mapping an objective architecture of a single system to the database that has relational character. Such implementation is a common approach for applications that are implemented in an objective language using objective pattern. In this class there is only one persist() method defined. In this member function we define how Web Toolkit should map class member variables to database fields, so whenever an User object is created in code, Web Toolkit already knows how to put it into the database, if necessary. Other than that there are no methods whatsoever and the constructor is default. The class itself is rather really simple, there are three fields. Name, balance and authInfos for authentication upon logging. It is a built-in functionality provided by Web Toolkit. Let's jump into an example code (listing ~\ref{lst:examplecode}) which will get us closer to the idea behind using this class with object relational mapping.
 
 \bigskip
-\begin{lstlisting}[frame=single, basicstyle=\small, language=C++, caption={Example usage of object-relational mapping on User class. This logic happens in constructor of Session class, which is called upon turning the application on.}, captionpos=b]
+\begin{lstlisting}[frame=single, label={lst:examplecode}, basicstyle=\small, language=C++, caption={Example usage of object-relational mapping on User class. This logic happens in constructor of Session class, which is called upon turning the application on.}, captionpos=b]
 	auto sqlite3 = cpp14::make_unique<Dbo::backend::Sqlite3>
 	(WApplication::instance()->appRoot() + "WebBankingUserDatabase.db");
 
@@ -1285,35 +1304,38 @@ The database that was chosen for this application was sqlite3 data base. It is i
 
 \subsection*{Authentication identity}
 {
-This table contains one of two reflections of users in the service. Those are actually the ones used for authentication during logging into the service. The most valuable information that this table carries is identity of the user auth info id which later on creates one-to-one relation with Authentication information table.
+This table (figure~\ref{fig:firsttable}) contains one of two reflections of users in the service. Those are actually the ones used for authentication during logging into the service. The most valuable information that this table carries is identity of the user auth info id which later on creates one-to-one relation with Authentication information table.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{auth_identity}
 \caption{Authentication identity table.}
+\label{fig:firsttable}
 \end{figure}
 
 }
 \subsection*{Authentication information}
 {
-This table in realtion with Authentication identity creates a whole piece of record that is used to authenticate any user. It stores valuable and fragile information like password. Because of this fact, the password is encrypted with bcrypt method. In the database there is a password salt and password hash column - with those information it is possible to decrypt each password, but for the sake of security such information should not be stored in a plain text. There is also a table named "failed login attempts" which will increment with every failed login attempt an user makes.
+This table (figure~\ref{fig:secondtable}) in realtion with Authentication identity creates a whole piece of record that is used to authenticate any user. It stores valuable and fragile information like password. Because of this fact, the password is encrypted with bcrypt method. In the database there is a password salt and password hash column - with those information it is possible to decrypt each password, but for the sake of security such information should not be stored in a plain text. There is also a table named "failed login attempts" which will increment with every failed login attempt an user makes.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1.0\textwidth]{auth_info}
 \caption{Authentication information table.}
+\label{fig:secondtable}
 \end{figure}
 
 }
 
 \subsection*{User}
 {
-User table is the second one containing information about the users in the table, but this one is actually the one that is object-relational mapped from the code to the database object. Records from this table are also the ones used for transactions and other Web Banking Application features different then logging and authentication. It stores information about users name, balance and version, which actually shows an amount of changes that has been made to each record. For example if a guest's version is 17, it means that it was involved in 17 transactions.
+User table is the second one containing information about the users in the table, but this one is actually the one that is object-relational mapped from the code to the database object. Records from this table are also the ones used for transactions and other Web Banking Application features different then logging and authentication. It stores information about users name, balance and version, which actually shows an amount of changes that has been made to each record. For example if a guest's version is 17, it means that it was involved in 17 transactions (figure~\ref{fig:version}).
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.6\textwidth]{user}
 \caption{User table.}
+\label{fig:version}
 \end{figure}
 }
 \chapter{Summary}
